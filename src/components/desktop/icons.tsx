@@ -29,7 +29,7 @@ const icons: Icon[] = [
 export const Icons: FC = () => {
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   return (
-    <>
+    <div className="relative w-fit">
       {icons.map(({ index, filename }) => (
         <div
           key={filename}
@@ -46,6 +46,6 @@ export const Icons: FC = () => {
           />
         </div>
       ))}
-    </>
+    </div>
   );
 };
