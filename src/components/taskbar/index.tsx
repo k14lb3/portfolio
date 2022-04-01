@@ -18,8 +18,6 @@ const Taskbar: FC = () => {
     setInterval(() => setClock(), 60000);
   }, []);
 
-  console.log(time);
-
   return (
     <div className="absolute bottom-0 left-0 h-8 w-full bg-taskbar-base taskbar-border">
       <div className="flex items-center justify-between relative h-full w-full pt-[2px] px-0.5">
