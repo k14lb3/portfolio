@@ -10,6 +10,8 @@ module.exports = {
       backgroundImage: {
         "taskbar-base": "url(/static/images/taskbar/base.png)",
         "taskbar-clock": "url(/static/images/taskbar/clock.png)",
+        "start-default": "url(/static/images/taskbar/start/default.png)",
+        "start-clicked": "url(/static/images/taskbar/start/clicked.png)",
       },
     },
   },
