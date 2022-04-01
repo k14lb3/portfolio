@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Microsoft Sans Serif";
+  src: url("/public/static/fonts/mss.woff2"), format("woff2");
+  -webkit-font-smoothing: none;
+}
+
+@layer base {
+  html {
+    @apply font-mss;
+  }
+}
