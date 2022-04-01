@@ -3,7 +3,7 @@ import Head from "next/head";
 import Background from "@/components/background";
 import Taskbar from "@/components/taskbar";
 
-const Home: NextPage = () => {
+const Desktop: NextPage = () => {
   return (
     <Background>
       <Head>
@@ -14,4 +14,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Desktop;
