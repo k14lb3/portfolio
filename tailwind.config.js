@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         mss: ["Microsoft Sans Serif", ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        "taskbar-base": "url(/static/images/taskbar/base.png)",
+      },
     },
   },
   plugins: [],
