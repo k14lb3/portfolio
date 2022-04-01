@@ -13,3 +13,7 @@
     @apply font-mss;
   }
 }
+
+#__next {
+  @apply h-screen w-screen;
+}

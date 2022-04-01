@@ -1,13 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Background from "@/components/background";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>Karl Ivan Alberto | Portfolio</title>
       </Head>
-    </div>
+      <Background />
+    </>
   );
 };
 
