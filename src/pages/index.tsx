@@ -8,8 +8,8 @@ import {
   startState,
   startMenuOptionHighlightState,
 } from "@/recoil/atoms";
-import Background from "@/components/background";
-import { Icons, Taskbar } from "@/components/desktop";
+import { Background, Icons } from "@/components/desktop";
+import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
   const setDesktopIconHighlightAtom = useSetRecoilState(

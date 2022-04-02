@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { desktopIconHighlightState } from "@/recoil/atoms";
-import Start from "./start";
-import Clock from "./clock";
+import { Start } from "./start";
+import { Clock } from "./clock";
 
 const Taskbar: FC = () => {
-  const setDesktopIconHighlightAtom = useSetRecoilState(desktopIconHighlightState);
+  const setDesktopIconHighlightAtom = useSetRecoilState(
+    desktopIconHighlightState
+  );
 
   return (
     <div

@@ -8,7 +8,7 @@ interface Option {
   event: () => void;
 }
 
-export const Menu: FC = () => {
+export const StartMenu: FC = () => {
   const setStartAtom = useSetRecoilState(startState);
   const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
     useRecoilState(startMenuOptionHighlightState);

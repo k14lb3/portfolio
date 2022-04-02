@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react";
 
-const Clock: FC = () => {
+export const Clock: FC = () => {
   const [time, setTime] = useState<string>("");
 
   const setClock = () => {
@@ -23,5 +23,3 @@ const Clock: FC = () => {
     </div>
   );
 };
-
-export default Clock;
