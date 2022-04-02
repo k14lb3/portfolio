@@ -8,7 +8,7 @@ const Start: FC = () => {
   return (
     <div
       className={`h-6 w-[3.75rem] ${
-        startAtom ? " bg-start-clicked" : " bg-start-default"
+        startAtom ? "bg-start-clicked" : "bg-start-default"
       } bg-cover`}
       onClick={() => setStartAtom(!startAtom)}
     />

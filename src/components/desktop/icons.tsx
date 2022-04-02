@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useRecoilState } from "recoil";
-import { highlightState } from "@/recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { highlightState, startState } from "@/recoil/atoms";
 
 interface Icon {
   index: number;
@@ -33,8 +33,10 @@ const icons: Icon[] = [
 
 export const Icons: FC = () => {
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
+  const setStartAtom = useSetRecoilState(startState);
+
   return (
-    <div className="relative w-fit">
+    <div className="relative w-fit" onClick={() => setStartAtom(false)}>
       {icons.map(({ index, filename, event }) => (
         <div
           key={filename}
