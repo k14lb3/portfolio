@@ -3,31 +3,54 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { arrowUpHandler, arrowDownHandler } from "@/utils/helpers";
-import { desktopIconHighlightState, startState } from "@/recoil/atoms";
+import {
+  desktopIconHighlightState,
+  startState,
+  startMenuOptionHighlightState,
+} from "@/recoil/atoms";
 import Background from "@/components/background";
 import { Icons, Taskbar } from "@/components/desktop";
 
 const Desktop: NextPage = () => {
-  const sesetDesktopIconHighlightAtom = useSetRecoilState(desktopIconHighlightState);
+  const setDesktopIconHighlightAtom = useSetRecoilState(
+    desktopIconHighlightState
+  );
   const [startAtom, setStartAtom] = useRecoilState(startState);
+  const setStartMenuOptionHighlightAtom = useSetRecoilState(
+    startMenuOptionHighlightState
+  );
 
   useEffect(() => {
-    const highlightIcon = (e: KeyboardEvent) => {
+    const keydownEvents = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowUp":
-          arrowUpHandler(sesetDesktopIconHighlightAtom, startAtom);
+          arrowUpHandler(
+            setDesktopIconHighlightAtom,
+            startAtom,
+            setStartMenuOptionHighlightAtom
+          );
           break;
         case "ArrowDown":
-          arrowDownHandler(sesetDesktopIconHighlightAtom, startAtom);
+          arrowDownHandler(
+            setDesktopIconHighlightAtom,
+            startAtom,
+            setStartMenuOptionHighlightAtom
+          );
           break;
       }
     };
 
-    window.addEventListener("keydown", highlightIcon);
+    window.addEventListener("keydown", keydownEvents);
 
     return () => {
-      window.removeEventListener("keydown", highlightIcon);
+      window.removeEventListener("keydown", keydownEvents);
     };
+  }, [startAtom]);
+
+  useEffect(() => {
+    if (!startAtom) {
+      setStartMenuOptionHighlightAtom(0);
+    }
   }, [startAtom]);
 
   return (
@@ -38,7 +61,7 @@ const Desktop: NextPage = () => {
       <div
         className="absolute inset-0"
         onClick={() => {
-          sesetDesktopIconHighlightAtom(0);
+          setDesktopIconHighlightAtom(0);
           setStartAtom(false);
         }}
       />

@@ -2,15 +2,18 @@ import { SetterOrUpdater } from "recoil";
 
 export const arrowUpHandler = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
-  startAtom: boolean
+  startAtom: boolean,
+  startMenuOptionHighlightAtom: SetterOrUpdater<number>
 ) => {
-  console.log(startAtom);
   if (startAtom) {
+    startMenuOptionHighlightAtom((prevHighlight) => {
+      if (prevHighlight === 0 || prevHighlight === 1) return 4;
+
+      return --prevHighlight;
+    });
   } else {
     setDesktopIconHighlightAtom((prevHighlight) => {
-      if (prevHighlight === null || prevHighlight === 1) {
-        return 4;
-      }
+      if (prevHighlight === 0 || prevHighlight === 1) return 4;
 
       return --prevHighlight;
     });
@@ -19,15 +22,18 @@ export const arrowUpHandler = (
 
 export const arrowDownHandler = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
-  startAtom: boolean
+  startAtom: boolean,
+  startMenuOptionHighlightAtom: SetterOrUpdater<number>
 ) => {
-  console.log(startAtom);
   if (startAtom) {
+    startMenuOptionHighlightAtom((prevHighlight) => {
+      if (prevHighlight === 4) return 1;
+
+      return ++prevHighlight;
+    });
   } else {
     setDesktopIconHighlightAtom((prevHighlight) => {
-      if (prevHighlight === null || prevHighlight === 4) {
-        return 1;
-      }
+      if (prevHighlight === 4) return 1;
 
       return ++prevHighlight;
     });
