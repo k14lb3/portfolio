@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { arrowUpHandler, arrowDownHandler } from "@/utils/helpers";
 import { highlightState, startState } from "@/recoil/atoms";
 import Background from "@/components/background";
@@ -9,16 +9,16 @@ import { Icons, Taskbar } from "@/components/desktop";
 
 const Desktop: NextPage = () => {
   const setHighlightAtom = useSetRecoilState(highlightState);
-  const setStartAtom = useSetRecoilState(startState);
+  const [startAtom, setStartAtom] = useRecoilState(startState);
 
   useEffect(() => {
     const highlightIcon = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowUp":
-          arrowUpHandler(setHighlightAtom);
+          arrowUpHandler(setHighlightAtom, startAtom);
           break;
         case "ArrowDown":
-          arrowDownHandler(setHighlightAtom);
+          arrowDownHandler(setHighlightAtom, startAtom);
           break;
       }
     };
@@ -28,7 +28,7 @@ const Desktop: NextPage = () => {
     return () => {
       window.removeEventListener("keydown", highlightIcon);
     };
-  }, []);
+  }, [startAtom]);
 
   return (
     <Background>
