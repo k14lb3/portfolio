@@ -5,8 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { arrowUpHandler, arrowDownHandler } from "@/utils/helpers";
 import { highlightState, startState } from "@/recoil/atoms";
 import Background from "@/components/background";
-import Taskbar from "@/components/taskbar";
-import { Icons } from "@/components/desktop";
+import { Icons, Taskbar } from "@/components/desktop";
 
 const Desktop: NextPage = () => {
   const setHighlightAtom = useSetRecoilState(highlightState);
