@@ -2,6 +2,7 @@ import { SetterOrUpdater } from "recoil";
 
 export const arrowUpHandler = (setHighlightAtom : SetterOrUpdater<number>) => {
   setHighlightAtom((prevHighlight) => {
+    
     if (prevHighlight === null || prevHighlight === 1) {
       return 4;
     }

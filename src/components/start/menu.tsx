@@ -1,4 +1,6 @@
 import { FC, MutableRefObject, createRef } from "react";
+import { useSetRecoilState } from "recoil";
+import { startState } from "@/recoil/atoms";
 
 interface Option {
   index: number;
@@ -25,12 +27,13 @@ const options: Option[] = [
   {
     index: 3,
     name: "shut-down",
-    event: () => {},
+    event: () => window.close(),
   },
 ];
 
 export const Menu: FC = () => {
   const optionsRef: MutableRefObject<HTMLImageElement | null>[] = [];
+  const setStartAtom = useSetRecoilState(startState);
 
   const optionHoverIn = (index: number, name: string) => {
     optionsRef[
@@ -45,7 +48,10 @@ export const Menu: FC = () => {
   };
 
   return (
-    <div className="absolute bottom-[84%] flex flex-col items-end h-[10.75rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5">
+    <div
+      className="absolute bottom-[84%] flex flex-col items-end h-[10.75rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5"
+      onClick={(e) => e.stopPropagation()}
+    >
       {options.map(({ index, name, event }) => {
         optionsRef.push(createRef());
 
@@ -57,7 +63,10 @@ export const Menu: FC = () => {
             }`}
             onMouseEnter={() => optionHoverIn(index, name)}
             onMouseOut={() => optionHoverOut(index, name)}
-            onClick={event}
+            onClick={() => {
+              event();
+              setStartAtom(false);
+            }}
           >
             <img
               ref={optionsRef[index]}
