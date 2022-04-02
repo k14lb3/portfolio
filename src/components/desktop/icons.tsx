@@ -1,6 +1,6 @@
 import { FC, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { highlightState, startState } from "@/recoil/atoms";
+import { desktopIconHighlightState, startState } from "@/recoil/atoms";
 
 interface Icon {
   index: number;
@@ -9,7 +9,7 @@ interface Icon {
 }
 
 export const Icons: FC = () => {
-  const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
+  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] = useRecoilState(desktopIconHighlightState);
   const setStartAtom = useSetRecoilState(startState);
   const resumeRef = useRef<HTMLAnchorElement | null>(null);
 
@@ -44,15 +44,15 @@ export const Icons: FC = () => {
           <div
             key={filename}
             className="h-16 w-[6.375rem] mb-4"
-            onClick={() => setHighlightAtom(index)}
+            onClick={() => setDesktopIconHighlightAtom(index)}
             onDoubleClick={() => {
               event();
-              setHighlightAtom(0);
+              setDesktopIconHighlightAtom(0);
             }}
           >
             <img
               src={
-                highlightAtom === index
+                desktopIconHighlightAtom === index
                   ? `/static/images/icons/highlighted/${filename}.png`
                   : `/static/images/icons/${filename}.png`
               }

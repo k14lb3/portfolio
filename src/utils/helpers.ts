@@ -1,13 +1,13 @@
 import { SetterOrUpdater } from "recoil";
 
 export const arrowUpHandler = (
-  setHighlightAtom: SetterOrUpdater<number>,
+  setDesktopIconHighlightAtom: SetterOrUpdater<number>,
   startAtom: boolean
 ) => {
   console.log(startAtom);
   if (startAtom) {
   } else {
-    setHighlightAtom((prevHighlight) => {
+    setDesktopIconHighlightAtom((prevHighlight) => {
       if (prevHighlight === null || prevHighlight === 1) {
         return 4;
       }
@@ -18,13 +18,13 @@ export const arrowUpHandler = (
 };
 
 export const arrowDownHandler = (
-  setHighlightAtom: SetterOrUpdater<number>,
+  setDesktopIconHighlightAtom: SetterOrUpdater<number>,
   startAtom: boolean
 ) => {
   console.log(startAtom);
   if (startAtom) {
   } else {
-    setHighlightAtom((prevHighlight) => {
+    setDesktopIconHighlightAtom((prevHighlight) => {
       if (prevHighlight === null || prevHighlight === 4) {
         return 1;
       }

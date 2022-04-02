@@ -5,7 +5,7 @@ export const startState = atom({
   default: false as boolean,
 });
 
-export const highlightState = atom({
-  key: "highlightState",
+export const desktopIconHighlightState = atom({
+  key: "desktopIconHighlightState",
   default: 0 as number,
 });
