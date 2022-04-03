@@ -1,67 +1,15 @@
-import { useEffect } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  arrowUpHandler,
-  arrowDownHandler,
-  keydownDefaultHandler,
-} from "@/utils/helpers";
-import {
-  desktopIconHighlightState,
-  startState,
-  startMenuOptionHighlightState,
-} from "@/recoil/atoms";
+import { useSetRecoilState } from "recoil";
+import { desktopIconHighlightState, startState } from "@/recoil/atoms";
 import { Background, Icons } from "@/components/desktop";
 import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
-  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
-    useRecoilState(desktopIconHighlightState);
-  const [startAtom, setStartAtom] = useRecoilState(startState);
-  const setStartMenuOptionHighlightAtom = useSetRecoilState(
-    startMenuOptionHighlightState
+  const setDesktopIconHighlightAtom = useSetRecoilState(
+    desktopIconHighlightState
   );
-
-  useEffect(() => {
-    const keydownEvents = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case "ArrowUp":
-          arrowUpHandler(
-            setDesktopIconHighlightAtom,
-            startAtom,
-            setStartMenuOptionHighlightAtom
-          );
-          break;
-        case "ArrowDown":
-          arrowDownHandler(
-            setDesktopIconHighlightAtom,
-            startAtom,
-            setStartMenuOptionHighlightAtom
-          );
-          break;
-        default:
-          keydownDefaultHandler(
-            e.key,
-            desktopIconHighlightAtom,
-            setDesktopIconHighlightAtom,
-            startAtom
-          );
-      }
-    };
-
-    window.addEventListener("keydown", keydownEvents);
-
-    return () => {
-      window.removeEventListener("keydown", keydownEvents);
-    };
-  }, [startAtom, desktopIconHighlightAtom]);
-
-  useEffect(() => {
-    if (!startAtom) {
-      setStartMenuOptionHighlightAtom(0);
-    }
-  }, [startAtom]);
+  const setStartAtom = useSetRecoilState(startState);
 
   return (
     <Background>
