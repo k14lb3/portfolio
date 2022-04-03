@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { arrowUpHandler, arrowDownHandler } from "@/utils/helpers";
+import {
+  arrowUpHandler,
+  arrowDownHandler,
+  keydownDefaultHandler,
+} from "@/utils/helpers";
 import {
   desktopIconHighlightState,
   startState,
@@ -12,9 +16,8 @@ import { Background, Icons } from "@/components/desktop";
 import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
-  const setDesktopIconHighlightAtom = useSetRecoilState(
-    desktopIconHighlightState
-  );
+  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
+    useRecoilState(desktopIconHighlightState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const setStartMenuOptionHighlightAtom = useSetRecoilState(
     startMenuOptionHighlightState
@@ -37,6 +40,13 @@ const Desktop: NextPage = () => {
             setStartMenuOptionHighlightAtom
           );
           break;
+        default:
+          keydownDefaultHandler(
+            e.key,
+            desktopIconHighlightAtom,
+            setDesktopIconHighlightAtom,
+            startAtom
+          );
       }
     };
 
@@ -45,7 +55,7 @@ const Desktop: NextPage = () => {
     return () => {
       window.removeEventListener("keydown", keydownEvents);
     };
-  }, [startAtom]);
+  }, [startAtom, desktopIconHighlightAtom]);
 
   useEffect(() => {
     if (!startAtom) {

@@ -5,48 +5,51 @@ import { desktopIconHighlightState, startState } from "@/recoil/atoms";
 interface Icon {
   index: number;
   filename: string;
-  event: () => void;
 }
 
+export const icons: Icon[] = [
+  {
+    index: 1,
+    filename: "recycle-bin",
+  },
+  {
+    index: 2,
+    filename: "projects",
+  },
+  {
+    index: 3,
+    filename: "resume",
+  },
+  {
+    index: 4,
+    filename: "minecraft",
+  },
+];
+
 export const Icons: FC = () => {
-  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] = useRecoilState(desktopIconHighlightState);
+  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
+    useRecoilState(desktopIconHighlightState);
   const setStartAtom = useSetRecoilState(startState);
   const resumeRef = useRef<HTMLAnchorElement | null>(null);
 
-  const icons: Icon[] = [
-    {
-      index: 1,
-      filename: "recycle-bin",
-      event: () => {},
-    },
-    {
-      index: 2,
-      filename: "projects",
-      event: () => {},
-    },
-    {
-      index: 3,
-      filename: "resume",
-      event: () => resumeRef.current!.click(),
-    },
-    {
-      index: 4,
-      filename: "minecraft",
-      event: () => {},
-    },
+  const iconsEvent: VoidFunction[] = [
+    () => {},
+    () => {},
+    () => resumeRef.current!.click(),
+    () => {},
   ];
 
   return (
     <>
       <a ref={resumeRef} href="/static/karlivan-alberto_resume.pdf" download />
       <div className="relative w-fit" onClick={() => setStartAtom(false)}>
-        {icons.map(({ index, filename, event }) => (
+        {icons.map(({ index, filename }) => (
           <div
             key={filename}
             className="h-16 w-[6.375rem] mb-4"
             onClick={() => setDesktopIconHighlightAtom(index)}
             onDoubleClick={() => {
-              event();
+              iconsEvent[index - 1]();
               setDesktopIconHighlightAtom(0);
             }}
           >
