@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import {
@@ -32,6 +33,7 @@ export const options: Option[] = [
 ];
 
 export const StartMenu: FC = () => {
+  const router = useRouter();
   const optionsRef = useRef<any[]>([]);
   const setStartMenuOptionsRefAtom = useSetRecoilState(
     startMenuOptionsRefState
@@ -40,7 +42,15 @@ export const StartMenu: FC = () => {
   const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
     useRecoilState(startMenuOptionHighlightState);
 
-  const optionsEvent = [() => {}, () => {}, () => {}, () => window.close()];
+  const optionsEvent = [
+    () => {},
+    () => {},
+    () => {},
+    () => {
+      window.close();
+      router.push("https://www.linkedin.com/in/karlivanalberto/");
+    },
+  ];
 
   useEffect(() => {
     if (optionsRef.current) {
