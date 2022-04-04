@@ -3,21 +3,25 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   arrowUpHandler,
   arrowDownHandler,
+  keydownEnterHandler,
   keydownDefaultHandler,
 } from "@/utils/helpers";
 import {
+  desktopIconsRefState,
   desktopIconHighlightState,
   startState,
+  startMenuOptionsRefState,
   startMenuOptionHighlightState,
 } from "@/recoil/atoms";
 
 const Root: FC = ({ children }) => {
+  const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
-  const startAtom = useRecoilValue(startState);
-  const setStartMenuOptionHighlightAtom = useSetRecoilState(
-    startMenuOptionHighlightState
-  );
+  const [startAtom, setStartAtom] = useRecoilState(startState);
+  const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
+  const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
+    useRecoilState(startMenuOptionHighlightState);
 
   useEffect(() => {
     const keydownEvents = (e: KeyboardEvent) => {
@@ -36,6 +40,18 @@ const Root: FC = ({ children }) => {
             setStartMenuOptionHighlightAtom
           );
           break;
+        case "Enter":
+          keydownEnterHandler(
+            desktopIconsRefAtom,
+            desktopIconHighlightAtom,
+            startAtom,
+            startMenuOptionsRefAtom,
+            startMenuOptionHighlightAtom
+          );
+          break;
+        case " ":
+          setStartAtom(!startAtom);
+          break;
         default:
           keydownDefaultHandler(
             e.key,
@@ -51,14 +67,14 @@ const Root: FC = ({ children }) => {
     return () => {
       window.removeEventListener("keydown", keydownEvents);
     };
-  }, [startAtom, desktopIconHighlightAtom]);
+  }, [desktopIconHighlightAtom, startAtom, startMenuOptionHighlightAtom]);
 
   useEffect(() => {
     if (!startAtom) {
       setStartMenuOptionHighlightAtom(0);
     }
   }, [startAtom]);
-	
+
   return <>{children}</>;
 };
 

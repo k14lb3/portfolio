@@ -41,6 +41,29 @@ export const arrowDownHandler = (
   }
 };
 
+export const keydownEnterHandler = (
+  desktopIconsRefAtom: HTMLDivElement[],
+  desktopIconHighlightAtom: number,
+  startAtom: boolean,
+  startMenuOptionsRefAtom: HTMLDivElement[],
+  startMenuOptionHighlightAtom: number
+): void => {
+  if (startAtom) {
+    if (startMenuOptionHighlightAtom === 0) return;
+
+    startMenuOptionsRefAtom[startMenuOptionHighlightAtom - 1].click();
+  } else {
+    if (desktopIconHighlightAtom === 0) return;
+
+    const dblclick = new MouseEvent("dblclick", {
+      view: window,
+      bubbles: true,
+    });
+
+    desktopIconsRefAtom[desktopIconHighlightAtom - 1].dispatchEvent(dblclick);
+  }
+};
+
 export const keydownDefaultHandler = (
   key: string,
   desktopIconHighlightAtom: number,

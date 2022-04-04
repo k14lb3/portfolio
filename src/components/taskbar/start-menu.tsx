@@ -1,49 +1,65 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { startState, startMenuOptionHighlightState } from "@/recoil/atoms";
+import _ from "lodash";
+import {
+  startState,
+  startMenuOptionsRefState,
+  startMenuOptionHighlightState,
+} from "@/recoil/atoms";
 
 interface Option {
   index: number;
   filename: string;
-  event: () => void;
 }
 
+export const options: Option[] = [
+  {
+    index: 1,
+    filename: "programs",
+  },
+  {
+    index: 2,
+    filename: "contact",
+  },
+  {
+    index: 3,
+    filename: "about",
+  },
+  {
+    index: 4,
+    filename: "shut-down",
+  },
+];
+
 export const StartMenu: FC = () => {
+  const optionsRef = useRef<any[]>([]);
+  const setStartMenuOptionsRefAtom = useSetRecoilState(
+    startMenuOptionsRefState
+  );
   const setStartAtom = useSetRecoilState(startState);
   const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
     useRecoilState(startMenuOptionHighlightState);
 
-  const options: Option[] = [
-    {
-      index: 1,
-      filename: "programs",
-      event: () => {},
-    },
-    {
-      index: 2,
-      filename: "contact",
-      event: () => {},
-    },
-    {
-      index: 3,
-      filename: "about",
-      event: () => {},
-    },
-    {
-      index: 4,
-      filename: "shut-down",
-      event: () => window.close(),
-    },
-  ];
+  const optionsEvent = [() => {}, () => {}, () => {}, () => window.close()];
+
+  useEffect(() => {
+    if (optionsRef.current) {
+      const refs = _.cloneDeep(optionsRef);
+      setStartMenuOptionsRefAtom(refs.current);
+    }
+  }, [optionsRef]);
 
   return (
     <div
       className="absolute bottom-[84%] flex flex-col items-end h-[10.75rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5"
       onClick={(e) => e.stopPropagation()}
     >
-      {options.map(({ index, filename, event }) => {
+      {options.map(({ index, filename }) => {
         return (
           <div
+            ref={(el) => {
+              optionsRef.current[index - 1] = el as HTMLDivElement;
+            }}
             key={filename}
             className={`h-10 w-[9.3125rem] mb-[0.0625rem]${
               index === 3 ? " mt-0.5" : ""
@@ -51,7 +67,7 @@ export const StartMenu: FC = () => {
             onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
             onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
             onClick={() => {
-              event();
+              optionsEvent[index - 1]();
               setStartAtom(false);
             }}
           >
