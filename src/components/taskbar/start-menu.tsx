@@ -61,7 +61,7 @@ export const StartMenu: FC = () => {
 
   return (
     <div
-      className="absolute bottom-[84%] flex flex-col items-end h-[10.75rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5"
+      className="absolute bottom-[84%] flex flex-col items-end h-[10.6875rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5"
       onClick={(e) => e.stopPropagation()}
     >
       {options.map(({ index, filename }) => {
@@ -71,8 +71,8 @@ export const StartMenu: FC = () => {
               optionsRef.current[index - 1] = el as HTMLDivElement;
             }}
             key={filename}
-            className={`h-10 w-[9.3125rem] mb-[0.0625rem]${
-              index === 4 ? " mt-[0.3125rem]" : ""
+            className={`h-10 w-[9.3125rem] ${
+              index === 3 ? "mb-0.5": "mb-[0.0625rem]"
             }`}
             onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
             onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
