@@ -1,4 +1,5 @@
 import { SetterOrUpdater } from "recoil";
+import { options } from "@/components/taskbar/start-menu";
 import { icons } from "@/components/desktop/icons";
 
 export const arrowUpHandler = (
@@ -68,9 +69,24 @@ export const keydownDefaultHandler = (
   key: string,
   desktopIconHighlightAtom: number,
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
-  startAtom: boolean
+  startAtom: boolean,
+  startMenuOptionHighlightAtom: number,
+  setStartMenuOptionHighlightAtom: SetterOrUpdater<number>
 ): void => {
   if (startAtom) {
+    let keyIndex: number = 0;
+
+    const optionKeys = options.map(({ index, filename }) => ({
+      index: index,
+      key: filename[0],
+    }));
+    const optionKey = optionKeys.filter((optionKey) => optionKey.key === key);
+
+    if (optionKey.length === 0) return;
+
+    keyIndex = optionKey[0].index;
+
+    setStartMenuOptionHighlightAtom(keyIndex);
   } else {
     let keyIndex: number = 0;
 

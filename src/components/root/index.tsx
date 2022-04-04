@@ -62,7 +62,9 @@ const Root: FC = ({ children }) => {
             e.key,
             desktopIconHighlightAtom,
             setDesktopIconHighlightAtom,
-            startAtom
+            startAtom,
+            startMenuOptionHighlightAtom,
+            setStartMenuOptionHighlightAtom
           );
       }
     };
