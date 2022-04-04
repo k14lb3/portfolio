@@ -49,6 +49,11 @@ const Root: FC = ({ children }) => {
             startMenuOptionHighlightAtom
           );
           break;
+        case "Escape":
+          if (desktopIconHighlightAtom !== 0)
+            return setDesktopIconHighlightAtom(0);
+          if (startAtom) return setStartAtom(false);
+          break;
         case " ":
           setStartAtom(!startAtom);
           break;
