@@ -72,7 +72,7 @@ export const StartMenu: FC = () => {
             }}
             key={filename}
             className={`h-10 w-[9.3125rem] mb-[0.0625rem]${
-              index === 3 ? " mt-0.5" : ""
+              index === 4 ? " mt-[0.3125rem]" : ""
             }`}
             onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
             onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
