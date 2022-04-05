@@ -1,15 +1,21 @@
 import "../styles/globals.css";
+import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import type { AppProps } from "next/app";
 import Root from "@/components/root";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <RecoilRoot>
-      <Root>
-        <Component {...pageProps} />
-      </Root>
-    </RecoilRoot>
+    <>
+      <Head>
+        <title>Karl Ivan Alberto | Portfolio</title>
+      </Head>
+      <RecoilRoot>
+        <Root>
+          <Component {...pageProps} />
+        </Root>
+      </RecoilRoot>
+    </>
   );
 };
 

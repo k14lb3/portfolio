@@ -1,5 +1,10 @@
 import { atom } from "recoil";
 
+export const bootState = atom({
+  key: "bootState",
+  default: false as boolean,
+});
+
 export const desktopIconsRefState = atom({
   key: "desktopIconsRefState",
   default: [] as HTMLDivElement[],

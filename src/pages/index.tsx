@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import Head from "next/head";
 import { useSetRecoilState } from "recoil";
 import { desktopIconHighlightState, startState } from "@/recoil/atoms";
 import { Background, Icons } from "@/components/desktop";
@@ -13,9 +12,6 @@ const Desktop: NextPage = () => {
 
   return (
     <Background>
-      <Head>
-        <title>Karl Ivan Alberto | Portfolio</title>
-      </Head>
       <div
         className="absolute inset-0"
         onClick={() => {

@@ -7,14 +7,17 @@ import {
   keydownDefaultHandler,
 } from "@/utils/helpers";
 import {
+  bootState,
   desktopIconsRefState,
   desktopIconHighlightState,
   startState,
   startMenuOptionsRefState,
   startMenuOptionHighlightState,
 } from "@/recoil/atoms";
+import Boot from "@/components/boot";
 
 const Root: FC = ({ children }) => {
+  const bootAtom = useRecoilValue(bootState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
@@ -82,7 +85,7 @@ const Root: FC = ({ children }) => {
     }
   }, [startAtom]);
 
-  return <>{children}</>;
+  return bootAtom ? <>{children}</> : <Boot />;
 };
 
 export default Root;
