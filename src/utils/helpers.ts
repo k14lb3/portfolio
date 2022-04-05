@@ -2,6 +2,9 @@ import { SetterOrUpdater } from "recoil";
 import { options } from "@/components/taskbar/start-menu";
 import { icons } from "@/components/desktop/icons";
 
+export const generateRandomNumber = (min: number = 0, max: number = 1): number =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
 export const arrowUpHandler = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
   startAtom: boolean,
