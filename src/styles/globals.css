@@ -19,5 +19,5 @@
 }
 
 #__next {
-  @apply h-screen w-screen;
+  @apply h-screen w-screen bg-black;
 }
