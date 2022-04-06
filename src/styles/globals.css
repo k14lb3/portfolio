@@ -10,7 +10,7 @@
 
 @layer base {
   html {
-    @apply font-mss cursor-default;
+    @apply font-mss overflow-hidden cursor-default;
   }
 }
 
