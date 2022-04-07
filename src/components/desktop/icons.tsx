@@ -64,7 +64,7 @@ export const Icons: FC = () => {
                 iconsRef.current[index - 1] = el as HTMLDivElement;
               }}
               key={filename}
-              className="h-16 w-[6.375rem] mb-4"
+              className="h-[9.446vh] mb-[2.3988vh]"
               onClick={() => setDesktopIconHighlightAtom(index)}
               onDoubleClick={() => {
                 iconsEvent[index - 1]();
@@ -72,6 +72,7 @@ export const Icons: FC = () => {
               }}
             >
               <img
+                className="block h-[9.446vh] mt-auto"
                 src={
                   desktopIconHighlightAtom === index
                     ? `/static/images/icons/highlighted/${filename}.png`

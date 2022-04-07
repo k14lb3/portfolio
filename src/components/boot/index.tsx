@@ -39,10 +39,15 @@ const Boot: FC = () => {
   }, []);
 
   return (
-    <div className={`fixed inset-0 w-full h-full ${bgColor} p-4${cursor}`}>
+    <div
+      className={`fixed inset-0 h-full aspect-[8/5] ${bgColor} pt-[4vh] px-[2vh] m-auto`}
+    >
+      <div className={`fixed inset-0${cursor}`} />
       {cli ? (
         cursor === " cursor-default" && (
-          <span className="text-white text-xl font-bold animate-blink">_</span>
+          <code className="block text-white text-[2.5vh] font-bold animate-blink">
+            _
+          </code>
         )
       ) : (
         <Image src="/static/images/boot.png" layout="fill" objectFit="cover" />

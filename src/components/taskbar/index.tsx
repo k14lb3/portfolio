@@ -11,10 +11,12 @@ const Taskbar: FC = () => {
 
   return (
     <div
-      className="absolute bottom-0 left-0 h-8 w-full bg-taskbar-base taskbar-border"
+      className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0]"
       onClick={() => setDesktopIconHighlightAtom(0)}
     >
-      <div className="flex items-center justify-between relative h-full w-full pt-[2px] px-0.5">
+      <div className="bg-[#DFDFDF] h-[0.152vh] w-full" />
+      <div className="bg-white h-[0.152vh] w-full" />
+      <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">
         <Start />
         <Clock />
       </div>

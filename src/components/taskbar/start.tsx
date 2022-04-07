@@ -8,9 +8,9 @@ export const Start: FC = () => {
 
   return (
     <div
-      className={`h-6 w-[3.75rem] ${
-        startAtom ? " bg-start-clicked" : " bg-start-default"
-      } bg-cover`}
+      className={`h-[3.6vh] aspect-[118/48] ${
+        startAtom ? "bg-start-clicked" : "bg-start-default"
+      } bg-cover bg-no-repeat`}
       onClick={() => setStartAtom(!startAtom)}
     >
       {startAtom && <StartMenu />}

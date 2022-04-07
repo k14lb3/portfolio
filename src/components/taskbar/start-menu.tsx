@@ -61,7 +61,7 @@ export const StartMenu: FC = () => {
 
   return (
     <div
-      className="absolute bottom-[84%] flex flex-col items-end h-[10.6875rem] w-[11.0625rem] bg-start-menu bg-cover pt-1 pr-0.5"
+      className="absolute bottom-[84%] flex flex-col items-end h-[25.639vh] aspect-[59/57] bg-start-menu bg-cover pt-[0.5997vh] pr-[0.2999vh]"
       onClick={(e) => e.stopPropagation()}
     >
       {options.map(({ index, filename }) => {
@@ -71,8 +71,8 @@ export const StartMenu: FC = () => {
               optionsRef.current[index - 1] = el as HTMLDivElement;
             }}
             key={filename}
-            className={`h-10 w-[9.3125rem] ${
-              index === 3 ? "mb-0.5": "mb-[0.0625rem]"
+            className={`h-[5.999vh] aspect-[298/80] ${
+              index === 3 ? "mb-[0.2999vh]" : "mb-[0.15vh]"
             }`}
             onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
             onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
@@ -82,6 +82,7 @@ export const StartMenu: FC = () => {
             }}
           >
             <img
+              className="h-full"
               src={
                 startMenuOptionHighlightAtom === index
                   ? `/static/images/taskbar/start/menu/options/hover/${filename}.png`

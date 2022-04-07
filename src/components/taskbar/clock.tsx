@@ -18,8 +18,8 @@ export const Clock: FC = () => {
   }, []);
 
   return (
-    <div className="h-6 w-[4.25rem] bg-taskbar-clock bg-no-repeat bg-cover text-center select-none">
-      <time className="text-xs">{time}</time>
+    <div className="flex justify-center items-center h-[3.6vh] aspect-[17/6] bg-taskbar-clock bg-cover bg-no-repeat select-none">
+      <time className="text-[1.75vh]">{time}</time>
     </div>
   );
 };
