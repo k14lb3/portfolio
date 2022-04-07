@@ -73,7 +73,7 @@ export const StartMenu: FC = () => {
             key={filename}
             className={`h-[5.999vh] aspect-[298/80] ${
               index === 3 ? "mb-[0.2999vh]" : "mb-[0.15vh]"
-            }`}
+            } select-none`}
             onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
             onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
             onClick={() => {

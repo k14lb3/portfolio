@@ -64,7 +64,7 @@ export const Icons: FC = () => {
                 iconsRef.current[index - 1] = el as HTMLDivElement;
               }}
               key={filename}
-              className="h-[9.446vh] mb-[2.3988vh]"
+              className="h-[9.446vh] mb-[2.3988vh] select-none"
               onClick={() => setDesktopIconHighlightAtom(index)}
               onDoubleClick={() => {
                 iconsEvent[index - 1]();
