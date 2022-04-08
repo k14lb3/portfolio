@@ -4,7 +4,15 @@
 
 @font-face {
   font-family: "Microsoft Sans Serif";
+  font-weight: normal;
   src: url("/static/fonts/mss.woff2") format("woff2");
+  -webkit-font-smoothing: none;
+}
+
+@font-face {
+  font-family: "Microsoft Sans Serif";
+  font-weight: bold;
+  src: url("/static/fonts/mss-bold.woff2") format("woff2");
   -webkit-font-smoothing: none;
 }
 
