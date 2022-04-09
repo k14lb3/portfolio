@@ -19,7 +19,7 @@ export const Clock: FC = () => {
 
   return (
     <div className="flex justify-center items-center h-[3.6vh] aspect-[17/6] bg-taskbar-clock bg-cover bg-no-repeat select-none">
-      <time className="text-[1.75vh]">{time}</time>
+      <time className="text-[1.5vh]">{time}</time>
     </div>
   );
 };
