@@ -10,25 +10,32 @@ import {
 
 interface Option {
   index: number;
-  filename: string;
+  src: string;
+  label: string;
+  nested?: boolean;
 }
 
 export const options: Option[] = [
   {
     index: 1,
-    filename: "programs",
+    src: "/static/images/taskbar/start/menu/programs.png",
+    label: "Programs",
+    nested: true,
   },
   {
     index: 2,
-    filename: "contact",
+    src: "/static/images/taskbar/start/menu/contact.png",
+    label: "Contact",
   },
   {
     index: 3,
-    filename: "about",
+    src: "/static/images/taskbar/start/menu/about.png",
+    label: "About",
   },
   {
     index: 4,
-    filename: "shut-down",
+    src: "/static/images/taskbar/start/menu/shut-down.png",
+    label: "Shut Down",
   },
 ];
 
@@ -61,38 +68,79 @@ export const StartMenu: FC = () => {
 
   return (
     <div
-      className="absolute bottom-[84%] flex flex-col items-end h-[25.639vh] aspect-[59/57] bg-start-menu bg-cover pt-[0.5997vh] pr-[0.2999vh]"
+      className="absolute bottom-[84%] bg-[#C0C0C0] border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF]"
       onClick={(e) => e.stopPropagation()}
     >
-      {options.map(({ index, filename }) => {
-        return (
-          <div
-            ref={(el) => {
-              optionsRef.current[index - 1] = el as HTMLDivElement;
-            }}
-            key={filename}
-            className={`h-[5.999vh] aspect-[298/80] ${
-              index === 3 ? "mb-[0.2999vh]" : "mb-[0.15vh]"
-            } select-none`}
-            onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
-            onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
-            onClick={() => {
-              optionsEvent[index - 1]();
-              setStartAtom(false);
-            }}
-          >
-            <img
-              className="h-full"
-              src={
-                startMenuOptionHighlightAtom === index
-                  ? `/static/images/taskbar/start/menu/options/hover/${filename}.png`
-                  : `/static/images/taskbar/start/menu/options/${filename}.png`
-              }
-              alt={filename}
-            />
+      <div className="flex border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
+        <div className="flex bg-[#DFDFDF] p-[0.1522vh]">
+          <div className="relative h-full w-[3.198vh] bg-[#808080]">
+            <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 -rotate-90 text-white font-bold text-[2.25vh] whitespace-nowrap">
+              hello world :3
+            </div>
           </div>
-        );
-      })}
+          <div className="flex-col">
+            {options.map(({ index, src, label, nested }) => {
+              return (
+                <>
+                  {label === "Shut Down" && (
+                    <div className="relative mt-[0.3044vh] mb-[0.761vh] border-solid border-[0.1vh] border-t-[#808080] border-b-white  " />
+                  )}
+                  <div
+                    ref={(el) => {
+                      optionsRef.current[index - 1] = el as HTMLDivElement;
+                    }}
+                    key={src}
+                    className={`flex h-[4.873vh] aspect-[274/64] items-center${
+                      startMenuOptionHighlightAtom === index
+                        ? " bg-[#000180]"
+                        : ""
+                    }`}
+                    onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
+                    onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
+                    onClick={() => {
+                      optionsEvent[index - 1]();
+                      setStartAtom(false);
+                    }}
+                  >
+                    <div className="h-[3.655vh] aspect-[1/1] mx-[1.522vh] pointer-events-none">
+                      <img className="h-full" src={src} alt={label} />
+                    </div>
+                    <div
+                      className={`text-[2.1vh]${
+                        startMenuOptionHighlightAtom === index
+                          ? " text-white"
+                          : ""
+                      } pointer-events-none`}
+                    >
+                      <span className="underline">{label[0]}</span>
+                      {label.slice(1)}
+                    </div>
+                    {nested && (
+                      <div className="w-full pointer-events-none">
+                        <div
+                          style={{
+                            maskImage: `url(/static/images/taskbar/start/menu/arrow.png)`,
+                            WebkitMaskImage: `url(/static/images/taskbar/start/menu/arrow.png)`,
+                            maskRepeat: "no-repeat",
+                            WebkitMaskRepeat: "no-repeat",
+                            maskSize: "auto 1.067h",
+                            WebkitMaskSize: "auto 1.067vh",
+                          }}
+                          className={`h-[1.067vh] aspect-[8/14] ml-auto mr-[0.9132vh] ${
+                            startMenuOptionHighlightAtom === index
+                              ? "bg-white"
+                              : "bg-black"
+                          } pointer-events-none`}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
