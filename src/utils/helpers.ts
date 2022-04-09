@@ -76,6 +76,9 @@ export const keydownDefaultHandler = (
   startMenuOptionHighlightAtom: number,
   setStartMenuOptionHighlightAtom: SetterOrUpdater<number>
 ): void => {
+  
+  key = key.toLowerCase()
+
   if (startAtom) {
     let keyIndex: number = 0;
 
@@ -93,9 +96,9 @@ export const keydownDefaultHandler = (
   } else {
     let keyIndex: number = 0;
 
-    const shortcutKeys = icons.map(({ index, filename }) => ({
+    const shortcutKeys = icons.map(({ index, label }) => ({
       index: index,
-      key: filename[0],
+      key: label[0].toLowerCase(),
     }));
 
     const shortcutKey = shortcutKeys.filter(
