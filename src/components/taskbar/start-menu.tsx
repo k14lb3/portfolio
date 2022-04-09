@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, Fragment, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
@@ -81,7 +81,7 @@ export const StartMenu: FC = () => {
           <div className="flex-col">
             {options.map(({ index, src, label, nested }) => {
               return (
-                <>
+                <Fragment key={src}>
                   {label === "Shut Down" && (
                     <div className="relative mt-[0.3044vh] mb-[0.761vh] border-solid border-[0.1vh] border-t-[#808080] border-b-white  " />
                   )}
@@ -89,7 +89,6 @@ export const StartMenu: FC = () => {
                     ref={(el) => {
                       optionsRef.current[index - 1] = el as HTMLDivElement;
                     }}
-                    key={src}
                     className={`flex h-[4.873vh] aspect-[274/64] items-center${
                       startMenuOptionHighlightAtom === index
                         ? " bg-[#000180]"
@@ -137,7 +136,7 @@ export const StartMenu: FC = () => {
                       </div>
                     )}
                   </div>
-                </>
+                </Fragment>
               );
             })}
           </div>
