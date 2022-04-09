@@ -18,23 +18,23 @@ interface Option {
 export const options: Option[] = [
   {
     index: 1,
-    src: "/static/images/start/menu/programs.png",
+    src: "/static/images/start/menu/options/programs.png",
     label: "Programs",
     nested: true,
   },
   {
     index: 2,
-    src: "/static/images/start/menu/contact.png",
+    src: "/static/images/start/menu/options/contact.png",
     label: "Contact",
   },
   {
     index: 3,
-    src: "/static/images/start/menu/about.png",
+    src: "/static/images/start/menu/options/about.png",
     label: "About",
   },
   {
     index: 4,
-    src: "/static/images/start/menu/shut-down.png",
+    src: "/static/images/start/menu/options/shut-down.png",
     label: "Shut Down",
   },
 ];
@@ -119,8 +119,10 @@ export const StartMenu: FC = () => {
                       <div className="w-full pointer-events-none">
                         <div
                           style={{
-                            maskImage: `url(/static/images/taskbar/start/menu/arrow.png)`,
-                            WebkitMaskImage: `url(/static/images/taskbar/start/menu/arrow.png)`,
+                            maskImage:
+                              "url(/static/images/start/menu/arrow.png)",
+                            WebkitMaskImage:
+                              "url(/static/images/start/menu/arrow.png)",
                             maskRepeat: "no-repeat",
                             WebkitMaskRepeat: "no-repeat",
                             maskSize: "auto 1.067h",
