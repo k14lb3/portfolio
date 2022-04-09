@@ -30,6 +30,9 @@
 
 * {
   image-rendering: pixelated;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
 }
 
 #__next {
