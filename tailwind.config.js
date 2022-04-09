@@ -18,11 +18,9 @@ module.exports = {
         mss: ["Microsoft Sans Serif", ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
-        "taskbar-base": "url(/static/images/taskbar/base.png)",
-        "taskbar-clock": "url(/static/images/taskbar/clock.png)",
-        "start-default": "url(/static/images/taskbar/start/default.png)",
-        "start-clicked": "url(/static/images/taskbar/start/clicked.png)",
-        "start-menu": "url(/static/images/taskbar/start/menu/base.png)",
+        "start-default": "url(/static/images/start/default.png)",
+        "start-clicked": "url(/static/images/start/clicked.png)",
+        "start-menu": "url(/static/images/start/menu/base.png)",
       },
       keyframes: {
         blink: {

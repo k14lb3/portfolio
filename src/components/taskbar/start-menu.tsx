@@ -18,23 +18,23 @@ interface Option {
 export const options: Option[] = [
   {
     index: 1,
-    src: "/static/images/taskbar/start/menu/programs.png",
+    src: "/static/images/start/menu/programs.png",
     label: "Programs",
     nested: true,
   },
   {
     index: 2,
-    src: "/static/images/taskbar/start/menu/contact.png",
+    src: "/static/images/start/menu/contact.png",
     label: "Contact",
   },
   {
     index: 3,
-    src: "/static/images/taskbar/start/menu/about.png",
+    src: "/static/images/start/menu/about.png",
     label: "About",
   },
   {
     index: 4,
-    src: "/static/images/taskbar/start/menu/shut-down.png",
+    src: "/static/images/start/menu/shut-down.png",
     label: "Shut Down",
   },
 ];
