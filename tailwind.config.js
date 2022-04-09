@@ -20,7 +20,6 @@ module.exports = {
       backgroundImage: {
         "start-default": "url(/static/images/start/default.png)",
         "start-clicked": "url(/static/images/start/clicked.png)",
-        "start-menu": "url(/static/images/start/menu/base.png)",
       },
       keyframes: {
         blink: {
