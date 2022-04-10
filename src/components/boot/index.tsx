@@ -50,7 +50,7 @@ const Boot: FC = () => {
           </code>
         )
       ) : (
-        <Image src="/static/images/boot.png" layout="fill" objectFit="cover" />
+        <Image priority src="/static/images/boot.png" layout="fill" objectFit="cover" />
       )}
     </div>
   );
