@@ -1,14 +1,28 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useLayoutEffect, useEffect, useState } from "react";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
+import Typewriter from "typewriter-effect";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { generateRandomNumber } from "@/utils/helpers";
 import { bootState } from "@/recoil/atoms";
 
 const Boot: FC = () => {
+  const { width, height } = useWindowDimensions();
   const setBootAtom = useSetRecoilState(bootState);
+  const [aspectRatio, setAspectRatio] = useState<boolean>(false);
   const [cli, setCli] = useState<boolean>(false);
   const [cursor, setCursor] = useState<string>(" cursor-default");
   const [bgColor, setBgcolor] = useState<string>("bg-black");
+
+  useLayoutEffect(() => {
+    if (width) {
+      if (width / height! >= 1.6) {
+        setAspectRatio(true);
+      } else {
+        setAspectRatio(false);
+      }
+    }
+  }, [width]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,12 +49,13 @@ const Boot: FC = () => {
           }, generateRandomNumber(1000, 2000));
         }, generateRandomNumber(1000, 2000));
       }, generateRandomNumber(1000, 2000));
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
     <div
-      className={`fixed inset-0 h-full aspect-[8/5] ${bgColor} pt-[4vh] px-[2vh] m-auto`}
+      style={{ aspectRatio: aspectRatio ? "8/5" : "auto" }}
+      className={`fixed inset-0 h-full ${bgColor} pt-[4vh] px-[2vh] m-auto`}
     >
       <div className={`fixed inset-0${cursor}`} />
       {cli ? (
@@ -49,8 +64,24 @@ const Boot: FC = () => {
             _
           </code>
         )
+      ) : aspectRatio ? (
+        <Image
+          priority
+          src="/static/images/boot.png"
+          layout="fill"
+          objectFit="cover"
+        />
       ) : (
-        <Image priority src="/static/images/boot.png" layout="fill" objectFit="cover" />
+        <code className="block text-white text-[2.5vh] font-bold">
+          <Typewriter
+            options={{
+              strings: ["Windows 95"],
+              autoStart: true,
+              cursor: "_",
+              cursorClassName: "animate-blink",
+            }}
+          />
+        </code>
       )}
     </div>
   );
