@@ -61,7 +61,7 @@ export const Icons: FC = () => {
   return (
     <>
       <a ref={resumeRef} href="/static/karlivan-alberto_resume.pdf" download />
-      <div className="w-fit ml-[1.3493vh]" onClick={() => setStartAtom(false)}>
+      <div className="w-fit ml-[1.1994vh]" onClick={() => setStartAtom(false)}>
         {icons.map(({ index, src, label }) => {
           return (
             <div
@@ -76,7 +76,7 @@ export const Icons: FC = () => {
                 setDesktopIconHighlightAtom(0);
               }}
             >
-              <div className="relative h-[4.873vh] aspect-[1/1] mb-[0.8996vh]">
+              <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
                 <img className="h-full mx-auto" src={src} alt={label} />
                 {desktopIconHighlightAtom === index && (
                   <div
@@ -85,8 +85,8 @@ export const Icons: FC = () => {
                       WebkitMaskImage: `url(${src})`,
                       maskRepeat: "no-repeat",
                       WebkitMaskRepeat: "no-repeat",
-                      maskSize: "4.873vh",
-                      WebkitMaskSize: "4.873vh",
+                      maskSize: "4.799vh",
+                      WebkitMaskSize: "4.799vh",
                     }}
                     className="absolute inset-0 aspect-square bg-[#000180] opacity-70 "
                   />
