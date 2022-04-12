@@ -93,8 +93,10 @@ export const Icons: FC = () => {
                 )}
               </div>
               <div
-                className={`relative px-[0.6656vh] text-[2.1vh] text-white${
-                  desktopIconHighlightAtom === index ? " bg-[#000180]" : ""
+                className={`relative px-[0.6656vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
+                  desktopIconHighlightAtom === index
+                    ? " bg-[#000180] border-[#ffff7f] "
+                    : "  border-[transparent]"
                 }`}
               >
                 {label}
