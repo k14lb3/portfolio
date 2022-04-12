@@ -69,7 +69,7 @@ export const Icons: FC = () => {
                 iconsRef.current[index - 1] = el as HTMLDivElement;
               }}
               key={src}
-              className="flex flex-col items-center mb-[2.3988vh]"
+              className="relative flex flex-col items-center mb-[2.3988vh]"
               onClick={() => setDesktopIconHighlightAtom(index)}
               onDoubleClick={() => {
                 iconsEvent[index - 1]();
@@ -93,7 +93,7 @@ export const Icons: FC = () => {
                 )}
               </div>
               <div
-                className={`relative px-[0.2999vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
+                className={`px-[0.2999vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
                   desktopIconHighlightAtom === index
                     ? " bg-[#000180] border-[#ffff7f] "
                     : " bg-[#008080] border-[transparent]"
