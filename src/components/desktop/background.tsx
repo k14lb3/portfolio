@@ -18,7 +18,7 @@ export const Background: FC = ({ children }) => {
   return (
     <div
       style={{ aspectRatio: aspectRatio ? "8/5" : "auto" }}
-      className="relative h-full bg-[#008081] pt-[2vh] pb-12 mx-auto"
+      className="relative h-full bg-[#008080] pt-[1.1994vh] pb-[4.4978vh] mx-auto"
     >
       {children}
     </div>
