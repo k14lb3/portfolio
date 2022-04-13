@@ -1,9 +1,11 @@
 import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
 
+export type TitleBarButton = { visible: false } | { visible: true; disabled: boolean };
+
 interface Props {
   title?: string;
-  minimize?: { visible: false } | { visible: true; disabled: boolean };
-  maximize?: { visible: false } | { visible: true; disabled: boolean };
+  minimize?: TitleBarButton;
+  maximize?: TitleBarButton;
 }
 
 const minimizeIcon = (
