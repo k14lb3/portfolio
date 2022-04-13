@@ -19,7 +19,10 @@ const Desktop: NextPage = () => {
           setStartAtom(false);
         }}
       />
-      <Icons />
+      <div className="w-fit ml-[1.1994vh]" onClick={() => setStartAtom(false)}>
+        <Icons />
+      </div>
+
       <Taskbar />
     </Background>
   );
