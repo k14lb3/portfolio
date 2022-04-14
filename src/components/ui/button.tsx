@@ -13,13 +13,13 @@ export const Button: FC<
 > = ({ size, className, children, ...rest }) => {
   return (
     <button
-      className={`group block${
+      className={`group h-[3.45vh] block${
         size === "default"
           ? " aspect-[150/46] "
           : size === "large"
           ? " aspect-[210/46] "
           : ""
-      }h-[3.45vh] border-solid border-[0.1vh] border-black border-t-white border-l-white focus:border-black active:border-black outline-none${
+      }border-solid border-[0.1vh] border-black border-t-white border-l-white focus:border-black active:border-black outline-none${
         className ? ` ${className}` : ""
       }`}
       {...rest}
