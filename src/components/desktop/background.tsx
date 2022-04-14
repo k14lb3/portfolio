@@ -1,5 +1,5 @@
 import { FC, useState, useLayoutEffect } from "react";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { useWindowDimensions } from "@/hooks";
 
 export const Background: FC = ({ children }) => {
   const { width, height } = useWindowDimensions();

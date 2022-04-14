@@ -2,7 +2,7 @@ import { FC, useLayoutEffect, useEffect, useState } from "react";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import Typewriter from "typewriter-effect";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { useWindowDimensions } from "@/hooks";
 import { generateRandomNumber } from "@/utils/helpers";
 import { bootState } from "@/recoil/atoms";
 
