@@ -32,18 +32,21 @@ const Root: FC = ({ children }) => {
     useRecoilState(startMenuOptionHighlightState);
   const [launching, setLaunching] = useState<boolean>(false);
 
-  const launchStartupWindows = () =>
-    setWindowsAtom((oldWindowsAtom) => [..._.cloneDeep(oldWindowsAtom), About]);
-
   useEffect(() => {
     if (bootAtom) {
       setLaunching(true);
-      setTimeout(() => {
-        launchStartupWindows();
+
+      const launchStartupWindows = setTimeout(() => {
+        setWindowsAtom((oldWindowsAtom) => [
+          ..._.cloneDeep(oldWindowsAtom),
+          About,
+        ]);
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
+
+      return () => clearTimeout(launchStartupWindows);
     }
-  }, [bootAtom]);
+  }, []);
 
   useEffect(() => {
     const keydownEvents = (e: KeyboardEvent) => {
