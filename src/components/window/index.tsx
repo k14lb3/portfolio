@@ -6,48 +6,95 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useSetRecoilState } from "recoil";
-import { startState } from "@/recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import _ from "lodash";
+import { startState, windowsRefState, windowsState } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
 import { TitleBar, TitleBarButton } from "./title-bar";
-
-interface Props {
-  title?: string;
-  minimize?: TitleBarButton;
-  maximize?: TitleBarButton;
-  type?: "explorer" | "properties";
-}
 
 interface Coordinates {
   x: number;
   y: number;
 }
 
+export interface WindowProps {
+  title?: string;
+  minimize?: TitleBarButton;
+  maximize?: TitleBarButton;
+  type?: "explorer" | "properties";
+  initPos?: Coordinates;
+}
+
 const Window: FC<
-  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & Props
-> = ({ title, minimize, maximize, type, className, children }) => {
-  const { height: screenHeight } = useWindowDimensions();
-  const parentRef = useRef<HTMLDivElement>(null);
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
+    WindowProps
+> = ({ title, minimize, maximize, type, className, children, ...rest }) => {
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const mousePos = useMousePosition();
+  const parentRef = useRef<HTMLDivElement>(null);
   const setStartAtom = useSetRecoilState(startState);
-  const [initPos, setInitPos] = useState<Coordinates>({ x: 0, y: 0 });
-  const [windowPos, setWindowPos] = useState<Coordinates>({ x: 0, y: 0 });
+  const setWindowsAtom = useSetRecoilState(windowsState);
+  const [windowsRefAtom, setWindowsRefAtom] = useRecoilState(windowsRefState);
+  const [windowPos, setWindowPos] = useState<Coordinates>({
+    x: -9999,
+    y: -9999,
+  });
+  const [positioned, setPositioned] = useState<boolean>(false);
+  const [initDragPos, setInitDragPos] = useState<Coordinates>({ x: 0, y: 0 });
   const [draggerPos, setDraggerPos] = useState<Coordinates>({ x: 0, y: 0 });
   const [drag, setDrag] = useState<boolean>(false);
 
   useEffect(() => {
+    if (parentRef.current) {
+      const ref = _.cloneDeep(parentRef).current as HTMLDivElement;
+
+      setWindowsRefAtom((oldWindowsRefAtom) => [...oldWindowsRefAtom, ref]);
+
+      return () =>
+        setWindowsRefAtom((oldWindowsRefAtom) =>
+          oldWindowsRefAtom.filter((window) => !_.isEqual(window, ref))
+        );
+    }
+  }, [parentRef]);
+
+  useEffect(() => {
+    if (parentRef && screenHeight) {
+      const screenWidthRatioed = screenHeight! * 1.6;
+
+      const small = screenWidth! <= screenWidthRatioed;
+
+      const pos = {
+        x: convertPxToVh(
+          (small ? screenWidth : screenWidthRatioed)! / 2 -
+            parentRef.current!.clientWidth / 2,
+          screenHeight!
+        ),
+        y:
+          convertPxToVh(
+            screenHeight! / 2 - parentRef.current!.clientHeight / 2,
+            screenHeight!
+          ) - 4.5,
+      };
+
+      setWindowPos(pos);
+      setDraggerPos(pos);
+      setPositioned(true);
+    }
+  }, [parentRef, screenHeight]);
+
+  useEffect(() => {
     if (drag) {
       setDraggerPos({
-        x: convertPxToVh(mousePos.x, screenHeight!) - initPos.x,
-        y: convertPxToVh(mousePos.y, screenHeight!) - initPos.y,
+        x: convertPxToVh(mousePos.x, screenHeight!) - initDragPos.x,
+        y: convertPxToVh(mousePos.y, screenHeight!) - initDragPos.y,
       });
     }
   }, [mousePos]);
 
   const handleMouseDown = () => {
-    setInitPos({
+    setInitDragPos({
       x: convertPxToVh(
         mousePos.x - parentRef.current!.offsetLeft,
         screenHeight!
@@ -67,15 +114,25 @@ const Window: FC<
     setWindowPos(draggerPos);
   };
 
+  const closeWindow = () => {
+    setWindowsAtom((oldWindowsAtom) =>
+      oldWindowsAtom.filter((window) => window.name !== title)
+    );
+  };
+
   return (
     <>
       <div
         ref={parentRef}
-        style={{ top: `${windowPos.y}vh`, left: `${windowPos.x}vh` }}
+        style={{
+          top: `${windowPos.y}vh`,
+          left: `${windowPos.x}vh`,
+        }}
         className={`absolute flex border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF] ${
-          className ? ` ${className}` : ""
-        }`}
+          positioned ? "" : "invisible"
+        }${className ? ` ${className}` : ""}`}
         onMouseDown={() => setStartAtom(false)}
+        {...rest}
       >
         <div className="h-full w-full border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
           <div
@@ -104,9 +161,10 @@ const Window: FC<
                     {children}
                   </div>
                 </div>
-                <div className="flex justify-end space-x-[0.5997vh] ml-auto">
-                  <Button autoFocus>OK</Button>
-                  <Button>Cancel</Button>
+                <div className="ml-auto">
+                  <Button autoFocus onClick={closeWindow}>
+                    OK
+                  </Button>
                 </div>
               </div>
             )}

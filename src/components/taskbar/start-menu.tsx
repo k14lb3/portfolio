@@ -6,7 +6,9 @@ import {
   startState,
   startMenuOptionsRefState,
   startMenuOptionHighlightState,
+  windowsState,
 } from "@/recoil/atoms";
+import About from "@/components/about";
 
 interface Option {
   index: number;
@@ -48,11 +50,21 @@ export const StartMenu: FC = () => {
   const setStartAtom = useSetRecoilState(startState);
   const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
     useRecoilState(startMenuOptionHighlightState);
+  const setWindowsAtom = useSetRecoilState(windowsState);
 
   const optionsEvent = [
     () => {},
     () => {},
-    () => {},
+    () =>
+      setWindowsAtom((oldWindowsAtom) => {
+        const windows = _.cloneDeep(oldWindowsAtom);
+
+        const found = windows.find((window) => window.name === About.name);
+
+        if (found) return [...oldWindowsAtom];
+
+        return [...windows, About];
+      }),
     () => {
       window.close();
       router.push("https://www.linkedin.com/in/karlivanalberto/");

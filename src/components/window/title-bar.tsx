@@ -1,4 +1,11 @@
-import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
+import {
+  FC,
+  DetailedHTMLProps,
+  HTMLAttributes,
+  ButtonHTMLAttributes,
+} from "react";
+import { useSetRecoilState } from "recoil";
+import { windowsState } from "@/recoil/atoms";
 
 export type TitleBarButton =
   | { visible: false }
@@ -68,7 +75,12 @@ const closeIcon = (
   </div>
 );
 
-const Button = ({ logo }: { logo: JSX.Element }) => {
+const Button: FC<
+  DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > & { logo: JSX.Element }
+> = ({ logo, ...rest }) => {
   return (
     <button
       tabIndex={-1}
@@ -77,6 +89,7 @@ const Button = ({ logo }: { logo: JSX.Element }) => {
 					border-black border-t-white border-l-white 
 					active:border-white active:border-t-black 
 					active:border-l-black"
+      {...rest}
     >
       <div
         className="h-full border-solid border-[0.1vh]
@@ -108,6 +121,14 @@ export const TitleBar: FC<
   children,
   ...rest
 }) => {
+  const setWindowsAtom = useSetRecoilState(windowsState);
+
+  const closeWindow = () => {
+    setWindowsAtom((oldWindowsAtom) =>
+      oldWindowsAtom.filter((window) => window.name !== title)
+    );
+  };
+
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full bg-[#000080] px-[0.2999vh] ${
@@ -133,7 +154,7 @@ export const TitleBar: FC<
               : ""
           }
         >
-          <Button logo={closeIcon} />
+          <Button logo={closeIcon} onClick={closeWindow} />
         </div>
       </div>
     </div>

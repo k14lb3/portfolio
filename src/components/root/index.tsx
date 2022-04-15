@@ -1,13 +1,16 @@
-import { FC, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { FC, useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import _ from "lodash";
 import {
   arrowUpHandler,
   arrowDownHandler,
   keydownEnterHandler,
   keydownDefaultHandler,
+  generateRandomNumber,
 } from "@/utils/helpers";
 import {
   bootState,
+  windowsState,
   desktopIconsRefState,
   desktopIconHighlightState,
   startState,
@@ -15,9 +18,11 @@ import {
   startMenuOptionHighlightState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
+import About from "@/components/about";
 
 const Root: FC = ({ children }) => {
   const bootAtom = useRecoilValue(bootState);
+  const setWindowsAtom = useSetRecoilState(windowsState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
@@ -25,6 +30,20 @@ const Root: FC = ({ children }) => {
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
   const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
     useRecoilState(startMenuOptionHighlightState);
+  const [launching, setLaunching] = useState<boolean>(false);
+
+  const launchStartupWindows = () =>
+    setWindowsAtom((oldWindowsAtom) => [..._.cloneDeep(oldWindowsAtom), About]);
+
+  useEffect(() => {
+    if (bootAtom) {
+      setLaunching(true);
+      setTimeout(() => {
+        launchStartupWindows();
+        setLaunching(false);
+      }, generateRandomNumber(1000, 2000));
+    }
+  }, [bootAtom]);
 
   useEffect(() => {
     const keydownEvents = (e: KeyboardEvent) => {
@@ -84,7 +103,14 @@ const Root: FC = ({ children }) => {
     }
   }, [startAtom]);
 
-  return bootAtom ? <>{children}</> : <Boot />;
+  return bootAtom ? (
+    <>
+      {children}
+      {launching && <div className="fixed inset-0 cursor-wait" />}
+    </>
+  ) : (
+    <Boot />
+  );
 };
 
 export default Root;

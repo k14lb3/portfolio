@@ -1,8 +1,23 @@
+import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
 import { atom } from "recoil";
+import { WindowProps } from "@/components/window";
 
 export const bootState = atom({
   key: "bootState",
   default: false as boolean,
+});
+
+export const windowsState = atom({
+  key: "windowsState",
+  default: [] as FC<
+    DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
+      WindowProps
+  >[],
+});
+
+export const windowsRefState = atom({
+  key: "windowsRefState",
+  default: [] as HTMLDivElement[],
 });
 
 export const desktopIconsRefState = atom({

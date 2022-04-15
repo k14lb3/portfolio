@@ -17,7 +17,7 @@ const About: FC<
     >
       <div className="grid grid-cols-2 p-[2.9985vh]">
         <div className="relative h-[17.993vh] aspect-square rounded-full overflow-hidden">
-          <Image src="/static/images/me.jpg" layout="fill" />
+          <Image priority src="/static/images/me.jpg" layout="fill" />
         </div>
         <div className="flex flex-col space-y-[2.3988vh] text-[2vh]">
           <div>

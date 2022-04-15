@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useSetRecoilState } from "recoil";
 import { desktopIconHighlightState, startState } from "@/recoil/atoms";
-import { Background, Icons } from "@/components/desktop";
+import { Background, Icons, Windows } from "@/components/desktop";
 import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
@@ -22,7 +22,7 @@ const Desktop: NextPage = () => {
       <div className="w-fit ml-[1.1994vh]" onClick={() => setStartAtom(false)}>
         <Icons />
       </div>
-
+      <Windows />
       <Taskbar />
     </Background>
   );
