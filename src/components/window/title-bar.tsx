@@ -1,6 +1,8 @@
 import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
 
-export type TitleBarButton = { visible: false } | { visible: true; disabled: boolean };
+export type TitleBarButton =
+  | { visible: false }
+  | { visible: true; disabled: boolean };
 
 interface Props {
   title?: string;
@@ -96,16 +98,32 @@ const Button = ({ logo }: { logo: JSX.Element }) => {
 
 export const TitleBar: FC<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & Props
-> = ({ title, minimize, maximize, className, children, ...rest }) => {
+> = ({
+  title,
+  minimize,
+  maximize,
+  className,
+  onMouseDown,
+  onMouseUp,
+  children,
+  ...rest
+}) => {
   return (
     <div
-      className={`relative flex justify-between items-center space-x-[2.3988vh] h-[2.7vh] w-full bg-[#000080] px-[0.2999vh] ${
+      className={`relative flex justify-between items-center h-[2.7vh] w-full bg-[#000080] px-[0.2999vh] ${
         className ? ` ${className}` : ""
       }`}
       {...rest}
     >
-      <div className="text-white font-bold text-[1.75vh]">{title}</div>
-      <div className="flex">
+      <div
+        className="absolute inset-0"
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      />
+      <div className="relative mr-[2.3988vh] text-white font-bold text-[1.75vh]">
+        {title}
+      </div>
+      <div className="relative flex">
         {minimize && minimize.visible && <Button logo={minimizeIcon} />}
         {maximize && maximize.visible && <Button logo={maximizeIcon} />}
         <div
