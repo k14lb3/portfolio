@@ -22,8 +22,8 @@ const About: FC<
         <div className="flex flex-col space-y-[2.3988vh] text-[2vh]">
           <div>
             <p className="text-justify">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hi, I'm a Software Developer based
-              in the Philippines.
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hi, I&apos;m a Software Developer
+              based in the Philippines.
             </p>
           </div>
           <div>
