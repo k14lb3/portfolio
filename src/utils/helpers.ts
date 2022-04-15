@@ -7,8 +7,8 @@ export const generateRandomNumber = (
   max: number = 1
 ): number => Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const convertPxToVh = (px: number, windowHeight: number) =>
-  px * (100 / windowHeight);
+export const convertPxToVh = (px: number, screenHeight: number) =>
+  px * (100 / screenHeight);
 
 export const arrowUpHandler = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
