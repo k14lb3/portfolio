@@ -46,7 +46,7 @@ const Root: FC = ({ children }) => {
 
       return () => clearTimeout(launchStartupWindows);
     }
-  }, []);
+  }, [bootAtom]);
 
   useEffect(() => {
     const keydownEvents = (e: KeyboardEvent) => {
