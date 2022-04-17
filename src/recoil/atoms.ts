@@ -1,4 +1,4 @@
-import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
+import { FC } from "react";
 import { atom } from "recoil";
 import { WindowProps } from "@/components/window";
 
@@ -9,10 +9,7 @@ export const bootState = atom({
 
 export const windowsState = atom({
   key: "windowsState",
-  default: [] as FC<
-    DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
-      WindowProps
-  >[],
+  default: [] as FC<WindowProps>[],
 });
 
 export const windowsRefState = atom({

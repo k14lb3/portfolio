@@ -1,11 +1,8 @@
-import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
+import { FC } from "react";
 import Image from "next/image";
 import Window, { WindowProps } from "@/components/window";
 
-const About: FC<
-  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
-    WindowProps
-> = ({ ...rest }) => {
+const About: FC<WindowProps> = ({ ...rest }) => {
   return (
     <Window
       className="h-[64.47vh] aspect-[205/214]"

@@ -19,7 +19,8 @@ interface Coordinates {
   y: number;
 }
 
-export interface WindowProps {
+export interface WindowProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title?: string;
   minimize?: TitleBarButton;
   maximize?: TitleBarButton;
@@ -27,10 +28,15 @@ export interface WindowProps {
   initPos?: Coordinates;
 }
 
-const Window: FC<
-  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
-    WindowProps
-> = ({ title, minimize, maximize, type, className, children, ...rest }) => {
+const Window: FC<WindowProps> = ({
+  title,
+  minimize,
+  maximize,
+  type,
+  className,
+  children,
+  ...rest
+}) => {
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const mousePos = useMousePosition();
   const parentRef = useRef<HTMLDivElement>(null);
