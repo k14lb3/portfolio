@@ -1,16 +1,19 @@
 import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 
-interface Props {
+interface ButtonProps
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   size?: "default" | "large";
 }
 
-export const Button: FC<
-  DetailedHTMLProps<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > &
-    Props
-> = ({ size, className, children, ...rest }) => {
+export const Button: FC<ButtonProps> = ({
+  size,
+  className,
+  children,
+  ...rest
+}) => {
   return (
     <button
       className={`group h-[3.45vh] block${

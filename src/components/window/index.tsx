@@ -12,7 +12,7 @@ import { startState, windowsRefState, windowsState } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
-import { TitleBar, TitleBarButton } from "./title-bar";
+import { TitleBar } from "./title-bar";
 
 interface Coordinates {
   x: number;
@@ -22,9 +22,9 @@ interface Coordinates {
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title?: string;
-  minimize?: TitleBarButton;
-  maximize?: TitleBarButton;
   type?: "explorer" | "properties";
+  minimize?: { visible: false } | { visible: true; disabled: boolean };
+  maximize?: { visible: false } | { visible: true; disabled: boolean };
   initPos?: Coordinates;
 }
 

@@ -1,21 +1,7 @@
-import {
-  FC,
-  DetailedHTMLProps,
-  HTMLAttributes,
-  ButtonHTMLAttributes,
-} from "react";
+import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 import { useSetRecoilState } from "recoil";
 import { windowsState } from "@/recoil/atoms";
-
-export type TitleBarButton =
-  | { visible: false }
-  | { visible: true; disabled: boolean };
-
-interface Props {
-  title?: string;
-  minimize?: TitleBarButton;
-  maximize?: TitleBarButton;
-}
+import { WindowProps } from ".";
 
 const minimizeIcon = (
   <div className="h-[0.3vh] aspect-[3/1] mt-auto mb-[0.15vh]">
@@ -109,9 +95,7 @@ const Button: FC<
   );
 };
 
-export const TitleBar: FC<
-  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & Props
-> = ({
+export const TitleBar: FC<WindowProps> = ({
   title,
   minimize,
   maximize,
@@ -166,3 +150,4 @@ TitleBar.defaultProps = {
   minimize: { visible: true, disabled: false },
   maximize: { visible: true, disabled: false },
 };
+Button;
