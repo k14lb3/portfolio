@@ -36,3 +36,21 @@ export const desktopIcons: Icon[] = [
     label: "Minecraft",
   },
 ];
+
+export const socialsIcons: Icon[] = [
+  {
+    index: 1,
+    src: "/static/images/icons/github.png",
+    label: "GitHub",
+  },
+  {
+    index: 2,
+    src: "/static/images/icons/linkedin.png",
+    label: "LinkedIn",
+  },
+  {
+    index: 3,
+    src: "/static/images/icons/twitter.png",
+    label: "Twitter",
+  },
+];
