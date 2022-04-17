@@ -8,16 +8,12 @@ import {
 } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
+import { Coordinates } from "@/utils/constants";
 import { startState, windowsRefState, windowsState } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
 import { TitleBar } from "./title-bar";
-
-interface Coordinates {
-  x: number;
-  y: number;
-}
 
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

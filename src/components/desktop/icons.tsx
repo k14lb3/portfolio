@@ -1,47 +1,17 @@
 import { FC, useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
+import { desktopIcons } from "@/utils/constants";
 import {
   desktopIconsRefState,
   desktopIconHighlightState,
-  startState,
 } from "@/recoil/atoms";
-
-interface Icon {
-  index: number;
-  src: string;
-  label: string;
-}
-
-export const icons: Icon[] = [
-  {
-    index: 1,
-    src: "/static/images/icons/recycle-bin.png",
-    label: "Recycle Bin",
-  },
-  {
-    index: 2,
-    src: "/static/images/icons/projects.png",
-    label: "Projects",
-  },
-  {
-    index: 3,
-    src: "/static/images/icons/resume.png",
-    label: "Resume",
-  },
-  {
-    index: 4,
-    src: "/static/images/icons/minecraft.png",
-    label: "Minecraft",
-  },
-];
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
-  const setStartAtom = useSetRecoilState(startState);
   const resumeRef = useRef<HTMLAnchorElement | null>(null);
 
   const iconsEvent: VoidFunction[] = [
@@ -61,7 +31,7 @@ export const Icons: FC = () => {
   return (
     <>
       <a ref={resumeRef} href="/static/karlivan-alberto_resume.pdf" download />
-      {icons.map(({ index, src, label }) => {
+      {desktopIcons.map(({ index, src, label }) => {
         return (
           <div
             ref={(el) => {

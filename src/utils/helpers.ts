@@ -1,6 +1,6 @@
 import { SetterOrUpdater } from "recoil";
 import { options } from "@/components/taskbar/start-menu";
-import { icons } from "@/components/desktop/icons";
+import { desktopIcons } from "@/utils/constants";
 
 export const generateRandomNumber = (
   min: number = 0,
@@ -103,7 +103,7 @@ export const keydownDefaultHandler = (
   } else {
     let keyIndex: number = 0;
 
-    const shortcutKeys = icons.map(({ index, label }) => ({
+    const shortcutKeys = desktopIcons.map(({ index, label }) => ({
       index: index,
       key: label[0].toLowerCase(),
     }));
