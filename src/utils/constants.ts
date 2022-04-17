@@ -17,16 +17,21 @@ export const desktopIcons: Icon[] = [
   },
   {
     index: 2,
-    src: "/static/images/icons/projects.png",
+    src: "/static/images/icons/folder.png",
     label: "Projects",
   },
   {
     index: 3,
+    src: "/static/images/icons/folder.png",
+    label: "Socials",
+  },
+  {
+    index: 4,
     src: "/static/images/icons/resume.png",
     label: "Resume",
   },
   {
-    index: 4,
+    index: 5,
     src: "/static/images/icons/minecraft.png",
     label: "Minecraft",
   },

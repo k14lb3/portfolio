@@ -17,6 +17,7 @@ export const Icons: FC = () => {
   const iconsEvent: VoidFunction[] = [
     () => {},
     () => {},
+    () => {},
     () => resumeRef.current!.click(),
     () => {},
   ];
