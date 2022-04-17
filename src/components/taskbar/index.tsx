@@ -11,7 +11,7 @@ const Taskbar: FC = () => {
 
   return (
     <div
-      className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0]"
+      className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0] z-[999]"
       onClick={() => setDesktopIconHighlightAtom(0)}
     >
       <div className="bg-[#DFDFDF] h-[0.152vh] w-full" />
