@@ -7,6 +7,11 @@ export const bootState = atom({
   default: false as boolean,
 });
 
+export const focusedWindowState = atom({
+  key: "focusedWindow",
+  default: "" as string,
+});
+
 export const windowsState = atom({
   key: "windowsState",
   default: [] as FC<WindowProps>[],

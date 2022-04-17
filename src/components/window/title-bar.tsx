@@ -1,6 +1,6 @@
 import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
-import { useSetRecoilState } from "recoil";
-import { windowsState } from "@/recoil/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { focusedWindowState, windowsState } from "@/recoil/atoms";
 import { WindowProps } from ".";
 
 const minimizeIcon = (
@@ -95,10 +95,11 @@ const Button: FC<
   );
 };
 
-export const TitleBar: FC<WindowProps> = ({
+export const TitleBar: FC<WindowProps & { closeWindow?: () => void }> = ({
   title,
   minimize,
   maximize,
+  closeWindow,
   className,
   onMouseDown,
   onMouseUp,
@@ -106,18 +107,13 @@ export const TitleBar: FC<WindowProps> = ({
   ...rest
 }) => {
   const setWindowsAtom = useSetRecoilState(windowsState);
-
-  const closeWindow = () => {
-    setWindowsAtom((oldWindowsAtom) =>
-      oldWindowsAtom.filter((window) => window.name !== title)
-    );
-  };
+  const focusedWindowAtom = useRecoilValue(focusedWindowState);
 
   return (
     <div
-      className={`relative flex justify-between items-center h-[2.7vh] w-full bg-[#000080] px-[0.2999vh] ${
-        className ? ` ${className}` : ""
-      }`}
+      className={`relative flex justify-between items-center h-[2.7vh] w-full ${
+        focusedWindowAtom === title ? "bg-[#000080]" : "bg-[#808080]"
+      } px-[0.2999vh] ${className ? ` ${className}` : ""}`}
       {...rest}
     >
       <div

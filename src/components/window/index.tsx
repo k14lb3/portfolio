@@ -6,10 +6,15 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
-import { startState, windowsRefState, windowsState } from "@/recoil/atoms";
+import {
+  focusedWindowState,
+  startState,
+  windowsRefState,
+  windowsState,
+} from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
@@ -38,7 +43,8 @@ const Window: FC<WindowProps> = ({
   const parentRef = useRef<HTMLDivElement>(null);
   const setStartAtom = useSetRecoilState(startState);
   const setWindowsAtom = useSetRecoilState(windowsState);
-  const [windowsRefAtom, setWindowsRefAtom] = useRecoilState(windowsRefState);
+  const setWindowsRefAtom = useSetRecoilState(windowsRefState);
+  const setFocusedWindowAtom = useSetRecoilState(focusedWindowState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
     x: -9999,
     y: -9999,
@@ -47,6 +53,10 @@ const Window: FC<WindowProps> = ({
   const [initDragPos, setInitDragPos] = useState<Coordinates>({ x: 0, y: 0 });
   const [draggerPos, setDraggerPos] = useState<Coordinates>({ x: 0, y: 0 });
   const [drag, setDrag] = useState<boolean>(false);
+
+  useEffect(() => {
+    setFocusedWindowAtom(title!);
+  }, []);
 
   useEffect(() => {
     if (parentRef.current) {
@@ -120,6 +130,7 @@ const Window: FC<WindowProps> = ({
     setWindowsAtom((oldWindowsAtom) =>
       oldWindowsAtom.filter((window) => window.name !== title)
     );
+    setFocusedWindowAtom("");
   };
 
   return (
@@ -133,7 +144,10 @@ const Window: FC<WindowProps> = ({
         className={`absolute flex border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF] ${
           positioned ? "" : "invisible"
         }${className ? ` ${className}` : ""}`}
-        onMouseDown={() => setStartAtom(false)}
+        onMouseDown={() => {
+          setStartAtom(false);
+          setFocusedWindowAtom(title!);
+        }}
         {...rest}
       >
         <div className="h-full w-full border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
@@ -148,6 +162,7 @@ const Window: FC<WindowProps> = ({
               }
               minimize={minimize}
               maximize={maximize}
+              closeWindow={closeWindow}
               onMouseDown={handleMouseDown}
             />
             {type === "explorer" ? (

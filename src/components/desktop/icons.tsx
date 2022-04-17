@@ -5,19 +5,31 @@ import { desktopIcons } from "@/utils/constants";
 import {
   desktopIconsRefState,
   desktopIconHighlightState,
+  windowsState,
 } from "@/recoil/atoms";
+import Socials from "@/components/socials";
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
+  const setWindowsAtom = useSetRecoilState(windowsState);
   const resumeRef = useRef<HTMLAnchorElement | null>(null);
 
   const iconsEvent: VoidFunction[] = [
     () => {},
     () => {},
-    () => {},
+    () =>
+      setWindowsAtom((oldWindowsAtom) => {
+        const windows = _.cloneDeep(oldWindowsAtom);
+
+        const found = windows.find((window) => window.name === Socials.name);
+
+        if (found) return [...oldWindowsAtom];
+
+        return [...windows, Socials];
+      }),
     () => resumeRef.current!.click(),
     () => {},
   ];
@@ -38,7 +50,7 @@ export const Icons: FC = () => {
             ref={(el) => {
               iconsRef.current[index - 1] = el as HTMLDivElement;
             }}
-            key={src}
+            key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
             onClick={() => setDesktopIconHighlightAtom(index)}
             onDoubleClick={() => {
