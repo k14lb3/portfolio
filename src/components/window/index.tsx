@@ -2,6 +2,7 @@ import {
   FC,
   DetailedHTMLProps,
   HTMLAttributes,
+  MouseEvent,
   useRef,
   useEffect,
   useState,
@@ -105,7 +106,9 @@ const Window: FC<WindowProps> = ({
     }
   }, [mousePos]);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: MouseEvent) => {
+    if (e.button !== 0) return;
+
     setInitDragPos({
       x: convertPxToVh(
         mousePos.x - parentRef.current!.offsetLeft,
