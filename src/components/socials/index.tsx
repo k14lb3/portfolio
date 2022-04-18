@@ -15,7 +15,7 @@ const Socials: FC<WindowProps> = () => {
               <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
                 <img className="h-full mx-auto" src={src} alt={label} />
               </div>
-              <div className="px-[0.2999vh] text-[2.1vh] border-[0.1vh] border-dotted">
+              <div className="px-[0.2999vh] text-[2.1vh] border-[0.1vh] border-dotted border-white">
                 {label}
               </div>
             </div>
