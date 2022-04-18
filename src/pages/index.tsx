@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { useResetRecoilState } from "recoil";
 import {
   desktopIconHighlightState,
   focusedWindowState,
@@ -9,26 +9,26 @@ import { Background, Icons, Windows } from "@/components/desktop";
 import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
-  const setDesktopIconHighlightAtom = useSetRecoilState(
+  const resetDesktopIconHighlightAtom = useResetRecoilState(
     desktopIconHighlightState
   );
   const resetFocusedWindowAtom = useResetRecoilState(focusedWindowState);
-  const setStartAtom = useSetRecoilState(startState);
+  const resetStartAtom = useResetRecoilState(startState);
 
   return (
     <Background>
       <div
         className="absolute inset-0"
         onClick={() => {
-          setDesktopIconHighlightAtom(0);
+          resetDesktopIconHighlightAtom();
           resetFocusedWindowAtom();
-          setStartAtom(false);
+          resetStartAtom();
         }}
       />
       <div
         className="w-fit ml-[1.1994vh]"
         onClick={() => {
-          setStartAtom(false);
+          resetStartAtom();
           resetFocusedWindowAtom();
         }}
       >
@@ -37,8 +37,8 @@ const Desktop: NextPage = () => {
       <Windows />
       <Taskbar
         onClick={() => {
-          setDesktopIconHighlightAtom(0);
-          resetFocusedWindowAtom()
+          resetDesktopIconHighlightAtom();
+          resetFocusedWindowAtom();
         }}
       />
     </Background>
