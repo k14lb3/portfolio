@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
 import {
@@ -45,7 +45,8 @@ const Window: FC<WindowProps> = ({
   const setStartAtom = useSetRecoilState(startState);
   const setWindowsAtom = useSetRecoilState(windowsState);
   const setWindowsRefAtom = useSetRecoilState(windowsRefState);
-  const setFocusedWindowAtom = useSetRecoilState(focusedWindowState);
+  const [focusedWindowAtom, setFocusedWindowAtom] =
+    useRecoilState(focusedWindowState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
     x: -9999,
     y: -9999,
@@ -144,9 +145,9 @@ const Window: FC<WindowProps> = ({
           top: `${windowPos.y}vh`,
           left: `${windowPos.x}vh`,
         }}
-        className={`absolute flex border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF] ${
-          positioned ? "" : "invisible"
-        }${className ? ` ${className}` : ""}`}
+        className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
+          focusedWindowAtom === title ? " z-[99]" : ""
+        }${positioned ? "" : "invisible"}${className ? ` ${className}` : ""}`}
         onMouseDown={() => {
           setStartAtom(false);
           setFocusedWindowAtom(title!);
@@ -205,7 +206,7 @@ const Window: FC<WindowProps> = ({
               screenHeight!
             )}vh`,
           }}
-          className="absolute border-dotted border-[0.1vh] border-[#FF7F7F]"
+          className="absolute border-dotted border-[0.1vh] border-[#FF7F7F] z-[999]"
           onMouseUp={handleMouseUp}
         >
           {type === "explorer" && (
