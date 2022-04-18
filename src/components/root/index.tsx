@@ -21,7 +21,7 @@ import {
 import Boot from "@/components/boot";
 import About from "@/components/about";
 
-export const handleArrowUp = (
+export const handleArrowUpKeydown = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
   startAtom: boolean,
   startMenuOptionHighlightAtom: SetterOrUpdater<number>
@@ -41,7 +41,7 @@ export const handleArrowUp = (
   }
 };
 
-export const handleArrowDown = (
+export const handleArrowDownKeydown = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
   startAtom: boolean,
   startMenuOptionHighlightAtom: SetterOrUpdater<number>
@@ -61,7 +61,7 @@ export const handleArrowDown = (
   }
 };
 
-export const handleKeydown = (
+export const handleEnterKeydown = (
   desktopIconsRefAtom: HTMLDivElement[],
   desktopIconHighlightAtom: number,
   startAtom: boolean,
@@ -172,21 +172,21 @@ const Root: FC = ({ children }) => {
     const keydownEvents = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowUp":
-          handleArrowUp(
+          handleArrowUpKeydown(
             setDesktopIconHighlightAtom,
             startAtom,
             setStartMenuOptionHighlightAtom
           );
           break;
         case "ArrowDown":
-          handleArrowDown(
+          handleArrowDownKeydown(
             setDesktopIconHighlightAtom,
             startAtom,
             setStartMenuOptionHighlightAtom
           );
           break;
         case "Enter":
-          handleKeydown(
+          handleEnterKeydown(
             desktopIconsRefAtom,
             desktopIconHighlightAtom,
             startAtom,
