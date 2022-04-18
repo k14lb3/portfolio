@@ -35,12 +35,7 @@ const Desktop: NextPage = () => {
         <Icons />
       </div>
       <Windows />
-      <Taskbar
-        onClick={() => {
-          resetDesktopIconHighlightAtom();
-          resetFocusedWindowAtom();
-        }}
-      />
+      <Taskbar />
     </Background>
   );
 };

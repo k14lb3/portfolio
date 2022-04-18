@@ -1,7 +1,10 @@
+import { focusedWindowState } from "@/recoil/atoms";
 import { FC, useState, useEffect } from "react";
+import { useResetRecoilState } from "recoil";
 
 export const Clock: FC = () => {
   const [time, setTime] = useState<string>("");
+  const resetFocusedWindowAtom = useResetRecoilState(focusedWindowState);
 
   const setClock = () => {
     const date = new Date();
@@ -18,7 +21,10 @@ export const Clock: FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-[3.3vh] aspect-[126/44] border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080]">
+    <div
+      className="relative flex justify-center items-center h-[3.3vh] aspect-[126/44] border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080]"
+      onMouseDown={() => resetFocusedWindowAtom()}
+    >
       <time className="text-[1.5vh]">{time}</time>
     </div>
   );
