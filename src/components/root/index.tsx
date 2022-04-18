@@ -7,6 +7,7 @@ import {
 } from "recoil";
 import _ from "lodash";
 import { desktopIcons } from "@/utils/constants";
+import { options } from "@/components/taskbar/start-menu";
 import { generateRandomNumber } from "@/utils/helpers";
 import {
   bootState,
@@ -19,7 +20,6 @@ import {
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
 import About from "@/components/about";
-import { options } from "@/components/taskbar/start-menu";
 
 export const handleArrowUp = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
@@ -28,13 +28,13 @@ export const handleArrowUp = (
 ): void => {
   if (startAtom) {
     startMenuOptionHighlightAtom((prevHighlight) => {
-      if (prevHighlight === 0 || prevHighlight === 1) return 4;
+      if (prevHighlight === 0 || prevHighlight === 1) return options.length;
 
       return --prevHighlight;
     });
   } else {
     setDesktopIconHighlightAtom((prevHighlight) => {
-      if (prevHighlight === 0 || prevHighlight === 1) return 4;
+      if (prevHighlight === 0 || prevHighlight === 1) return desktopIcons.length;
 
       return --prevHighlight;
     });
@@ -48,13 +48,13 @@ export const handleArrowDown = (
 ): void => {
   if (startAtom) {
     startMenuOptionHighlightAtom((prevHighlight) => {
-      if (prevHighlight === 4) return 1;
+      if (prevHighlight === options.length) return 1;
 
       return ++prevHighlight;
     });
   } else {
     setDesktopIconHighlightAtom((prevHighlight) => {
-      if (prevHighlight === 4) return 1;
+      if (prevHighlight === desktopIcons.length) return 1;
 
       return ++prevHighlight;
     });
