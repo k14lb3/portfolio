@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { atom } from "recoil";
-import { WindowProps } from "@/components/window";
 
 export const bootState = atom({
   key: "bootState",
@@ -14,7 +13,7 @@ export const focusedWindowState = atom({
 
 export const windowsState = atom({
   key: "windowsState",
-  default: [] as FC<WindowProps>[],
+  default: [] as FC[],
 });
 
 export const windowsRefState = atom({
