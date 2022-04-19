@@ -1,6 +1,6 @@
 import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { focusedWindowState, windowsState } from "@/recoil/atoms";
+import { useRecoilValue } from "recoil";
+import { focusedWindowState } from "@/recoil/atoms";
 import { WindowProps } from ".";
 
 const minimizeIcon = (
@@ -95,8 +95,15 @@ const Button: FC<
   );
 };
 
-export const TitleBar: FC<WindowProps & { closeWindow?: () => void }> = ({
+interface TitleBarProps extends Omit<WindowProps, "icon"> {
+  icon?: string;
+  closeWindow?: () => void;
+}
+
+export const TitleBar: FC<TitleBarProps> = ({
   title,
+  type,
+  icon,
   minimize,
   maximize,
   closeWindow,
@@ -106,7 +113,6 @@ export const TitleBar: FC<WindowProps & { closeWindow?: () => void }> = ({
   children,
   ...rest
 }) => {
-  const setWindowsAtom = useSetRecoilState(windowsState);
   const focusedWindowAtom = useRecoilValue(focusedWindowState);
 
   return (
@@ -121,8 +127,25 @@ export const TitleBar: FC<WindowProps & { closeWindow?: () => void }> = ({
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
       />
-      <div className="relative mr-[2.3988vh] text-white font-bold text-[1.75vh]">
-        {title}
+      <div className="relative flex h-full items-center">
+        {type === "explorer" && (
+          <div className="h-[2.4vh] aspect-square">
+            <img
+              className="h-full w-full"
+              src={
+                type === "explorer"
+                  ? icon
+                    ? icon
+                    : "/static/images/icons/folder-opened.png"
+                  : undefined
+              }
+              alt="Icon"
+            />
+          </div>
+        )}
+        <div className="mr-[2.3988vh] ml-[0.4498vh] pb-[0.4498vh] text-white font-bold text-[1.75vh]">
+          {title}
+        </div>
       </div>
       <div className="relative flex">
         {minimize && minimize.visible && <Button logo={minimizeIcon} />}

@@ -21,20 +21,32 @@ import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
 import { TitleBar } from "./title-bar";
 
-export interface WindowProps
+export type WindowProps = Explorer | Properties;
+
+interface WindowBase
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  title?: string;
-  type?: "explorer" | "properties";
+  title: string;
   minimize?: { visible: false } | { visible: true; disabled: boolean };
   maximize?: { visible: false } | { visible: true; disabled: boolean };
   initPos?: Coordinates;
 }
 
+interface Explorer extends WindowBase {
+  type?: "explorer";
+  icon: string;
+}
+
+interface Properties extends WindowBase {
+  type?: "properties";
+  icon?: undefined;
+}
+
 const Window: FC<WindowProps> = ({
   title,
+  type,
+  icon,
   minimize,
   maximize,
-  type,
   className,
   children,
   ...rest
@@ -161,9 +173,9 @@ const Window: FC<WindowProps> = ({
             }`}
           >
             <TitleBar
-              title={
-                title === "" ? type![0].toUpperCase() + type!.slice(1) : title
-              }
+              title={title}
+              type={type}
+              icon={icon}
               minimize={minimize}
               maximize={maximize}
               closeWindow={closeWindow}
@@ -223,7 +235,6 @@ const Window: FC<WindowProps> = ({
 };
 
 Window.defaultProps = {
-  title: "",
   type: "explorer",
   minimize: { visible: true, disabled: false },
   maximize: { visible: true, disabled: false },
