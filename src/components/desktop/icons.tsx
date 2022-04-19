@@ -24,11 +24,11 @@ export const Icons: FC = () => {
       setWindowsAtom((oldWindowsAtom) => {
         const windows = _.cloneDeep(oldWindowsAtom);
 
-        const found = windows.find((window) => window.name === Socials.name);
+        const found = windows.find((window) => window.title === "Socials");
 
         if (found) return [...oldWindowsAtom];
 
-        return [...windows, Socials];
+        return [...windows, { component: Socials, title: "Socials" }];
       }),
     () => resumeRef.current!.click(),
     () => {},

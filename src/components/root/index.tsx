@@ -34,7 +34,8 @@ export const handleArrowUpKeydown = (
     });
   } else {
     setDesktopIconHighlightAtom((prevHighlight) => {
-      if (prevHighlight === 0 || prevHighlight === 1) return desktopIcons.length;
+      if (prevHighlight === 0 || prevHighlight === 1)
+        return desktopIcons.length;
 
       return --prevHighlight;
     });
@@ -159,7 +160,7 @@ const Root: FC = ({ children }) => {
       const launchStartupWindows = setTimeout(() => {
         setWindowsAtom((oldWindowsAtom) => [
           ..._.cloneDeep(oldWindowsAtom),
-          About,
+          { component: About, title: "About" },
         ]);
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));

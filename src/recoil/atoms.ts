@@ -13,7 +13,7 @@ export const focusedWindowState = atom({
 
 export const windowsState = atom({
   key: "windowsState",
-  default: [] as FC[],
+  default: [] as { component: FC; title: string }[],
 });
 
 export const windowsRefState = atom({

@@ -144,7 +144,7 @@ const Window: FC<WindowProps> = ({
 
   const closeWindow = () => {
     setWindowsAtom((oldWindowsAtom) =>
-      oldWindowsAtom.filter((window) => window.name !== title)
+      oldWindowsAtom.filter((window) => window.title !== title)
     );
     setFocusedWindowAtom("");
   };
