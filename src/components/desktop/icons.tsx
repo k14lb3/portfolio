@@ -11,11 +11,11 @@ import Socials from "@/components/socials";
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
+  const anchorRef = useRef<HTMLAnchorElement>(null);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
   const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
     useRecoilState(desktopIconHighlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
-  const resumeRef = useRef<HTMLAnchorElement | null>(null);
 
   const iconsEvent: VoidFunction[] = [
     () => {},
@@ -30,8 +30,24 @@ export const Icons: FC = () => {
 
         return [...windows, { component: Socials, title: "Socials" }];
       }),
-    () => resumeRef.current!.click(),
-    () => {},
+    () => {
+      anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";
+      anchorRef.current!.download = "";
+      anchorRef.current!.click();
+
+      anchorRef.current!.removeAttribute("href");
+      anchorRef.current!.removeAttribute("download");
+    },
+    () => {
+      anchorRef.current!.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+      anchorRef.current!.target = "_blank";
+      anchorRef.current!.rel = "noopener noreferrer";
+      anchorRef.current!.click();
+
+      anchorRef.current!.removeAttribute("href");
+      anchorRef.current!.removeAttribute("target");
+      anchorRef.current!.removeAttribute("rel");
+    },
   ];
 
   useEffect(() => {
@@ -43,7 +59,7 @@ export const Icons: FC = () => {
 
   return (
     <>
-      <a ref={resumeRef} href="/static/karlivan-alberto_resume.pdf" download />
+      <a ref={anchorRef} />
       {desktopIcons.map(({ index, src, label }) => {
         return (
           <div
