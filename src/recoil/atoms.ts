@@ -16,11 +16,6 @@ export const windowsState = atom({
   default: [] as { component: FC; title: string }[],
 });
 
-export const windowsRefState = atom({
-  key: "windowsRefState",
-  default: [] as HTMLDivElement[],
-});
-
 export const desktopIconsRefState = atom({
   key: "desktopIconsRefState",
   default: [] as HTMLDivElement[],

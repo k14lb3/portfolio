@@ -10,12 +10,7 @@ import {
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
-import {
-  focusedWindowState,
-  startState,
-  windowsRefState,
-  windowsState,
-} from "@/recoil/atoms";
+import { focusedWindowState, startState, windowsState } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
@@ -56,7 +51,6 @@ const Window: FC<WindowProps> = ({
   const parentRef = useRef<HTMLDivElement>(null);
   const setStartAtom = useSetRecoilState(startState);
   const setWindowsAtom = useSetRecoilState(windowsState);
-  const setWindowsRefAtom = useSetRecoilState(windowsRefState);
   const [focusedWindowAtom, setFocusedWindowAtom] =
     useRecoilState(focusedWindowState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
@@ -71,19 +65,6 @@ const Window: FC<WindowProps> = ({
   useEffect(() => {
     setFocusedWindowAtom(title!);
   }, []);
-
-  useEffect(() => {
-    if (parentRef.current) {
-      const ref = _.cloneDeep(parentRef).current as HTMLDivElement;
-
-      setWindowsRefAtom((oldWindowsRefAtom) => [...oldWindowsRefAtom, ref]);
-
-      return () =>
-        setWindowsRefAtom((oldWindowsRefAtom) =>
-          oldWindowsRefAtom.filter((window) => !_.isEqual(window, ref))
-        );
-    }
-  }, [parentRef]);
 
   useEffect(() => {
     if (parentRef && screenHeight) {
