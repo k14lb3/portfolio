@@ -10,7 +10,12 @@ import {
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
-import { focusedWindowState, startState, windowsState } from "@/recoil/atoms";
+import {
+  startState,
+  topMostWindowState,
+  focusedWindowState,
+  windowsState,
+} from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
@@ -51,6 +56,8 @@ const Window: FC<WindowProps> = ({
   const parentRef = useRef<HTMLDivElement>(null);
   const setStartAtom = useSetRecoilState(startState);
   const setWindowsAtom = useSetRecoilState(windowsState);
+  const [topMostWindowAtom, setTopMostWindowAtom] =
+    useRecoilState(topMostWindowState);
   const [focusedWindowAtom, setFocusedWindowAtom] =
     useRecoilState(focusedWindowState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
@@ -63,6 +70,7 @@ const Window: FC<WindowProps> = ({
   const [drag, setDrag] = useState<boolean>(false);
 
   useEffect(() => {
+    setTopMostWindowAtom(title!);
     setFocusedWindowAtom(title!);
   }, []);
 
@@ -139,10 +147,11 @@ const Window: FC<WindowProps> = ({
           left: `${windowPos.x}vh`,
         }}
         className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
-          focusedWindowAtom === title ? " z-[99]" : ""
+          topMostWindowAtom === title ? " z-[99]" : ""
         }${positioned ? "" : "invisible"}${className ? ` ${className}` : ""}`}
         onMouseDown={() => {
           setStartAtom(false);
+          setTopMostWindowAtom(title!);
           setFocusedWindowAtom(title!);
         }}
         {...rest}

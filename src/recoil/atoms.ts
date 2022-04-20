@@ -6,6 +6,11 @@ export const bootState = atom({
   default: false as boolean,
 });
 
+export const topMostWindowState = atom({
+  key: "topMostWindowState",
+  default: "" as string,
+});
+
 export const focusedWindowState = atom({
   key: "focusedWindow",
   default: "" as string,
