@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
-import { v4 as uuid } from "uuid";
 import { windowsState } from "@/recoil/atoms";
 
 export const Windows: FC = () => {
@@ -8,8 +7,8 @@ export const Windows: FC = () => {
 
   return (
     <>
-      {windowsAtom.map(({ component: Component }) => (
-        <Component key={uuid()} />
+      {windowsAtom.map(({ component: Component, title }) => (
+        <Component key={title} />
       ))}
     </>
   );
