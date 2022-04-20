@@ -22,13 +22,10 @@ export const Icons: FC = () => {
     () => {},
     () =>
       setWindowsAtom((oldWindowsAtom) => {
-        const windows = _.cloneDeep(oldWindowsAtom);
+        if (oldWindowsAtom.find((window) => window.title === "Socials"))
+          return oldWindowsAtom;
 
-        const found = windows.find((window) => window.title === "Socials");
-
-        if (found) return [...oldWindowsAtom];
-
-        return [...windows, { component: Socials, title: "Socials" }];
+        return [...oldWindowsAtom, { component: Socials, title: "Socials" }];
       }),
     () => {
       anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";

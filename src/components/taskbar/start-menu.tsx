@@ -57,13 +57,10 @@ export const StartMenu: FC = () => {
     () => {},
     () =>
       setWindowsAtom((oldWindowsAtom) => {
-        const windows = _.cloneDeep(oldWindowsAtom);
+        if (oldWindowsAtom.find((window) => window.title === "About"))
+          return oldWindowsAtom;
 
-        const found = windows.find((window) => window.title === "About");
-
-        if (found) return [...oldWindowsAtom];
-
-        return [...windows, { component: About, title: "About" }];
+        return [...oldWindowsAtom, { component: About, title: "About" }];
       }),
     () => {
       window.close();
