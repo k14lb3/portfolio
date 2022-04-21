@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { desktopIcons } from "@/utils/constants";
 import { options } from "@/components/taskbar/start-menu";
-import { generateRandomNumber } from "@/utils/helpers";
+import { generateRandomNumber, launchFile } from "@/utils/helpers";
 import {
   bootState,
   windowsState,
@@ -19,7 +19,7 @@ import {
   startMenuOptionHighlightState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
-import About from "@/components/about";
+import About, { props } from "@/components/about";
 
 export const handleArrowUpKeydown = (
   setDesktopIconHighlightAtom: SetterOrUpdater<number>,
@@ -158,10 +158,7 @@ const Root: FC = ({ children }) => {
       setLaunching(true);
 
       const launchStartupWindows = setTimeout(() => {
-        setWindowsAtom((oldWindowsAtom) => [
-          ..._.cloneDeep(oldWindowsAtom),
-          { component: About, title: "About" },
-        ]);
+        launchFile({ component: About, props: props }, setWindowsAtom);
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
 

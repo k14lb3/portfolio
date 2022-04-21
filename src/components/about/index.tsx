@@ -1,16 +1,18 @@
 import { FC } from "react";
 import Image from "next/image";
-import Window from "@/components/window";
+import Window, { WindowProps } from "@/components/window";
+
+export const props: WindowProps = {
+  className: "h-[64.47vh] aspect-[205/214]",
+  title: "About",
+  type: "properties",
+  minimize: { visible: false },
+  maximize: { visible: false },
+};
 
 const About: FC = () => {
   return (
-    <Window
-      className="h-[64.47vh] aspect-[205/214]"
-      title="About"
-      type="properties"
-      minimize={{ visible: false }}
-      maximize={{ visible: false }}
-    >
+    <Window {...props}>
       <div className="grid grid-cols-2 p-[2.9985vh]">
         <div className="relative h-[17.993vh] aspect-square bg-[#DFDFDF] rounded-full overflow-hidden">
           <Image

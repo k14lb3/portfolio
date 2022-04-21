@@ -1,3 +1,4 @@
+import { WindowProps } from "@/components/window";
 import { FC } from "react";
 import { atom } from "recoil";
 
@@ -18,7 +19,7 @@ export const focusedWindowState = atom({
 
 export const windowsState = atom({
   key: "windowsState",
-  default: [] as { component: FC; title: string }[],
+  default: [] as { component: FC<Partial<WindowProps>>; props: WindowProps }[],
 });
 
 export const desktopIconsRefState = atom({

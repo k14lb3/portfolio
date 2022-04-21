@@ -7,7 +7,8 @@ import {
   desktopIconHighlightState,
   windowsState,
 } from "@/recoil/atoms";
-import Socials from "@/components/socials";
+import { launchFile } from "@/utils/helpers";
+import Socials, { props } from "@/components/socials";
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
@@ -20,13 +21,7 @@ export const Icons: FC = () => {
   const iconsEvent: VoidFunction[] = [
     () => {},
     () => {},
-    () =>
-      setWindowsAtom((oldWindowsAtom) => {
-        if (oldWindowsAtom.find((window) => window.title === "Socials"))
-          return oldWindowsAtom;
-
-        return [...oldWindowsAtom, { component: Socials, title: "Socials" }];
-      }),
+    () => launchFile({ component: Socials, props: props }, setWindowsAtom),
     () => {
       anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";
       anchorRef.current!.download = "";

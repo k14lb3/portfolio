@@ -1,10 +1,17 @@
 import { FC } from "react";
 import { socialsIcons } from "@/utils/constants";
-import Window from "@/components/window";
+import Window, { WindowProps } from "@/components/window";
+
+export const props: WindowProps = {
+  title: "Socials",
+  type: "explorer",
+  icon: "default",
+  className: "aspect-[5/4]",
+};
 
 const Socials: FC = () => {
   return (
-    <Window className="aspect-[5/4]" title="Socials">
+    <Window {...props}>
       <div className="flex space-x-[2.3988vh]">
         {socialsIcons.map(({ src, label }) => {
           return (

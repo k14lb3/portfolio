@@ -95,9 +95,8 @@ const Button: FC<
   );
 };
 
-interface TitleBarProps extends Omit<WindowProps, "icon"> {
-  icon?: string;
-  closeWindow?: () => void;
+interface TitleBarProps extends Omit<WindowProps, ""> {
+closeWindow?: () => void;
 }
 
 export const TitleBar: FC<TitleBarProps> = ({
@@ -134,12 +133,12 @@ export const TitleBar: FC<TitleBarProps> = ({
               className="h-full w-full"
               src={
                 type === "explorer"
-                  ? icon
-                    ? icon
-                    : "/static/images/icons/folder-opened.png"
+                  ? icon === "default"
+                    ? "/static/images/icons/folder-opened.png"
+                    : icon?.src
                   : undefined
               }
-              alt="Icon"
+              alt="Window Icon"
             />
           </div>
         )}

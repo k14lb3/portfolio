@@ -8,7 +8,8 @@ import {
   startMenuOptionHighlightState,
   windowsState,
 } from "@/recoil/atoms";
-import About from "@/components/about";
+import { launchFile } from "@/utils/helpers";
+import About, { props } from "@/components/about";
 
 interface Option {
   index: number;
@@ -55,13 +56,7 @@ export const StartMenu: FC = () => {
   const optionsEvent = [
     () => {},
     () => {},
-    () =>
-      setWindowsAtom((oldWindowsAtom) => {
-        if (oldWindowsAtom.find((window) => window.title === "About"))
-          return oldWindowsAtom;
-
-        return [...oldWindowsAtom, { component: About, title: "About" }];
-      }),
+    () => launchFile({ component: About, props: props }, setWindowsAtom),
     () => {
       window.close();
       router.push("https://www.linkedin.com/in/karlivanalberto/");

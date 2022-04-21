@@ -32,12 +32,12 @@ interface WindowBase
 }
 
 interface Explorer extends WindowBase {
-  type?: "explorer";
-  icon: string;
+  type: "explorer";
+  icon: "default" | { src: string };
 }
 
 interface Properties extends WindowBase {
-  type?: "properties";
+  type: "properties";
   icon?: undefined;
 }
 
@@ -70,8 +70,8 @@ const Window: FC<WindowProps> = ({
   const [drag, setDrag] = useState<boolean>(false);
 
   useEffect(() => {
-    setTopMostWindowAtom(title!);
-    setFocusedWindowAtom(title!);
+    setTopMostWindowAtom(title);
+    setFocusedWindowAtom(title);
   }, []);
 
   useEffect(() => {
@@ -133,7 +133,7 @@ const Window: FC<WindowProps> = ({
 
   const closeWindow = () => {
     setWindowsAtom((oldWindowsAtom) =>
-      oldWindowsAtom.filter((window) => window.title !== title)
+      oldWindowsAtom.filter(({ props }) => props.title !== title)
     );
     setFocusedWindowAtom("");
   };
@@ -151,8 +151,8 @@ const Window: FC<WindowProps> = ({
         }${positioned ? "" : "invisible"}${className ? ` ${className}` : ""}`}
         onMouseDown={() => {
           setStartAtom(false);
-          setTopMostWindowAtom(title!);
-          setFocusedWindowAtom(title!);
+          setTopMostWindowAtom(title);
+          setFocusedWindowAtom(title);
         }}
         {...rest}
       >
@@ -222,12 +222,6 @@ const Window: FC<WindowProps> = ({
       )}
     </>
   );
-};
-
-Window.defaultProps = {
-  type: "explorer",
-  minimize: { visible: true, disabled: false },
-  maximize: { visible: true, disabled: false },
 };
 
 export default Window;
