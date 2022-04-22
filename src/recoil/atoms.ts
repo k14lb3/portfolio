@@ -12,7 +12,7 @@ export const topMostWindowState = atom({
   default: "" as string,
 });
 
-export const focusedWindowState = atom({
+export const focusedState = atom({
   key: "focusedWindow",
   default: "" as string,
 });

@@ -9,7 +9,7 @@ import {
   desktopIconHighlightState,
   windowsState,
   topMostWindowState,
-  focusedWindowState,
+  focusedState,
 } from "@/recoil/atoms";
 import { Start } from "./start";
 import { Clock } from "./clock";
@@ -18,9 +18,9 @@ const Taskbar: FC = () => {
   const resetDesktopHighlightAtom = useResetRecoilState(
     desktopIconHighlightState
   );
-  const resetFocusedWindowAtom = useResetRecoilState(focusedWindowState);
-  const [focusedWindowAtom, setFocusedWindowAtom] =
-    useRecoilState(focusedWindowState);
+  const resetFocusedAtom = useResetRecoilState(focusedState);
+  const [focusedAtom, setFocusedAtom] =
+    useRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
   const windowsAtom = useRecoilValue(windowsState);
 
@@ -33,7 +33,7 @@ const Taskbar: FC = () => {
         <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">
           <div
             className="absolute inset-0"
-            onMouseDown={() => resetFocusedWindowAtom()}
+            onMouseDown={() => resetFocusedAtom()}
           />
           <Start />
           <div className="relative flex flex-grow items-center space-x-[0.4498vh] h-full mx-[0.5997vh]">
@@ -43,25 +43,25 @@ const Taskbar: FC = () => {
                   <div
                     key={`${props.title}-task`}
                     className={`h-[3.3vh] aspect-[80/11] border-solid border-[0.1vh] ${
-                      focusedWindowAtom === props.title
+                      focusedAtom === props.title
                         ? "border-white border-t-black border-l-black"
                         : "border-black border-t-white border-l-white"
                     }`}
                     onClick={() => {
-                      setFocusedWindowAtom(props.title);
+                      setFocusedAtom(props.title);
                       setTopMostWindowAtom(props.title);
                     }}
                   >
                     <div
                       className={`h-full border-solid border-[0.1vh] ${
-                        focusedWindowAtom === props.title
+                        focusedAtom === props.title
                           ? "pt-[0.1522vh] border-[#DFDFDF] border-t-[#808080] border-l-[#808080] bg-white"
                           : "border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]"
                       }`}
                     >
                       <div
                         className={`flex items-center h-full w-full px-[0.4498vh] ${
-                          focusedWindowAtom === props.title
+                          focusedAtom === props.title
                             ? "bg-checkered"
                             : "bg-[#C0C0C0]"
                         }`}
@@ -79,7 +79,7 @@ const Taskbar: FC = () => {
                         </div>
                         <div
                           className={`h-full ml-[0.4498vh] text-[1.75vh] ${
-                            focusedWindowAtom === props.title
+                            focusedAtom === props.title
                               ? "font-bold"
                               : "pt-[0.2998vh] "
                           }`}

@@ -1,6 +1,6 @@
 import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 import { useRecoilValue } from "recoil";
-import { focusedWindowState } from "@/recoil/atoms";
+import { focusedState } from "@/recoil/atoms";
 import { WindowProps } from ".";
 
 const minimizeIcon = (
@@ -112,12 +112,12 @@ export const TitleBar: FC<TitleBarProps> = ({
   children,
   ...rest
 }) => {
-  const focusedWindowAtom = useRecoilValue(focusedWindowState);
+  const focusedAtom = useRecoilValue(focusedState);
 
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full ${
-        focusedWindowAtom === title ? "bg-[#000080]" : "bg-[#808080]"
+        focusedAtom === title ? "bg-[#000080]" : "bg-[#808080]"
       } px-[0.2999vh] ${className ? ` ${className}` : ""}`}
       {...rest}
     >

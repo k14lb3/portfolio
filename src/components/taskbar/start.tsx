@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { startState, focusedWindowState } from "@/recoil/atoms";
+import { startState, focusedState } from "@/recoil/atoms";
 import { StartMenu } from "./start-menu";
 
 export const Start: FC = () => {
   const [startAtom, setStartAtom] = useRecoilState(startState);
-  const resetFocusedWindowAtom = useResetRecoilState(focusedWindowState);
+  const resetFocusedAtom = useResetRecoilState(focusedState);
 
   return (
     <div
@@ -13,7 +13,7 @@ export const Start: FC = () => {
         startAtom ? "bg-start-clicked" : "bg-start-default"
       } bg-cover bg-no-repeat`}
       onClick={() => !startAtom && setStartAtom(true)}
-      onMouseDown={() => resetFocusedWindowAtom()}
+      onMouseDown={() => resetFocusedAtom()}
     >
       {startAtom && <StartMenu />}
     </div>

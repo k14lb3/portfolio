@@ -13,7 +13,7 @@ import { Coordinates } from "@/utils/constants";
 import {
   startState,
   topMostWindowState,
-  focusedWindowState,
+  focusedState,
   windowsState,
 } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
@@ -58,8 +58,7 @@ const Window: FC<WindowProps> = ({
   const setWindowsAtom = useSetRecoilState(windowsState);
   const [topMostWindowAtom, setTopMostWindowAtom] =
     useRecoilState(topMostWindowState);
-  const [focusedWindowAtom, setFocusedWindowAtom] =
-    useRecoilState(focusedWindowState);
+  const setFocusedAtom = useSetRecoilState(focusedState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
     x: -9999,
     y: -9999,
@@ -71,7 +70,7 @@ const Window: FC<WindowProps> = ({
 
   useEffect(() => {
     setTopMostWindowAtom(title);
-    setFocusedWindowAtom(title);
+    setFocusedAtom(title);
   }, []);
 
   useEffect(() => {
@@ -135,7 +134,7 @@ const Window: FC<WindowProps> = ({
     setWindowsAtom((oldWindowsAtom) =>
       oldWindowsAtom.filter(({ props }) => props.title !== title)
     );
-    setFocusedWindowAtom("");
+    setFocusedAtom("");
   };
 
   return (
@@ -152,7 +151,7 @@ const Window: FC<WindowProps> = ({
         onMouseDown={() => {
           setStartAtom(false);
           setTopMostWindowAtom(title);
-          setFocusedWindowAtom(title);
+          setFocusedAtom(title);
         }}
         {...rest}
       >

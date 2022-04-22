@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useResetRecoilState } from "recoil";
 import {
   desktopIconHighlightState,
-  focusedWindowState,
+  focusedState,
   startState,
 } from "@/recoil/atoms";
 import { Background, Icons, Windows } from "@/components/desktop";
@@ -12,7 +12,7 @@ const Desktop: NextPage = () => {
   const resetDesktopIconHighlightAtom = useResetRecoilState(
     desktopIconHighlightState
   );
-  const resetFocusedWindowAtom = useResetRecoilState(focusedWindowState);
+  const resetFocusedAtom = useResetRecoilState(focusedState);
   const resetStartAtom = useResetRecoilState(startState);
 
   return (
@@ -21,7 +21,7 @@ const Desktop: NextPage = () => {
         className="absolute inset-0"
         onClick={() => {
           resetDesktopIconHighlightAtom();
-          resetFocusedWindowAtom();
+          resetFocusedAtom();
           resetStartAtom();
         }}
       />
@@ -29,7 +29,7 @@ const Desktop: NextPage = () => {
         className="w-fit ml-[1.1994vh]"
         onClick={() => {
           resetStartAtom();
-          resetFocusedWindowAtom();
+          resetFocusedAtom();
         }}
       >
         <Icons />
