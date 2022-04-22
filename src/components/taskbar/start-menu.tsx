@@ -75,7 +75,7 @@ export const StartMenu: FC = () => {
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
-        <div className="flex bg-[#DFDFDF] p-[0.1522vh]">
+        <div className="flex bg-[#C0C0C0] p-[0.1522vh]">
           <div className="relative h-full w-[3.198vh] bg-[#808080]">
             <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 -rotate-90 text-white font-bold text-[2.25vh] whitespace-nowrap">
               hello world :3
