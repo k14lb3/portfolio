@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import {
+  highlightState,
   startState,
   startMenuOptionsRefState,
-  startMenuOptionHighlightState,
   windowsState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
@@ -45,12 +45,11 @@ export const options: Option[] = [
 export const StartMenu: FC = () => {
   const router = useRouter();
   const optionsRef = useRef<any[]>([]);
+  const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const setStartMenuOptionsRefAtom = useSetRecoilState(
     startMenuOptionsRefState
   );
   const setStartAtom = useSetRecoilState(startState);
-  const [startMenuOptionHighlightAtom, setStartMenuOptionHighlightAtom] =
-    useRecoilState(startMenuOptionHighlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
 
   const optionsEvent = [
@@ -94,12 +93,20 @@ export const StartMenu: FC = () => {
                       optionsRef.current[index - 1] = el as HTMLDivElement;
                     }}
                     className={`flex h-[4.873vh] aspect-[274/64] items-center${
-                      startMenuOptionHighlightAtom === index
-                        ? " bg-[#000180]"
-                        : ""
+                      highlightAtom.startMenu === index ? " bg-[#000180]" : ""
                     }`}
-                    onMouseEnter={() => setStartMenuOptionHighlightAtom(index)}
-                    onMouseOut={() => setStartMenuOptionHighlightAtom(0)}
+                    onMouseEnter={() =>
+                      setHighlightAtom((oldHighlightAtom) => ({
+                        ...oldHighlightAtom,
+                        startMenu: index,
+                      }))
+                    }
+                    onMouseOut={() =>
+                      setHighlightAtom((oldHighlightAtom) => ({
+                        ...oldHighlightAtom,
+                        startMenu: 0,
+                      }))
+                    }
                     onClick={() => {
                       optionsEvent[index - 1]();
                       setStartAtom(false);
@@ -110,9 +117,7 @@ export const StartMenu: FC = () => {
                     </div>
                     <div
                       className={`text-[2.1vh]${
-                        startMenuOptionHighlightAtom === index
-                          ? " text-white"
-                          : ""
+                        highlightAtom.startMenu === index ? " text-white" : ""
                       } pointer-events-none`}
                     >
                       <span className="underline">{label[0]}</span>
@@ -132,7 +137,7 @@ export const StartMenu: FC = () => {
                             WebkitMaskSize: "auto 1.067vh",
                           }}
                           className={`h-[1.067vh] aspect-[8/14] ml-auto mr-[0.9132vh] ${
-                            startMenuOptionHighlightAtom === index
+                            highlightAtom.startMenu === index
                               ? "bg-white"
                               : "bg-black"
                           } pointer-events-none`}

@@ -3,8 +3,8 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { desktopIcons } from "@/utils/constants";
 import {
+  highlightState,
   desktopIconsRefState,
-  desktopIconHighlightState,
   windowsState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
@@ -13,9 +13,8 @@ import Socials, { props } from "@/components/socials";
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
+  const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
-  const [desktopIconHighlightAtom, setDesktopIconHighlightAtom] =
-    useRecoilState(desktopIconHighlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
 
   const iconsEvent: VoidFunction[] = [
@@ -60,15 +59,23 @@ export const Icons: FC = () => {
             }}
             key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
-            onClick={() => setDesktopIconHighlightAtom(index)}
+            onClick={() =>
+              setHighlightAtom((oldHighlightAtom) => ({
+                ...oldHighlightAtom,
+                desktop: index,
+              }))
+            }
             onDoubleClick={() => {
               iconsEvent[index - 1]();
-              setDesktopIconHighlightAtom(0);
+              setHighlightAtom((oldHighlightAtom) => ({
+                ...oldHighlightAtom,
+                desktop: 0,
+              }));
             }}
           >
             <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
               <img className="h-full mx-auto" src={src} alt={label} />
-              {desktopIconHighlightAtom === index && (
+              {highlightAtom.desktop === index && (
                 <div
                   style={{
                     maskImage: `url(${src})`,
@@ -84,7 +91,7 @@ export const Icons: FC = () => {
             </div>
             <div
               className={`px-[0.2999vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
-                desktopIconHighlightAtom === index
+                highlightAtom.desktop === index
                   ? " bg-[#000180] border-[#ffff7f] "
                   : " bg-[#008080] border-[transparent]"
               }`}

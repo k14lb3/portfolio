@@ -1,17 +1,11 @@
 import { NextPage } from "next";
-import { useResetRecoilState } from "recoil";
-import {
-  desktopIconHighlightState,
-  focusedState,
-  startState,
-} from "@/recoil/atoms";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { highlightState, focusedState, startState } from "@/recoil/atoms";
 import { Background, Icons, Windows } from "@/components/desktop";
 import Taskbar from "@/components/taskbar";
 
 const Desktop: NextPage = () => {
-  const resetDesktopIconHighlightAtom = useResetRecoilState(
-    desktopIconHighlightState
-  );
+  const setHighlightAtom = useSetRecoilState(highlightState);
   const resetFocusedAtom = useResetRecoilState(focusedState);
   const resetStartAtom = useResetRecoilState(startState);
 
@@ -20,7 +14,10 @@ const Desktop: NextPage = () => {
       <div
         className="absolute inset-0"
         onClick={() => {
-          resetDesktopIconHighlightAtom();
+          setHighlightAtom((oldHighlightAtom) => ({
+            ...oldHighlightAtom,
+            desktop: 0,
+          }));
           resetFocusedAtom();
           resetStartAtom();
         }}

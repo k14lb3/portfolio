@@ -7,19 +7,29 @@ export const bootState = atom({
   default: false as boolean,
 });
 
-export const topMostWindowState = atom({
-  key: "topMostWindowState",
-  default: "" as string,
-});
-
 export const focusedState = atom({
   key: "focusedWindow",
   default: "desktop" as string,
 });
 
-export const windowsState = atom({
-  key: "windowsState",
-  default: [] as { component: FC<Partial<WindowProps>>; props: WindowProps }[],
+export interface HighlightState {
+  desktop: number;
+  startMenu: number;
+  socials: number;
+}
+
+export const highlightState = atom({
+  key: "highlightState",
+  default: {
+    desktop: 0,
+    startMenu: 0,
+    socials: 0,
+  } as HighlightState,
+});
+
+export const startState = atom({
+  key: "startState",
+  default: false as boolean,
 });
 
 export const desktopIconsRefState = atom({
@@ -32,17 +42,12 @@ export const startMenuOptionsRefState = atom({
   default: [] as HTMLDivElement[],
 });
 
-export const startState = atom({
-  key: "startState",
-  default: false as boolean,
+export const windowsState = atom({
+  key: "windowsState",
+  default: [] as { component: FC<Partial<WindowProps>>; props: WindowProps }[],
 });
 
-export const desktopIconHighlightState = atom({
-  key: "desktopIconHighlightState",
-  default: 0 as number,
-});
-
-export const startMenuOptionHighlightState = atom({
-  key: "startMenuOptionHighlightState",
-  default: 0 as number,
+export const topMostWindowState = atom({
+  key: "topMostWindowState",
+  default: "" as string,
 });

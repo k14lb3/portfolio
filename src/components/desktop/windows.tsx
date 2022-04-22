@@ -7,9 +7,9 @@ export const Windows: FC = () => {
 
   return (
     <>
-      {windowsAtom.map(({ component: Component, props }) => (
-        <Component key={props.title} />
-      ))}
+      {windowsAtom.map(({ component: Component, props }) => {
+        return <Component key={props.title} />;
+      })}
     </>
   );
 };

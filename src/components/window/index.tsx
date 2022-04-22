@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
 import {
@@ -58,6 +58,7 @@ const Window: FC<WindowProps> = ({
   const setWindowsAtom = useSetRecoilState(windowsState);
   const [topMostWindowAtom, setTopMostWindowAtom] =
     useRecoilState(topMostWindowState);
+  const resetFocusedAtom = useResetRecoilState(focusedState);
   const setFocusedAtom = useSetRecoilState(focusedState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
     x: -9999,
@@ -134,7 +135,7 @@ const Window: FC<WindowProps> = ({
     setWindowsAtom((oldWindowsAtom) =>
       oldWindowsAtom.filter(({ props }) => props.title !== title)
     );
-    setFocusedAtom("");
+    resetFocusedAtom();
   };
 
   return (
