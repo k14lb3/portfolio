@@ -77,7 +77,7 @@ export const handleArrowDownKeydown = (
   });
 };
 
-export const handleEnterKeydown = (
+export const handleEnterKeyup = (
   highlightAtom: HighlightState,
   desktopIconsRefAtom: HTMLDivElement[],
   startAtom: boolean,
@@ -200,8 +200,20 @@ const Root: FC = ({ children }) => {
         case "ArrowDown":
           handleArrowDownKeydown(setHighlightAtom, startAtom);
           break;
+        default:
+          handleDefaultKeydown(
+            e.key,
+            highlightAtom,
+            setHighlightAtom,
+            startAtom
+          );
+      }
+    };
+
+    const keyupEvents = (e: KeyboardEvent) => {
+      switch (e.key) {
         case "Enter":
-          handleEnterKeydown(
+          handleEnterKeyup(
             highlightAtom,
             desktopIconsRefAtom,
             startAtom,
@@ -219,24 +231,17 @@ const Root: FC = ({ children }) => {
         case " ":
           setStartAtom(!startAtom);
           break;
-        default:
-          handleDefaultKeydown(
-            e.key,
-            highlightAtom,
-            setHighlightAtom,
-            startAtom
-          );
       }
     };
 
     window.addEventListener("keydown", keydownEvents);
+    window.addEventListener("keyup", keyupEvents);
 
     return () => {
       window.removeEventListener("keydown", keydownEvents);
+      window.removeEventListener("keyup", keyupEvents);
     };
   }, [highlightAtom, startAtom, startMenuOptionsRefAtom, windowsAtom]);
-
-  console.log(windowsAtom);
 
   return bootAtom ? (
     <>
