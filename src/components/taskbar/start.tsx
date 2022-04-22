@@ -12,7 +12,7 @@ export const Start: FC = () => {
       className={`relative h-[3.3vh] aspect-[27/11] ${
         startAtom ? "bg-start-clicked" : "bg-start-default"
       } bg-cover bg-no-repeat`}
-      onClick={() => !startAtom && setStartAtom(true)}
+      onClick={() => setStartAtom(!startAtom)}
       onMouseDown={() => resetFocusedAtom()}
     >
       {startAtom && <StartMenu />}
