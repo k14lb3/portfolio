@@ -60,15 +60,15 @@ export const Icons: FC = () => {
             key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
             onClick={() =>
-              setHighlightAtom((oldHighlightAtom) => ({
-                ...oldHighlightAtom,
+              setHighlightAtom((currHighlight) => ({
+                ...currHighlight,
                 desktop: index,
               }))
             }
             onDoubleClick={() => {
               iconsEvent[index - 1]();
-              setHighlightAtom((oldHighlightAtom) => ({
-                ...oldHighlightAtom,
+              setHighlightAtom((currHighlight) => ({
+                ...currHighlight,
                 desktop: 0,
               }));
             }}

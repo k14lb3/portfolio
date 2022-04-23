@@ -22,9 +22,9 @@ export const launchFile = (
     }[]
   >
 ) =>
-  setWindowsAtom((oldWindowsAtom) => {
-    if (oldWindowsAtom.find(({ props }) => props.title === window.props.title))
-      return oldWindowsAtom;
+  setWindowsAtom((currHighlight) => {
+    if (currHighlight.find(({ props }) => props.title === window.props.title))
+      return currHighlight;
 
-    return [...oldWindowsAtom, window];
+    return [...currHighlight, window];
   });

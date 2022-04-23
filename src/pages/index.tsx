@@ -14,8 +14,8 @@ const Desktop: NextPage = () => {
       <div
         className="absolute inset-0"
         onClick={() => {
-          setHighlightAtom((oldHighlightAtom) => ({
-            ...oldHighlightAtom,
+          setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
             desktop: 0,
           }));
           resetFocusedAtom();

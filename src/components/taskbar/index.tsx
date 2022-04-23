@@ -25,8 +25,8 @@ const Taskbar: FC = () => {
     <div
       className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0] border-solid border-t-[0.1vh] border-[#DFDFDF] z-[999]"
       onMouseDown={() =>
-        setHighlightAtom((oldHighlightAtom) => ({
-          ...oldHighlightAtom,
+        setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
           desktop: 0,
         }))
       }
