@@ -8,7 +8,7 @@ import {
   windowsState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
-import Socials, { props } from "@/components/socials";
+import { Socials, socialProps } from "@/components/windows";
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
@@ -20,7 +20,8 @@ export const Icons: FC = () => {
   const iconsEvent: VoidFunction[] = [
     () => {},
     () => {},
-    () => launchFile({ component: Socials, props: props }, setWindowsAtom),
+    () =>
+      launchFile({ component: Socials, props: socialProps }, setWindowsAtom),
     () => {
       anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";
       anchorRef.current!.download = "";

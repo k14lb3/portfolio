@@ -2,16 +2,16 @@ import { FC } from "react";
 import { socialsIcons } from "@/utils/constants";
 import Window, { WindowProps } from "@/components/window";
 
-export const props: WindowProps = {
+export const socialProps: WindowProps = {
   title: "Socials",
   type: "explorer",
   icon: "default",
   className: "aspect-[5/4]",
 };
 
-const Socials: FC = () => {
+export const Socials: FC = () => {
   return (
-    <Window {...props}>
+    <Window {...socialProps}>
       <div className="flex space-x-[2.3988vh]">
         {socialsIcons.map(({ src, label }) => {
           return (
@@ -32,5 +32,3 @@ const Socials: FC = () => {
     </Window>
   );
 };
-
-export default Socials;

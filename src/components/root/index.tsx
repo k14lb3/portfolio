@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import _, { divide } from "lodash";
+import _ from "lodash";
 import { desktopIcons } from "@/utils/constants";
 import { options } from "@/components/taskbar/start-menu";
 import { generateRandomNumber, launchFile } from "@/utils/helpers";
@@ -13,7 +13,7 @@ import {
   windowsState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
-import About, { props } from "@/components/about";
+import { About, aboutProps } from "@/components/windows";
 
 const Root: FC = ({ children }) => {
   const bootAtom = useRecoilValue(bootState);
@@ -210,7 +210,7 @@ const Root: FC = ({ children }) => {
       setLaunching(true);
 
       const launchStartupWindows = setTimeout(() => {
-        launchFile({ component: About, props: props }, setWindowsAtom);
+        launchFile({ component: About, props: aboutProps }, setWindowsAtom);
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
 

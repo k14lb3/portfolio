@@ -2,7 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import Window, { WindowProps } from "@/components/window";
 
-export const props: WindowProps = {
+export const aboutProps: WindowProps = {
   className: "h-[64.47vh] aspect-[205/214]",
   title: "About",
   type: "properties",
@@ -10,9 +10,9 @@ export const props: WindowProps = {
   maximize: { visible: false },
 };
 
-const About: FC = () => {
+export const About: FC = () => {
   return (
-    <Window {...props}>
+    <Window {...aboutProps}>
       <div className="grid grid-cols-2 p-[2.9985vh]">
         <div className="relative h-[17.993vh] aspect-square bg-[#DFDFDF] rounded-full overflow-hidden">
           <Image
@@ -50,5 +50,3 @@ const About: FC = () => {
     </Window>
   );
 };
-
-export default About;

@@ -4,7 +4,7 @@ import { atom } from "recoil";
 
 export const bootState = atom({
   key: "bootState",
-  default: false as boolean,
+  default: true as boolean,
 });
 
 export const focusedState = atom({

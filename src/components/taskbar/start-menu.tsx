@@ -16,7 +16,7 @@ import {
   windowsState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
-import About, { props } from "@/components/about";
+import { About, aboutProps } from "@/components/windows";
 import { StartSubmenu } from "./start-submenu";
 
 interface Option {
@@ -91,7 +91,7 @@ export const StartMenu: FC = () => {
   const optionsEvent = [
     [() => {}, () => {}],
     () => {},
-    () => launchFile({ component: About, props: props }, setWindowsAtom),
+    () => launchFile({ component: About, props: aboutProps }, setWindowsAtom),
     () => {
       window.close();
       router.push("https://www.linkedin.com/in/karlivanalberto/");
