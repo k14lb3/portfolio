@@ -5,7 +5,6 @@ import Window, { WindowProps } from "@/components/window";
 export const socialProps: WindowProps = {
   title: "Socials",
   type: "explorer",
-  icon: "default",
   className: "aspect-[5/4]",
 };
 

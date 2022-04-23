@@ -95,7 +95,7 @@ const Button: FC<
   );
 };
 
-interface TitleBarProps extends Omit<WindowProps, ""> {
+interface TitleBarProps extends WindowProps {
   closeWindow?: () => void;
 }
 
@@ -127,17 +127,11 @@ export const TitleBar: FC<TitleBarProps> = ({
         onMouseUp={onMouseUp}
       />
       <div className="flex h-full items-center">
-        {type === "explorer" && (
+        {(type === "explorer" || (type === "properties" && icon)) && (
           <div className="h-[2.4vh] aspect-square">
             <img
               className="h-full w-full"
-              src={
-                type === "explorer"
-                  ? icon === "default"
-                    ? "/static/images/icons/folder-opened.png"
-                    : icon?.src
-                  : undefined
-              }
+              src={icon ? icon : "/static/images/icons/folder-opened.png"}
               alt="Window Icon"
             />
           </div>

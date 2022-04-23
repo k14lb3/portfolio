@@ -72,9 +72,9 @@ const Taskbar: FC = () => {
                           <img
                             className="h-full"
                             src={
-                              props.icon === "default"
-                                ? "/static/images/icons/folder-opened.png"
-                                : props.icon.src
+                              props.icon
+                                ? props.icon
+                                : "/static/images/icons/folder-opened.png"
                             }
                             alt={props.title}
                           />

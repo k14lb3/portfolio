@@ -21,24 +21,14 @@ import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
 import { TitleBar } from "./title-bar";
 
-export type WindowProps = Explorer | Properties;
-
-interface WindowBase
+export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
+  type: "explorer" | "properties";
   minimize?: { visible: false } | { visible: true; disabled: boolean };
   maximize?: { visible: false } | { visible: true; disabled: boolean };
   initPos?: Coordinates;
-}
-
-interface Explorer extends WindowBase {
-  type: "explorer";
-  icon: "default" | { src: string };
-}
-
-interface Properties extends WindowBase {
-  type: "properties";
-  icon?: undefined;
+  icon?: string;
 }
 
 const Window: FC<WindowProps> = ({
