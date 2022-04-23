@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import _ from "lodash";
+import _, { divide } from "lodash";
 import { desktopIcons } from "@/utils/constants";
 import { options } from "@/components/taskbar/start-menu";
 import { generateRandomNumber, launchFile } from "@/utils/helpers";
@@ -25,68 +25,118 @@ const Root: FC = ({ children }) => {
   const [launching, setLaunching] = useState<boolean>(false);
 
   const handleArrowUpKeydown = () =>
-    setHighlightAtom((oldHighlightAtom) => {
+    setHighlightAtom((currHighlight) => {
       if (startAtom) {
-        if (
-          oldHighlightAtom.startMenu === 0 ||
-          oldHighlightAtom.startMenu === 1
-        )
+        if (typeof currHighlight.startMenu !== "number")
           return {
-            ...oldHighlightAtom,
+            ...currHighlight,
+            startMenu: [
+              (currHighlight.startMenu as number[])[0],
+              (currHighlight.startMenu as number[])[1] - 1,
+            ],
+          };
+
+        if (currHighlight.startMenu === 0 || currHighlight.startMenu === 1)
+          return {
+            ...currHighlight,
             startMenu: options.length,
           };
 
         return {
-          ...oldHighlightAtom,
-          startMenu: oldHighlightAtom.startMenu - 1,
+          ...currHighlight,
+          startMenu: (currHighlight.startMenu as number) - 1,
         };
       }
 
-      if (oldHighlightAtom.desktop === 0 || oldHighlightAtom.desktop === 1)
+      if (currHighlight.desktop === 0 || currHighlight.desktop === 1)
         return {
-          ...oldHighlightAtom,
+          ...currHighlight,
           desktop: desktopIcons.length,
         };
 
       return {
-        ...oldHighlightAtom,
-        desktop: oldHighlightAtom.desktop - 1,
+        ...currHighlight,
+        desktop: currHighlight.desktop - 1,
       };
     });
 
   const handleArrowDownKeydown = () => {
-    setHighlightAtom((oldHighlightAtom) => {
+    setHighlightAtom((currHighlight) => {
       if (startAtom) {
-        if (oldHighlightAtom.startMenu === options.length)
+        if (typeof currHighlight.startMenu !== "number")
           return {
-            ...oldHighlightAtom,
+            ...currHighlight,
+            startMenu: [
+              (currHighlight.startMenu as number[])[0],
+              (currHighlight.startMenu as number[])[1] + 1,
+            ],
+          };
+
+        if (currHighlight.startMenu === options.length)
+          return {
+            ...currHighlight,
             startMenu: 1,
           };
 
         return {
-          ...oldHighlightAtom,
-          startMenu: oldHighlightAtom.startMenu + 1,
+          ...currHighlight,
+          startMenu: (currHighlight.startMenu as number) + 1,
         };
       }
 
-      if (oldHighlightAtom.desktop === desktopIcons.length)
+      if (currHighlight.desktop === desktopIcons.length)
         return {
-          ...oldHighlightAtom,
+          ...currHighlight,
           desktop: 1,
         };
 
       return {
-        ...oldHighlightAtom,
-        desktop: oldHighlightAtom.desktop + 1,
+        ...currHighlight,
+        desktop: currHighlight.desktop + 1,
       };
     });
   };
+
+  const handleArrowRightKeydown = () =>
+    setHighlightAtom((currHighlight) => {
+      if (currHighlight.startMenu !== 1) return currHighlight;
+
+      return {
+        ...currHighlight,
+        startMenu: [1, 1],
+      };
+    });
+
+  const handleArrowLeftKeydown = () =>
+    setHighlightAtom((currHighlight) => {
+      if (typeof highlightAtom.startMenu === "number") return currHighlight;
+
+      return {
+        ...currHighlight,
+        startMenu: (currHighlight.startMenu as number[])[0],
+      };
+    });
 
   const handleEnterKeyup = () => {
     if (startAtom) {
       if (highlightAtom.startMenu === 0) return;
 
-      return startMenuOptionsRefAtom[highlightAtom.startMenu - 1].click();
+      if (typeof highlightAtom.startMenu !== "number") {
+        const index = highlightAtom.startMenu[0] - 1;
+        const subIndex = highlightAtom.startMenu[1] - 1;
+
+        return (
+          (
+            startMenuOptionsRefAtom[index] as [HTMLDivElement, HTMLDivElement[]]
+          )[1][subIndex] as HTMLDivElement
+        ).click();
+      }
+
+      return (
+        startMenuOptionsRefAtom[
+          (highlightAtom.startMenu as number) - 1
+        ] as HTMLDivElement
+      ).click();
     }
 
     if (highlightAtom.desktop === 0) return;
@@ -116,8 +166,8 @@ const Root: FC = ({ children }) => {
 
       keyIndex = optionKey[0].index;
 
-      setHighlightAtom((oldHighlightAtom) => ({
-        ...oldHighlightAtom,
+      setHighlightAtom((currHighlight) => ({
+        ...currHighlight,
         startMenu: keyIndex,
       }));
     } else {
@@ -148,8 +198,8 @@ const Root: FC = ({ children }) => {
         keyIndex = shortcutKey[0].index;
       }
 
-      setHighlightAtom((oldHighlightAtom) => ({
-        ...oldHighlightAtom,
+      setHighlightAtom((currHighlight) => ({
+        ...currHighlight,
         desktop: keyIndex,
       }));
     }
@@ -170,8 +220,8 @@ const Root: FC = ({ children }) => {
 
   useEffect(() => {
     if (!startAtom) {
-      setHighlightAtom((oldHighlightAtom) => ({
-        ...oldHighlightAtom,
+      setHighlightAtom((currHighlight) => ({
+        ...currHighlight,
         startMenu: 0,
       }));
     }
@@ -186,6 +236,12 @@ const Root: FC = ({ children }) => {
         case "ArrowDown":
           handleArrowDownKeydown();
           break;
+        case "ArrowRight":
+          handleArrowRightKeydown();
+          break;
+        case "ArrowLeft":
+          handleArrowLeftKeydown();
+          break;
         default:
           handleDefaultKeydown(e.key);
       }
@@ -198,8 +254,8 @@ const Root: FC = ({ children }) => {
           break;
         case "Escape":
           if (highlightAtom.desktop !== 0)
-            return setHighlightAtom((oldHighlightAtom) => ({
-              ...oldHighlightAtom,
+            return setHighlightAtom((currHighlight) => ({
+              ...currHighlight,
               desktop: 0,
             }));
           if (startAtom) return setStartAtom(false);
