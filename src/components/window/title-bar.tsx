@@ -96,7 +96,7 @@ const Button: FC<
 };
 
 interface TitleBarProps extends Omit<WindowProps, ""> {
-closeWindow?: () => void;
+  closeWindow?: () => void;
 }
 
 export const TitleBar: FC<TitleBarProps> = ({
@@ -126,7 +126,7 @@ export const TitleBar: FC<TitleBarProps> = ({
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
       />
-      <div className="relative flex h-full items-center">
+      <div className="flex h-full items-center">
         {type === "explorer" && (
           <div className="h-[2.4vh] aspect-square">
             <img
