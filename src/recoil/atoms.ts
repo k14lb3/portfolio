@@ -2,9 +2,19 @@ import { WindowProps } from "@/components/window";
 import { FC } from "react";
 import { atom } from "recoil";
 
+export const visitorIpState = atom({
+  key: "visitorIpState",
+  default: "" as string,
+});
+
+export const visitorsState = atom({
+  key: "visitorsState",
+  default: [] as string[],
+});
+
 export const bootState = atom({
   key: "bootState",
-  default: false as boolean,
+  default: true as boolean,
 });
 
 export const focusedState = atom({

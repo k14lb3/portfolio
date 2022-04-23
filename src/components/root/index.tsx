@@ -1,11 +1,24 @@
 import { FC, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  serverTimestamp,
+  query,
+  collection,
+  doc,
+  onSnapshot,
+  getDoc,
+  orderBy,
+  setDoc,
+} from "firebase/firestore";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import _ from "lodash";
+import { db } from "@/firebase";
 import { desktopIcons } from "@/utils/constants";
 import { options } from "@/components/taskbar/start-menu";
 import { generateRandomNumber, launchFile } from "@/utils/helpers";
 import {
   bootState,
+  visitorIpState,
+  visitorsState,
   highlightState,
   desktopIconsRefState,
   startMenuOptionsRefState,
@@ -17,6 +30,8 @@ import { About, aboutProps } from "@/components/windows";
 
 const Root: FC = ({ children }) => {
   const bootAtom = useRecoilValue(bootState);
+  const setVisitorIpAtom = useSetRecoilState(visitorIpState);
+  const setVisitorsAtom = useSetRecoilState(visitorsState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
@@ -204,6 +219,43 @@ const Root: FC = ({ children }) => {
       }));
     }
   };
+
+  useEffect(() => {
+    const getIp = async () => {
+      const data = await (
+        await fetch("https://geolocation-db.com/json/")
+      ).json();
+
+      const ip = data["IPv4"];
+
+      return ip;
+    };
+
+    const fetchVisitors = async () => {
+      const ip = await getIp();
+
+      setVisitorIpAtom(ip);
+
+      const visitorDoc = await getDoc(doc(db, "visitors", ip));
+
+      if (visitorDoc.exists()) return;
+
+      await setDoc(doc(db, "visitors", ip), {
+        timestamp: serverTimestamp(),
+      });
+    };
+
+    fetchVisitors();
+  }, []);
+
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, "visitors"), orderBy("timestamp")),
+        (snapshot) => setVisitorsAtom(snapshot.docs.map((doc) => doc.id))
+      ),
+    []
+  );
 
   useEffect(() => {
     if (bootAtom) {
