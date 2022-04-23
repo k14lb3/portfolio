@@ -16,8 +16,9 @@ import {
   windowsState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
-import { About, aboutProps } from "@/components/windows";
 import { StartSubmenu } from "./start-submenu";
+import { About, aboutProps } from "@/components/windows";
+import { VisitorCounter, visitorCounterProps } from "@/components/windows";
 
 interface Option {
   index: number;
@@ -89,7 +90,14 @@ export const StartMenu: FC = () => {
   const setWindowsAtom = useSetRecoilState(windowsState);
 
   const optionsEvent = [
-    [() => {}, () => {}],
+    [
+      () =>
+        launchFile(
+          { component: VisitorCounter, props: visitorCounterProps },
+          setWindowsAtom
+        ),
+      () => {},
+    ],
     () => {},
     () => launchFile({ component: About, props: aboutProps }, setWindowsAtom),
     () => {
