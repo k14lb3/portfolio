@@ -11,7 +11,7 @@ const Boot: FC = () => {
   const setBootAtom = useSetRecoilState(bootState);
   const [aspectRatio, setAspectRatio] = useState<boolean>(false);
   const [cli, setCli] = useState<boolean>(false);
-  const [cursor, setCursor] = useState<string>(" cursor-default");
+  const [cursor, setCursor] = useState<string>(" cursor-none");
   const [bgColor, setBgcolor] = useState<string>("bg-black");
 
   useLayoutEffect(() => {
@@ -55,11 +55,11 @@ const Boot: FC = () => {
   return (
     <div
       style={{ aspectRatio: aspectRatio ? "8/5" : "auto" }}
-      className={`fixed inset-0 h-full ${bgColor} pt-[4vh] px-[2vh] m-auto`}
+      className={`fixed inset-0 h-full ${bgColor} pt-[4vh] px-[2vh] m-auto cursor-none`}
     >
       <div className={`fixed inset-0${cursor}`} />
       {cli ? (
-        cursor === " cursor-default" && (
+        cursor === " cursor-none" && (
           <code className="block text-white text-[2.5vh] font-bold animate-blink">
             _
           </code>

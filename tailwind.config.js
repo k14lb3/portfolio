@@ -4,6 +4,7 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     cursor: {
+      none: "none",
       default: "url(/static/images/cursor/default.png), default",
       pointer: "url(/static/images/cursor/pointer.png), pointer",
       wait: "url(/static/images/cursor/wait.png), wait",
