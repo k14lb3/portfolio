@@ -15,16 +15,30 @@ export const convertVhtoPx = (vh: number, screenHeight: number) =>
 
 export const launchFile = (
   window: { component: FC<Partial<WindowProps>>; props: WindowProps },
-  setWindowsAtom: SetterOrUpdater<
-    {
+  windowsAtom: {
+    get: () => {
       component: FC<Partial<WindowProps>>;
       props: WindowProps;
-    }[]
-  >
-) =>
-  setWindowsAtom((currHighlight) => {
-    if (currHighlight.find(({ props }) => props.title === window.props.title))
-      return currHighlight;
+    }[];
+    set: SetterOrUpdater<
+      {
+        component: FC<Partial<WindowProps>>;
+        props: WindowProps;
+      }[]
+    >;
+  },
+  setFocusedAtom: SetterOrUpdater<string>,
+  setTopMostWindowAtom: SetterOrUpdater<string>
+) => {
+  const windows = windowsAtom.get();
 
-    return [...currHighlight, window];
-  });
+  if (windows.length === 0) return windowsAtom.set([window]);
+
+  if (windows.find(({ props }) => props.title === window.props.title)) {
+    setFocusedAtom!(window.props.title);
+    setTopMostWindowAtom!(window.props.title);
+    return windows;
+  }
+
+  windowsAtom.set((currWindows) => [...currWindows, window]);
+};

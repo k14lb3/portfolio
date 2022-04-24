@@ -14,7 +14,7 @@ export const visitorsState = atom({
 
 export const bootState = atom({
   key: "bootState",
-  default: true as boolean,
+  default: false as boolean,
 });
 
 export const focusedState = atom({

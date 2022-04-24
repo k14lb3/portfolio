@@ -24,6 +24,8 @@ import {
   startMenuOptionsRefState,
   startState,
   windowsState,
+  focusedState,
+  topMostWindowState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
 import { About, aboutProps } from "@/components/windows";
@@ -34,6 +36,8 @@ const Root: FC = ({ children }) => {
   const setVisitorsAtom = useSetRecoilState(visitorsState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
+  const setFocusedAtom = useSetRecoilState(focusedState);
+  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
@@ -262,7 +266,12 @@ const Root: FC = ({ children }) => {
       setLaunching(true);
 
       const launchStartupWindows = setTimeout(() => {
-        launchFile({ component: About, props: aboutProps }, setWindowsAtom);
+        launchFile(
+          { component: About, props: aboutProps },
+          { get: () => windowsAtom, set: setWindowsAtom },
+          setFocusedAtom,
+          setTopMostWindowAtom
+        );
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
 

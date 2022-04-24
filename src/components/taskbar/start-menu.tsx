@@ -14,6 +14,8 @@ import {
   startState,
   startMenuOptionsRefState,
   windowsState,
+  focusedState,
+  topMostWindowState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
 import { StartSubmenu } from "./start-submenu";
@@ -87,19 +89,29 @@ export const StartMenu: FC = () => {
     startMenuOptionsRefState
   );
   const setStartAtom = useSetRecoilState(startState);
-  const setWindowsAtom = useSetRecoilState(windowsState);
+  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
+  const setFocusedAtom = useSetRecoilState(focusedState);
+  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
 
   const optionsEvent = [
     [
       () =>
         launchFile(
           { component: VisitorCounter, props: visitorCounterProps },
-          setWindowsAtom
+          { get: () => windowsAtom, set: setWindowsAtom },
+          setFocusedAtom,
+          setTopMostWindowAtom
         ),
       () => {},
     ],
     () => {},
-    () => launchFile({ component: About, props: aboutProps }, setWindowsAtom),
+    () =>
+      launchFile(
+        { component: About, props: aboutProps },
+        { get: () => windowsAtom, set: setWindowsAtom },
+        setFocusedAtom,
+        setTopMostWindowAtom
+      ),
     () => {
       window.close();
       router.push("https://www.linkedin.com/in/karlivanalberto/");

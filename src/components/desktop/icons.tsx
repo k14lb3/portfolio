@@ -6,6 +6,8 @@ import {
   highlightState,
   desktopIconsRefState,
   windowsState,
+  focusedState,
+  topMostWindowState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
 import { Socials, socialProps } from "@/components/windows";
@@ -15,13 +17,20 @@ export const Icons: FC = () => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
-  const setWindowsAtom = useSetRecoilState(windowsState);
+  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
+  const setFocusedAtom = useSetRecoilState(focusedState);
+  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
 
   const iconsEvent: VoidFunction[] = [
     () => {},
     () => {},
     () =>
-      launchFile({ component: Socials, props: socialProps }, setWindowsAtom),
+      launchFile(
+        { component: Socials, props: socialProps },
+        { get: () => windowsAtom, set: setWindowsAtom },
+        setFocusedAtom,
+        setTopMostWindowAtom
+      ),
     () => {
       anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";
       anchorRef.current!.download = "";
