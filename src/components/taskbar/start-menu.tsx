@@ -114,7 +114,7 @@ export const StartMenu: FC = () => {
   }, [optionsRef]);
 
   return (
-    <Container className="bottom-[84%]">
+    <Container className="left-[-2%] bottom-[107%]">
       <div className="relative h-full w-[3.198vh] bg-[#808080]">
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 -rotate-90 text-white font-bold text-[2.25vh] whitespace-nowrap">
           hello world :3

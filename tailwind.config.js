@@ -17,10 +17,6 @@ module.exports = {
       fontFamily: {
         mss: ["Microsoft Sans Serif", ...defaultTheme.fontFamily.sans],
       },
-      backgroundImage: {
-        "start-default": "url(/static/images/start/default.png)",
-        "start-clicked": "url(/static/images/start/clicked.png)",
-      },
       keyframes: {
         blink: {
           "0%": { opacity: 0 },
