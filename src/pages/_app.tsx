@@ -8,7 +8,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <title>Karl Ivan Alberto | Portfolio</title>
+        <title>Karl Ivan Alberto | Software Developer</title>
       </Head>
       <RecoilRoot>
         <Root>
