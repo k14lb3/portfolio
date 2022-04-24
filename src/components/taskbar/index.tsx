@@ -68,9 +68,9 @@ const Taskbar: FC = () => {
                             : "bg-[#C0C0C0]"
                         }`}
                       >
-                        <div className="h-[2.4vh] aspect-square">
+                        <div className="flex items-center h-[2.4vh] aspect-square">
                           <img
-                            className="h-full"
+                            className="w-full"
                             src={
                               props.icon
                                 ? props.icon
