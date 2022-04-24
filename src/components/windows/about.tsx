@@ -76,7 +76,7 @@ export const About: FC = () => {
         <div className="flex items-end justify-center flex-grow">
           <div className="">
             <p className="text-[2vh]">
-              &quot;Hardworkers who do what they like are unstoppable.&quot;
+              &quot;Hard workers who do things they like are unstoppable.&quot;
               <br />
               {"- "}
               <a
