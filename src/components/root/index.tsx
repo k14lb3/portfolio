@@ -231,7 +231,7 @@ const Root: FC = ({ children }) => {
       return ip;
     };
 
-    const fetchVisitors = async () => {
+    const setVisitor = async () => {
       const ip = await getIp();
 
       setVisitorIpAtom(ip);
@@ -245,7 +245,7 @@ const Root: FC = ({ children }) => {
       });
     };
 
-    fetchVisitors();
+    setVisitor();
   }, []);
 
   useEffect(
