@@ -6,6 +6,7 @@ export const aboutProps: WindowProps = {
   className: "h-[64.47vh] aspect-[205/214]",
   title: "About",
   type: "properties",
+  icon: "/static/images/icons/about.png",
   minimize: { visible: false },
   maximize: { visible: false },
 };
