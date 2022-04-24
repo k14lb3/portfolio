@@ -18,7 +18,7 @@ export const Icons: FC = () => {
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const setFocusedAtom = useSetRecoilState(focusedState);
+  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
 
   const iconsEvent: VoidFunction[] = [
@@ -62,6 +62,12 @@ export const Icons: FC = () => {
     <>
       <a ref={anchorRef} />
       {desktopIcons.map(({ index, src, label }) => {
+        const highlighted =
+          (highlightAtom.desktop === index ||
+            highlightAtom.desktop === 90 + index) &&
+          (focusedAtom === "icon" || focusedAtom === "desktop");
+        const focused = focusedAtom === "icon";
+
         return (
           <div
             ref={(el) => {
@@ -69,12 +75,13 @@ export const Icons: FC = () => {
             }}
             key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
-            onClick={() =>
+            onClick={() => {
+              setFocusedAtom("icon");
               setHighlightAtom((currHighlight) => ({
                 ...currHighlight,
-                desktop: index,
-              }))
-            }
+                desktop: 90 + index,
+              }));
+            }}
             onDoubleClick={() => {
               iconsEvent[index - 1]();
               setHighlightAtom((currHighlight) => ({
@@ -85,7 +92,7 @@ export const Icons: FC = () => {
           >
             <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
               <img className="h-full mx-auto" src={src} alt={label} />
-              {highlightAtom.desktop === index && (
+              {highlighted && (
                 <div
                   style={{
                     maskImage: `url(${src})`,
@@ -95,15 +102,17 @@ export const Icons: FC = () => {
                     maskSize: "4.799vh",
                     WebkitMaskSize: "4.799vh",
                   }}
-                  className="absolute inset-0 aspect-square bg-[#000180] opacity-70 "
+                  className={`absolute inset-0 aspect-square opacity-70${
+                    focused ? " bg-[#000080]" : ""
+                  }`}
                 />
               )}
             </div>
             <div
               className={`px-[0.2999vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
-                highlightAtom.desktop === index
-                  ? " bg-[#000180] border-[#ffff7f] "
-                  : " bg-[#008080] border-[transparent]"
+                highlighted
+                  ? ` border-[#ffff7f] ${focused ? "bg-[#000080]" : ""}`
+                  : " bg-[#008080] border-[transparent] "
               }`}
             >
               {label}

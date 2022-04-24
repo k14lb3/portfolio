@@ -15,7 +15,6 @@ import { Start } from "./start";
 import { Clock } from "./clock";
 
 const Taskbar: FC = () => {
-  const setHighlightAtom = useSetRecoilState(highlightState);
   const resetFocusedAtom = useResetRecoilState(focusedState);
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
@@ -24,12 +23,7 @@ const Taskbar: FC = () => {
   return (
     <div
       className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0] border-solid border-t-[0.1vh] border-[#DFDFDF] z-[999]"
-      onMouseDown={() =>
-        setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          desktop: 0,
-        }))
-      }
+      onMouseDown={() => setFocusedAtom("taskbar")}
     >
       <div className="h-full border-solid border-t-[0.1vh] border-white">
         <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">

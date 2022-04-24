@@ -36,84 +36,88 @@ const Root: FC = ({ children }) => {
   const setVisitorsAtom = useSetRecoilState(visitorsState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const setFocusedAtom = useSetRecoilState(focusedState);
+  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
   const [launching, setLaunching] = useState<boolean>(false);
 
-  const handleArrowUpKeydown = () =>
-    setHighlightAtom((currHighlight) => {
-      if (startAtom) {
-        if (typeof currHighlight.startMenu !== "number")
-          return {
-            ...currHighlight,
-            startMenu: [
-              (currHighlight.startMenu as number[])[0],
-              (currHighlight.startMenu as number[])[1] - 1,
-            ],
-          };
-
-        if (currHighlight.startMenu === 0 || currHighlight.startMenu === 1)
-          return {
-            ...currHighlight,
-            startMenu: options.length,
-          };
-
-        return {
+  const handleArrowUpKeydown = () => {
+    if (startAtom) {
+      if (typeof highlightAtom.startMenu !== "number")
+        return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          startMenu: (currHighlight.startMenu as number) - 1,
-        };
-      }
+          startMenu: [
+            (currHighlight.startMenu as number[])[0],
+            (currHighlight.startMenu as number[])[1] - 1,
+          ],
+        }));
 
-      if (currHighlight.desktop === 0 || currHighlight.desktop === 1)
-        return {
+      if (highlightAtom.startMenu === 0 || highlightAtom.startMenu === 1)
+        return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          desktop: desktopIcons.length,
-        };
+          startMenu: options.length,
+        }));
 
-      return {
+      return setHighlightAtom((currHighlight) => ({
         ...currHighlight,
-        desktop: currHighlight.desktop - 1,
-      };
-    });
+        startMenu: (currHighlight.startMenu as number) - 1,
+      }));
+    }
+
+    if (focusedAtom === "icon" || focusedAtom === "desktop") {
+      setFocusedAtom("icon");
+
+      if (highlightAtom.desktop === 1 || highlightAtom.desktop === 90 + 1)
+        return;
+
+      return setHighlightAtom((currHighlight) => ({
+        ...currHighlight,
+        desktop:
+          (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop - 1,
+      }));
+    }
+  };
 
   const handleArrowDownKeydown = () => {
-    setHighlightAtom((currHighlight) => {
-      if (startAtom) {
-        if (typeof currHighlight.startMenu !== "number")
-          return {
-            ...currHighlight,
-            startMenu: [
-              (currHighlight.startMenu as number[])[0],
-              (currHighlight.startMenu as number[])[1] + 1,
-            ],
-          };
-
-        if (currHighlight.startMenu === options.length)
-          return {
-            ...currHighlight,
-            startMenu: 1,
-          };
-
-        return {
+    if (startAtom) {
+      if (typeof highlightAtom.startMenu !== "number")
+        return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          startMenu: (currHighlight.startMenu as number) + 1,
-        };
-      }
+          startMenu: [
+            (currHighlight.startMenu as number[])[0],
+            (currHighlight.startMenu as number[])[1] + 1,
+          ],
+        }));
 
-      if (currHighlight.desktop === desktopIcons.length)
-        return {
+      if (highlightAtom.startMenu === options.length)
+        return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          desktop: 1,
-        };
+          startMenu: 1,
+        }));
 
-      return {
+      return setHighlightAtom((currHighlight) => ({
         ...currHighlight,
-        desktop: currHighlight.desktop + 1,
-      };
-    });
+        startMenu: (currHighlight.startMenu as number) + 1,
+      }));
+    }
+
+    if (focusedAtom === "icon" || focusedAtom === "desktop") {
+      setFocusedAtom("icon");
+
+      if (
+        highlightAtom.desktop === desktopIcons.length ||
+        highlightAtom.desktop === 90 + desktopIcons.length
+      )
+        return;
+
+      return setHighlightAtom((currHighlight) => ({
+        ...currHighlight,
+        desktop:
+          (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop + 1,
+      }));
+    }
   };
 
   const handleArrowRightKeydown = () =>
@@ -334,7 +338,13 @@ const Root: FC = ({ children }) => {
       window.removeEventListener("keydown", keydownEvents);
       window.removeEventListener("keyup", keyupEvents);
     };
-  }, [highlightAtom, startAtom, startMenuOptionsRefAtom, windowsAtom]);
+  }, [
+    startAtom,
+    startMenuOptionsRefAtom,
+    highlightAtom,
+    windowsAtom,
+    focusedAtom,
+  ]);
 
   return bootAtom ? (
     <>
