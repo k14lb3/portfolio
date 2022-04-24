@@ -30,7 +30,7 @@ interface Option {
 export const options: Option[] = [
   {
     index: 1,
-    src: "/static/images/start/menu/options/programs.png",
+    src: "/static/images/icons/programs.png",
     label: "Programs",
     nested: [
       {
@@ -47,17 +47,17 @@ export const options: Option[] = [
   },
   {
     index: 2,
-    src: "/static/images/start/menu/options/contact.png",
+    src: "/static/images/icons/contact.png",
     label: "Contact",
   },
   {
     index: 3,
-    src: "/static/images/start/menu/options/about.png",
+    src: "/static/images/icons/about.png",
     label: "About",
   },
   {
     index: 4,
-    src: "/static/images/start/menu/options/shut-down.png",
+    src: "/static/images/icons/shut-down.png",
     label: "Shut Down",
   },
 ];
