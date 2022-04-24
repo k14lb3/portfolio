@@ -82,6 +82,7 @@ export const Container: FC<
 
 export const StartMenu: FC = () => {
   const router = useRouter();
+  const anchorRef = useRef<HTMLAnchorElement>(null);
   const nestRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const optionsRef = useRef<HTMLDivElement[]>([]);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
@@ -102,7 +103,17 @@ export const StartMenu: FC = () => {
           setFocusedAtom,
           setTopMostWindowAtom
         ),
-      () => {},
+      () => {
+        anchorRef.current!.href =
+          "https://www.google.com/search?q=calculator&rlz=1C1NHXL_enAE736AE739&ei=COxkYq6xC6eMr7wP9NmgkAQ&ved=0ahUKEwiu1b-Uh6z3AhUnxosBHfQsCEIQ4dUDCA4&uact=5&oq=calculator&gs_lcp=Cgdnd3Mtd2l6EAMyBwgAELEDEEMyBwgAELEDEEMyBwgAELEDEEMyBAgAEEMyBAgAEEMyBwgAELEDEEMyBwgAELEDEEMyCwgAEIAEELEDEIMBMgcIABCxAxBDMggIABCxAxCDAToFCAAQkQI6CAgAEIAEELEDOgUIABCABDoKCC4QxwEQ0QMQQzoOCC4QgAQQsQMQxwEQ0QM6EQguEIAEELEDEIMBEMcBEKMCOg0ILhCxAxDHARDRAxBDSgQIQRgASgQIRhgAUABYtBFgrhJoAHABeACAAZYBiAHWCZIBAzIuOZgBAKABAcABAQ&sclient=gws-wiz";
+        anchorRef.current!.target = "_blank";
+        anchorRef.current!.rel = "noopener noreferrer";
+        anchorRef.current!.click();
+
+        anchorRef.current!.removeAttribute("href");
+        anchorRef.current!.removeAttribute("target");
+        anchorRef.current!.removeAttribute("rel");
+      },
     ],
     () => {},
     () =>
@@ -127,6 +138,7 @@ export const StartMenu: FC = () => {
 
   return (
     <Container className="left-[-2%] bottom-[107%]">
+      <a ref={anchorRef} />
       <div className="relative h-full w-[3.198vh] bg-[#808080]">
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 -rotate-90 text-white font-bold text-[2.25vh] whitespace-nowrap">
           hello world :3
