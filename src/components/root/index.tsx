@@ -10,7 +10,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import _ from "lodash";
+import _, { curry } from "lodash";
 import { db } from "@/firebase";
 import { desktopIcons } from "@/utils/constants";
 import { options } from "@/components/taskbar/start-menu";
@@ -35,9 +35,8 @@ const Root: FC = ({ children }) => {
   const setVisitorIpAtom = useSetRecoilState(visitorIpState);
   const setVisitorsAtom = useSetRecoilState(visitorsState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
-  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+  const windowsAtom = useRecoilValue(windowsState);
+  const focusedAtom = useRecoilValue(focusedState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
@@ -66,8 +65,12 @@ const Root: FC = ({ children }) => {
       }));
     }
 
-    if (focusedAtom === "icon" || focusedAtom === "desktop") {
-      setFocusedAtom("icon");
+    if (focusedAtom === "desktop") {
+      if (highlightAtom.desktop === 90)
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop: 90 + desktopIcons.length,
+        }));
 
       if (highlightAtom.desktop === 1 || highlightAtom.desktop === 90 + 1)
         return;
@@ -103,9 +106,7 @@ const Root: FC = ({ children }) => {
       }));
     }
 
-    if (focusedAtom === "icon" || focusedAtom === "desktop") {
-      setFocusedAtom("icon");
-
+    if (focusedAtom === "desktop") {
       if (
         highlightAtom.desktop === desktopIcons.length ||
         highlightAtom.desktop === 90 + desktopIcons.length
@@ -270,12 +271,12 @@ const Root: FC = ({ children }) => {
       setLaunching(true);
 
       const launchStartupWindows = setTimeout(() => {
-        launchFile(
-          { component: About, props: aboutProps },
-          { get: () => windowsAtom, set: setWindowsAtom },
-          setFocusedAtom,
-          setTopMostWindowAtom
-        );
+        // launchFile(
+        //   { component: About, props: aboutProps },
+        //   { get: () => windowsAtom, set: setWindowsAtom },
+        //   setFocusedAtom,
+        //   setTopMostWindowAtom
+        // );
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
 

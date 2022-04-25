@@ -54,10 +54,10 @@ export const Icons: FC = () => {
       <a ref={anchorRef} />
       {desktopIcons.map(({ index, src, label }) => {
         const highlighted =
+          focusedAtom === "desktop" &&
           (highlightAtom.desktop === index ||
-            highlightAtom.desktop === 90 + index) &&
-          (focusedAtom === "icon" || focusedAtom === "desktop");
-        const focused = focusedAtom === "icon";
+            highlightAtom.desktop === 90 + index);
+        const focused = focusedAtom === "desktop" && highlightAtom.desktop > 90;
 
         return (
           <div
@@ -67,7 +67,7 @@ export const Icons: FC = () => {
             key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
             onClick={() => {
-              setFocusedAtom("icon");
+              setFocusedAtom("desktop");
               setHighlightAtom((currHighlight) => ({
                 ...currHighlight,
                 desktop: 90 + index,
@@ -75,10 +75,6 @@ export const Icons: FC = () => {
             }}
             onDoubleClick={() => {
               iconsEvent[index - 1]();
-              setHighlightAtom((currHighlight) => ({
-                ...currHighlight,
-                desktop: 0,
-              }));
             }}
           >
             <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
