@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, RefObject } from "react";
 import { SetterOrUpdater } from "recoil";
 import { WindowProps } from "@/components/window";
 
@@ -41,4 +41,18 @@ export const launchFile = (
   }
 
   windowsAtom.set((currWindows) => [...currWindows, window]);
+};
+
+export const openLink = (
+  anchorRef: RefObject<HTMLAnchorElement>,
+  url: string
+) => {
+  anchorRef.current!.href = url;
+  anchorRef.current!.target = "_blank";
+  anchorRef.current!.rel = "noopener noreferrer";
+  anchorRef.current!.click();
+
+  anchorRef.current!.removeAttribute("href");
+  anchorRef.current!.removeAttribute("target");
+  anchorRef.current!.removeAttribute("rel");
 };

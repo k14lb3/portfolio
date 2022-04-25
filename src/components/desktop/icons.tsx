@@ -9,7 +9,7 @@ import {
   focusedState,
   topMostWindowState,
 } from "@/recoil/atoms";
-import { launchFile } from "@/utils/helpers";
+import { launchFile, openLink } from "@/utils/helpers";
 import { Socials, socialProps } from "@/components/windows";
 
 export const Icons: FC = () => {
@@ -39,16 +39,7 @@ export const Icons: FC = () => {
       anchorRef.current!.removeAttribute("href");
       anchorRef.current!.removeAttribute("download");
     },
-    () => {
-      anchorRef.current!.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-      anchorRef.current!.target = "_blank";
-      anchorRef.current!.rel = "noopener noreferrer";
-      anchorRef.current!.click();
-
-      anchorRef.current!.removeAttribute("href");
-      anchorRef.current!.removeAttribute("target");
-      anchorRef.current!.removeAttribute("rel");
-    },
+    () => openLink(anchorRef, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
   ];
 
   useEffect(() => {
