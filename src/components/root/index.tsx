@@ -170,7 +170,11 @@ const Root: FC = ({ children }) => {
       bubbles: true,
     });
 
-    desktopIconsRefAtom[highlightAtom.desktop - 1].dispatchEvent(dblclick);
+    desktopIconsRefAtom[
+      (highlightAtom.desktop < 90
+        ? highlightAtom.desktop
+        : highlightAtom.desktop - 90) - 1
+    ].dispatchEvent(dblclick);
   };
 
   const handleDefaultKeydown = (key: string) => {

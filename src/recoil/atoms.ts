@@ -14,7 +14,7 @@ export const visitorsState = atom({
 
 export const bootState = atom({
   key: "bootState",
-  default: true as boolean,
+  default: false as boolean,
 });
 
 export const focusedState = atom({
@@ -33,7 +33,7 @@ export const highlightState = atom({
   default: {
     desktop: 90,
     startMenu: 0,
-    socials: 0,
+    socials: 90,
   } as HighlightState,
 });
 
