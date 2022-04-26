@@ -62,7 +62,7 @@ const Window: FC<WindowProps> = ({
   useEffect(() => {
     setTopMostWindowAtom(title);
     setFocusedAtom(title.toLowerCase());
-  }, []);
+  }, [title, setFocusedAtom, setTopMostWindowAtom]);
 
   useEffect(() => {
     if (parentRef && screenHeight) {
@@ -87,7 +87,7 @@ const Window: FC<WindowProps> = ({
       setDraggerPos(pos);
       setPositioned(true);
     }
-  }, [parentRef, screenHeight]);
+  }, [parentRef, screenWidth, screenHeight]);
 
   useEffect(() => {
     if (drag) {
@@ -96,7 +96,7 @@ const Window: FC<WindowProps> = ({
         y: convertPxToVh(mousePos.y, screenHeight!) - initDragPos.y,
       });
     }
-  }, [mousePos]);
+  }, [drag, initDragPos, mousePos, screenHeight]);
 
   const handleMouseDown = (e: MouseEvent) => {
     if (e.button !== 0) return;
