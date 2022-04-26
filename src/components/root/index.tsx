@@ -43,197 +43,6 @@ const Root: FC = ({ children }) => {
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
   const [launching, setLaunching] = useState<boolean>(false);
 
-  const handleArrowUpKeydown = () => {
-    if (startAtom) {
-      if (typeof highlightAtom.startMenu !== "number")
-        return setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          startMenu: [
-            (currHighlight.startMenu as number[])[0],
-            (currHighlight.startMenu as number[])[1] - 1,
-          ],
-        }));
-
-      if (highlightAtom.startMenu === 0 || highlightAtom.startMenu === 1)
-        return setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          startMenu: options.length,
-        }));
-
-      return setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        startMenu: (currHighlight.startMenu as number) - 1,
-      }));
-    }
-
-    if (focusedAtom === "desktop") {
-      if (highlightAtom.desktop === 90)
-        return setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          desktop: 90 + desktopIcons.length,
-        }));
-
-      if (highlightAtom.desktop === 1 || highlightAtom.desktop === 90 + 1)
-        return;
-
-      return setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        desktop:
-          (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop - 1,
-      }));
-    }
-  };
-
-  const handleArrowDownKeydown = () => {
-    if (startAtom) {
-      if (typeof highlightAtom.startMenu !== "number")
-        return setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          startMenu: [
-            (currHighlight.startMenu as number[])[0],
-            (currHighlight.startMenu as number[])[1] + 1,
-          ],
-        }));
-
-      if (highlightAtom.startMenu === options.length)
-        return setHighlightAtom((currHighlight) => ({
-          ...currHighlight,
-          startMenu: 1,
-        }));
-
-      return setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        startMenu: (currHighlight.startMenu as number) + 1,
-      }));
-    }
-
-    if (focusedAtom === "desktop") {
-      if (
-        highlightAtom.desktop === desktopIcons.length ||
-        highlightAtom.desktop === 90 + desktopIcons.length
-      )
-        return;
-
-      return setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        desktop:
-          (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop + 1,
-      }));
-    }
-  };
-
-  const handleArrowRightKeydown = () =>
-    setHighlightAtom((currHighlight) => {
-      if (currHighlight.startMenu !== 1) return currHighlight;
-
-      return {
-        ...currHighlight,
-        startMenu: [1, 1],
-      };
-    });
-
-  const handleArrowLeftKeydown = () =>
-    setHighlightAtom((currHighlight) => {
-      if (typeof highlightAtom.startMenu === "number") return currHighlight;
-
-      return {
-        ...currHighlight,
-        startMenu: (currHighlight.startMenu as number[])[0],
-      };
-    });
-
-  const handleEnterKeyup = () => {
-    if (startAtom) {
-      if (highlightAtom.startMenu === 0) return;
-
-      if (typeof highlightAtom.startMenu !== "number") {
-        const index = highlightAtom.startMenu[0] - 1;
-        const subIndex = highlightAtom.startMenu[1] - 1;
-
-        return (
-          (
-            startMenuOptionsRefAtom[index] as [HTMLDivElement, HTMLDivElement[]]
-          )[1][subIndex] as HTMLDivElement
-        ).click();
-      }
-
-      return (
-        startMenuOptionsRefAtom[
-          (highlightAtom.startMenu as number) - 1
-        ] as HTMLDivElement
-      ).click();
-    }
-
-    if (highlightAtom.desktop === 0) return;
-
-    const dblclick = new MouseEvent("dblclick", {
-      view: window,
-      bubbles: true,
-    });
-
-    desktopIconsRefAtom[
-      (highlightAtom.desktop < 90
-        ? highlightAtom.desktop
-        : highlightAtom.desktop - 90) - 1
-    ].dispatchEvent(dblclick);
-  };
-
-  const handleDefaultKeydown = (key: string) => {
-    key = key.toLowerCase();
-
-    if (startAtom) {
-      let keyIndex: number = 0;
-
-      const optionKeys = options.map(({ index, label }) => ({
-        index: index,
-        key: label[0].toLowerCase(),
-      }));
-
-      const optionKey = optionKeys.filter((optionKey) => optionKey.key === key);
-
-      if (optionKey.length === 0) return;
-
-      keyIndex = optionKey[0].index;
-
-      setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        startMenu: keyIndex,
-      }));
-    } else {
-      let keyIndex: number = 0;
-
-      const shortcutKeys = desktopIcons.map(({ index, label }) => ({
-        index: index,
-        key: label[0].toLowerCase(),
-      }));
-
-      const shortcutKey = shortcutKeys.filter(
-        (shortcutKey) => shortcutKey.key === key
-      );
-
-      if (shortcutKey.length === 0) return;
-
-      if (shortcutKey.length > 1) {
-        if (highlightAtom.desktop !== shortcutKey[0].index) {
-          keyIndex = shortcutKey[0].index;
-        } else {
-          shortcutKey.forEach((key, i) => {
-            if (highlightAtom.desktop === key.index) {
-              keyIndex = shortcutKey[(i + 1) % shortcutKey.length].index;
-            }
-          });
-        }
-      } else {
-        keyIndex = shortcutKey[0].index;
-      }
-
-      setHighlightAtom((currHighlight) => ({
-        ...currHighlight,
-        desktop: keyIndex,
-      }));
-    }
-  };
-
   useEffect(() => {
     const getIp = async () => {
       const data = await (
@@ -260,7 +69,8 @@ const Root: FC = ({ children }) => {
     };
 
     setVisitor();
-  }, []);
+    
+  }, [setVisitorIpAtom]);
 
   useEffect(
     () =>
@@ -268,7 +78,7 @@ const Root: FC = ({ children }) => {
         query(collection(db, "visitors"), orderBy("timestamp")),
         (snapshot) => setVisitorsAtom(snapshot.docs.map((doc) => doc.id))
       ),
-    []
+    [setVisitorIpAtom, setVisitorsAtom]
   );
 
   useEffect(() => {
@@ -287,6 +97,8 @@ const Root: FC = ({ children }) => {
 
       return () => clearTimeout(launchStartupWindows);
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bootAtom]);
 
   useEffect(() => {
@@ -296,9 +108,204 @@ const Root: FC = ({ children }) => {
         startMenu: 0,
       }));
     }
-  }, [startAtom]);
+  }, [startAtom, setHighlightAtom]);
 
   useEffect(() => {
+    const handleArrowUpKeydown = () => {
+      if (startAtom) {
+        if (typeof highlightAtom.startMenu !== "number")
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            startMenu: [
+              (currHighlight.startMenu as number[])[0],
+              (currHighlight.startMenu as number[])[1] - 1,
+            ],
+          }));
+
+        if (highlightAtom.startMenu === 0 || highlightAtom.startMenu === 1)
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            startMenu: options.length,
+          }));
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          startMenu: (currHighlight.startMenu as number) - 1,
+        }));
+      }
+
+      if (focusedAtom === "desktop") {
+        if (highlightAtom.desktop === 90)
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            desktop: 90 + desktopIcons.length,
+          }));
+
+        if (highlightAtom.desktop === 1 || highlightAtom.desktop === 90 + 1)
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop:
+            (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop - 1,
+        }));
+      }
+    };
+
+    const handleArrowDownKeydown = () => {
+      if (startAtom) {
+        if (typeof highlightAtom.startMenu !== "number")
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            startMenu: [
+              (currHighlight.startMenu as number[])[0],
+              (currHighlight.startMenu as number[])[1] + 1,
+            ],
+          }));
+
+        if (highlightAtom.startMenu === options.length)
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            startMenu: 1,
+          }));
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          startMenu: (currHighlight.startMenu as number) + 1,
+        }));
+      }
+
+      if (focusedAtom === "desktop") {
+        if (
+          highlightAtom.desktop === desktopIcons.length ||
+          highlightAtom.desktop === 90 + desktopIcons.length
+        )
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop:
+            (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop + 1,
+        }));
+      }
+    };
+
+    const handleArrowRightKeydown = () =>
+      setHighlightAtom((currHighlight) => {
+        if (currHighlight.startMenu !== 1) return currHighlight;
+
+        return {
+          ...currHighlight,
+          startMenu: [1, 1],
+        };
+      });
+
+    const handleArrowLeftKeydown = () =>
+      setHighlightAtom((currHighlight) => {
+        if (typeof highlightAtom.startMenu === "number") return currHighlight;
+
+        return {
+          ...currHighlight,
+          startMenu: (currHighlight.startMenu as number[])[0],
+        };
+      });
+
+    const handleEnterKeyup = () => {
+      if (startAtom) {
+        if (highlightAtom.startMenu === 0) return;
+
+        if (typeof highlightAtom.startMenu !== "number") {
+          const index = highlightAtom.startMenu[0] - 1;
+          const subIndex = highlightAtom.startMenu[1] - 1;
+
+          return (
+            (
+              startMenuOptionsRefAtom[index] as [
+                HTMLDivElement,
+                HTMLDivElement[]
+              ]
+            )[1][subIndex] as HTMLDivElement
+          ).click();
+        }
+
+        return (
+          startMenuOptionsRefAtom[
+            (highlightAtom.startMenu as number) - 1
+          ] as HTMLDivElement
+        ).click();
+      }
+
+      if (highlightAtom.desktop === 0) return;
+
+      const dblclick = new MouseEvent("dblclick", {
+        view: window,
+        bubbles: true,
+      });
+
+      desktopIconsRefAtom[
+        (highlightAtom.desktop < 90
+          ? highlightAtom.desktop
+          : highlightAtom.desktop - 90) - 1
+      ].dispatchEvent(dblclick);
+    };
+
+    const handleDefaultKeydown = (key: string) => {
+      key = key.toLowerCase();
+
+      if (startAtom) {
+        let keyIndex: number = 0;
+
+        const optionKeys = options.map(({ index, label }) => ({
+          index: index,
+          key: label[0].toLowerCase(),
+        }));
+
+        const optionKey = optionKeys.filter(
+          (optionKey) => optionKey.key === key
+        );
+
+        if (optionKey.length === 0) return;
+
+        keyIndex = optionKey[0].index;
+
+        setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          startMenu: keyIndex,
+        }));
+      } else {
+        let keyIndex: number = 0;
+
+        const shortcutKeys = desktopIcons.map(({ index, label }) => ({
+          index: index,
+          key: label[0].toLowerCase(),
+        }));
+
+        const shortcutKey = shortcutKeys.filter(
+          (shortcutKey) => shortcutKey.key === key
+        );
+
+        if (shortcutKey.length === 0) return;
+
+        if (shortcutKey.length > 1) {
+          if (highlightAtom.desktop !== shortcutKey[0].index) {
+            keyIndex = shortcutKey[0].index;
+          } else {
+            shortcutKey.forEach((key, i) => {
+              if (highlightAtom.desktop === key.index) {
+                keyIndex = shortcutKey[(i + 1) % shortcutKey.length].index;
+              }
+            });
+          }
+        } else {
+          keyIndex = shortcutKey[0].index;
+        }
+
+        setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop: keyIndex,
+        }));
+      }
+    };
     const keydownEvents = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowUp":
@@ -345,11 +352,14 @@ const Root: FC = ({ children }) => {
       window.removeEventListener("keyup", keyupEvents);
     };
   }, [
+    desktopIconsRefAtom,
     startAtom,
     startMenuOptionsRefAtom,
     highlightAtom,
     windowsAtom,
     focusedAtom,
+    setHighlightAtom,
+    setStartAtom,
   ]);
 
   return bootAtom ? (

@@ -134,7 +134,7 @@ export const StartMenu: FC = () => {
       const refs = _.cloneDeep(optionsRef);
       setStartMenuOptionsRefAtom(refs.current);
     }
-  }, [optionsRef]);
+  }, [optionsRef, setStartMenuOptionsRefAtom]);
 
   return (
     <Container className="left-[-2%] bottom-[107%]">

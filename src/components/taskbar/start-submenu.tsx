@@ -55,7 +55,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
           })
         );
     }
-  }, [optionsRef]);
+  }, [index, optionsRef, setStartMenuOptionsRefAtom]);
 
   return (
     <Container {...rest}>
