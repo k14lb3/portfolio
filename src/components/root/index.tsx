@@ -35,8 +35,9 @@ const Root: FC = ({ children }) => {
   const setVisitorIpAtom = useSetRecoilState(visitorIpState);
   const setVisitorsAtom = useSetRecoilState(visitorsState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const windowsAtom = useRecoilValue(windowsState);
-  const focusedAtom = useRecoilValue(focusedState);
+  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
+  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
   const desktopIconsRefAtom = useRecoilValue(desktopIconsRefState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const startMenuOptionsRefAtom = useRecoilValue(startMenuOptionsRefState);
@@ -275,12 +276,12 @@ const Root: FC = ({ children }) => {
       setLaunching(true);
 
       const launchStartupWindows = setTimeout(() => {
-        // launchFile(
-        //   { component: About, props: aboutProps },
-        //   { get: () => windowsAtom, set: setWindowsAtom },
-        //   setFocusedAtom,
-        //   setTopMostWindowAtom
-        // );
+        launchFile(
+          { component: About, props: aboutProps },
+          { get: () => windowsAtom, set: setWindowsAtom },
+          setFocusedAtom,
+          setTopMostWindowAtom
+        );
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
 
