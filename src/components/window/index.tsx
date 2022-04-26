@@ -12,9 +12,11 @@ import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
 import {
   startState,
-  topMostWindowState,
+  highlightState,
   focusedState,
   windowsState,
+  topMostWindowState,
+  HighlightState,
 } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
@@ -45,6 +47,7 @@ const Window: FC<WindowProps> = ({
   const mousePos = useMousePosition();
   const parentRef = useRef<HTMLDivElement>(null);
   const setStartAtom = useSetRecoilState(startState);
+  const setHighlightAtom = useSetRecoilState(highlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
   const [topMostWindowAtom, setTopMostWindowAtom] =
     useRecoilState(topMostWindowState);
@@ -125,7 +128,21 @@ const Window: FC<WindowProps> = ({
     setWindowsAtom((currHighlight) =>
       currHighlight.filter(({ props }) => props.title !== title)
     );
+
     resetFocusedAtom();
+
+    if (type !== "explorer") return;
+
+    setHighlightAtom((currHighlight) => {
+      const _title = title.toLowerCase() as keyof HighlightState;
+
+      return {
+        ...currHighlight,
+        [_title]:
+          (currHighlight[_title] as number) -
+          (currHighlight[_title] > 90 ? 90 : 0),
+      };
+    });
   };
 
   return (
