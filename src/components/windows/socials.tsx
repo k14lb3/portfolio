@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { socialsIcons } from "@/utils/constants";
 import { highlightState, focusedState } from "@/recoil/atoms";
@@ -12,6 +12,7 @@ export const socialProps: WindowProps = {
 };
 
 export const Socials: FC = () => {
+  const iconsRef = useRef<HTMLDivElement[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
@@ -21,6 +22,81 @@ export const Socials: FC = () => {
     () => openLink(anchorRef, "https://www.linkedin.com/in/karlivanalberto/"),
     () => openLink(anchorRef, "https://twitter.com/k14lb3"),
   ];
+
+  useEffect(() => {
+    if (iconsRef.current) {
+      const handleArrowRightKeydown = () => {
+        if (focusedAtom !== "socials") return;
+
+        if (
+          highlightAtom.socials === socialsIcons.length ||
+          highlightAtom.socials === 90 + socialsIcons.length
+        )
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          socials:
+            (highlightAtom.socials < 90 ? 90 : 0) + currHighlight.socials + 1,
+        }));
+      };
+
+      const handleArrowLeftKeydown = () => {
+        if (focusedAtom !== "socials") return;
+
+        if (highlightAtom.socials === 1 || highlightAtom.socials === 90 + 1)
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          socials:
+            (currHighlight.socials < 90 ? 90 : 0) + currHighlight.socials - 1,
+        }));
+      };
+
+      const handleEnterKeyup = () => {
+        if (focusedAtom !== "socials") return;
+
+        const dblclick = new MouseEvent("dblclick", {
+          view: window,
+          bubbles: true,
+        });
+
+        (iconsRef.current as HTMLDivElement[])[
+          (highlightAtom.socials < 90
+            ? highlightAtom.socials
+            : highlightAtom.socials - 90) - 1
+        ].dispatchEvent(dblclick);
+      };
+
+      const keydownEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "ArrowRight":
+            handleArrowRightKeydown();
+            break;
+          case "ArrowLeft":
+            handleArrowLeftKeydown();
+            break;
+        }
+      };
+
+      const keyupEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "Enter":
+            handleEnterKeyup();
+            break;
+        }
+      };
+
+      window.addEventListener("keydown", keydownEvents);
+      window.addEventListener("keyup", keyupEvents);
+
+      return () => {
+        window.removeEventListener("keydown", keydownEvents);
+        window.removeEventListener("keyup", keyupEvents);
+      };
+    }
+  }, [iconsRef, focusedAtom, highlightAtom.socials, setHighlightAtom]);
 
   return (
     <Window {...socialProps}>
@@ -47,6 +123,9 @@ export const Socials: FC = () => {
           return (
             <div
               key={label}
+              ref={(el) => {
+                iconsRef.current[index - 1] = el as HTMLDivElement;
+              }}
               className="relative flex flex-col items-center mb-[2.3988vh]"
               onClick={() => {
                 setHighlightAtom((currHighlight) => ({
@@ -56,10 +135,6 @@ export const Socials: FC = () => {
               }}
               onDoubleClick={() => {
                 iconsEvent[index - 1]();
-                setHighlightAtom((currHighlight) => ({
-                  ...currHighlight,
-                  socials: 0,
-                }));
               }}
             >
               <div className="relative h-[4.799vh] aspect-[1/1] mb-[0.8996vh]">
