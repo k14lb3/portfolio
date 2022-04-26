@@ -117,7 +117,7 @@ export const TitleBar: FC<TitleBarProps> = ({
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full ${
-        focusedAtom === title ? "bg-[#000080]" : "bg-[#808080]"
+        focusedAtom === title.toLowerCase() ? "bg-[#000080]" : "bg-[#808080]"
       } px-[0.2999vh] ${className ? ` ${className}` : ""}`}
       {...rest}
     >

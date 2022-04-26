@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import _ from "lodash";
+import _, { lowerCase, toLower } from "lodash";
 import { Coordinates } from "@/utils/constants";
 import {
   startState,
@@ -142,7 +142,7 @@ const Window: FC<WindowProps> = ({
         onMouseDown={() => {
           setStartAtom(false);
           setTopMostWindowAtom(title);
-          setFocusedAtom(title);
+          setFocusedAtom(title.toLowerCase());
         }}
         {...rest}
       >
@@ -163,14 +163,14 @@ const Window: FC<WindowProps> = ({
             />
             {type === "explorer" ? (
               <div className="h-full border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080] mt-[0.2999vh]">
-                <div className="h-full py-[1.1994vh] px-[1.1994vh] bg-white border-solid border-[0.1vh] border-[#DFDFDF] border-t-black border-l-black">
+                <div className="relative h-full py-[1.1994vh] px-[1.1994vh] bg-white border-solid border-[0.1vh] border-[#DFDFDF] border-t-black border-l-black">
                   {children}
                 </div>
               </div>
             ) : (
               <div className="flex flex-col flex-grow p-[0.8996vh] pt-[1.1994vh]">
                 <div className="flex-grow mb-[0.8996vh] border-solid border-[0.1vh] border-black border-t-white border-l-white">
-                  <div className="h-full px-[1.1994vh] bg-[#C0C0C0] border-solid border-[0.1vh] border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]">
+                  <div className="relative h-full px-[1.1994vh] bg-[#C0C0C0] border-solid border-[0.1vh] border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]">
                     {children}
                   </div>
                 </div>
