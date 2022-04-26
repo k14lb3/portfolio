@@ -69,7 +69,6 @@ const Root: FC = ({ children }) => {
     };
 
     setVisitor();
-    
   }, [setVisitorIpAtom]);
 
   useEffect(
@@ -98,7 +97,7 @@ const Root: FC = ({ children }) => {
       return () => clearTimeout(launchStartupWindows);
     }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bootAtom]);
 
   useEffect(() => {
@@ -235,7 +234,7 @@ const Root: FC = ({ children }) => {
         ).click();
       }
 
-      if (highlightAtom.desktop === 0) return;
+      if (highlightAtom.desktop === 0 || highlightAtom.desktop === 90) return;
 
       const dblclick = new MouseEvent("dblclick", {
         view: window,
