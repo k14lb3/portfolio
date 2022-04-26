@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import _, { lowerCase, toLower } from "lodash";
+import _ from "lodash";
 import { Coordinates } from "@/utils/constants";
 import {
   startState,
@@ -61,7 +61,7 @@ const Window: FC<WindowProps> = ({
 
   useEffect(() => {
     setTopMostWindowAtom(title);
-    setFocusedAtom(title);
+    setFocusedAtom(title.toLowerCase());
   }, []);
 
   useEffect(() => {
