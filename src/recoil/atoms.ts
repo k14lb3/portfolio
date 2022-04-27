@@ -17,9 +17,16 @@ export const bootState = atom({
   default: false as boolean,
 });
 
+export type FocusedState =
+  | "desktop"
+  | "about"
+  | "socials"
+  | "taskbar"
+  | "start-menu";
+
 export const focusedState = atom({
   key: "focusedWindow",
-  default: "desktop" as string,
+  default: "desktop" as FocusedState,
 });
 
 export interface HighlightState {

@@ -6,6 +6,7 @@ import {
   useSetRecoilState,
 } from "recoil";
 import {
+  FocusedState,
   windowsState,
   focusedState,
   topMostWindowState,
@@ -66,7 +67,7 @@ const Taskbar: FC = () => {
                         : "border-black border-t-white border-l-white"
                     }`}
                     onClick={() => {
-                      setFocusedAtom(props.title);
+                      setFocusedAtom(props.title as FocusedState);
                       setTopMostWindowAtom(props.title);
                     }}
                   >
