@@ -26,8 +26,11 @@ const Taskbar: FC = () => {
       switch (e.key) {
         case "x":
         case "x":
-          setStartAtom((currStart) => !currStart);
+          setStartAtom(true);
           setFocusedAtom("start-menu");
+          break;
+        case "Escape":
+          setStartAtom(false);
           break;
       }
     };
