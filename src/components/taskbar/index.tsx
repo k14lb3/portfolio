@@ -24,7 +24,8 @@ const Taskbar: FC = () => {
   useEffect(() => {
     const keyupEvents = (e: KeyboardEvent) => {
       switch (e.key) {
-        case " ":
+        case "x":
+        case "x":
           setStartAtom((currStart) => !currStart);
           setFocusedAtom("start-menu");
           break;
