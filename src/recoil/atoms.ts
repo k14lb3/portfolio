@@ -31,9 +31,9 @@ export interface HighlightState {
 export const highlightState = atom({
   key: "highlightState",
   default: {
-    desktop: 90,
+    desktop: 1,
     startMenu: 0,
-    socials: 90,
+    socials: 1,
   } as HighlightState,
 });
 
