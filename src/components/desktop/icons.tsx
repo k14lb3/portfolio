@@ -29,14 +29,7 @@ export const Icons: FC = () => {
         setFocusedAtom,
         setTopMostWindowAtom
       ),
-    () => {
-      anchorRef.current!.href = "/static/karlivan-alberto_resume.pdf";
-      anchorRef.current!.download = "";
-      anchorRef.current!.click();
-
-      anchorRef.current!.removeAttribute("href");
-      anchorRef.current!.removeAttribute("download");
-    },
+    () => openLink(anchorRef, "/static/karlivan-alberto_resume.pdf"),
     () => openLink(anchorRef, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
   ];
 
