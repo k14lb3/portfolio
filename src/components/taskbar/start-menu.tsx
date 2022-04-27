@@ -8,61 +8,19 @@ import {
 } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import _ from "lodash";
+import _, { indexOf } from "lodash";
 import {
   highlightState,
   startState,
-  startMenuOptionsRefState,
   windowsState,
   focusedState,
   topMostWindowState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
-import { StartSubmenu } from "./start-submenu";
+import { startMenuFiles } from "@/utils/constants";
 import { About, aboutProps } from "@/components/windows";
 import { VisitorCounter, visitorCounterProps } from "@/components/windows";
-
-interface Option {
-  index: number;
-  src: string;
-  label: string;
-  nested?: Option[];
-}
-
-export const options: Option[] = [
-  {
-    index: 1,
-    src: "/static/images/icons/programs.png",
-    label: "Programs",
-    nested: [
-      {
-        index: 1,
-        src: "/static/images/icons/internet.png",
-        label: "Visitor Counter",
-      },
-      {
-        index: 2,
-        src: "/static/images/icons/calculator.png",
-        label: "Calculator",
-      },
-    ],
-  },
-  {
-    index: 2,
-    src: "/static/images/icons/contact.png",
-    label: "Contact",
-  },
-  {
-    index: 3,
-    src: "/static/images/icons/about.png",
-    label: "About",
-  },
-  {
-    index: 4,
-    src: "/static/images/icons/shut-down.png",
-    label: "Shut Down",
-  },
-];
+import { StartSubmenu } from "./start-submenu";
 
 export const Container: FC<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
@@ -86,12 +44,9 @@ export const StartMenu: FC = () => {
   const nestRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const optionsRef = useRef<HTMLDivElement[]>([]);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const setStartMenuOptionsRefAtom = useSetRecoilState(
-    startMenuOptionsRefState
-  );
-  const setStartAtom = useSetRecoilState(startState);
+  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const [startAtom, setStartAtom] = useRecoilState(startState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const setFocusedAtom = useSetRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
 
   const optionsEvent = [
@@ -131,10 +86,175 @@ export const StartMenu: FC = () => {
 
   useEffect(() => {
     if (optionsRef.current) {
-      const refs = _.cloneDeep(optionsRef);
-      setStartMenuOptionsRefAtom(refs.current);
+      const handleArrowUpKeydown = () => {
+        if (focusedAtom !== "start-menu") return;
+
+        if (typeof highlightAtom["start-menu"] !== "number") return;
+
+        if (
+          highlightAtom["start-menu"] === 0 ||
+          highlightAtom["start-menu"] === 1
+        )
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            "start-menu": startMenuFiles.length,
+          }));
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          "start-menu": (currHighlight["start-menu"] as number) - 1,
+        }));
+      };
+
+      const handleArrowDownKeydown = () => {
+        if (focusedAtom !== "start-menu") return;
+
+        if (typeof highlightAtom["start-menu"] !== "number") return;
+
+        if (highlightAtom["start-menu"] === startMenuFiles.length)
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            "start-menu": 1,
+          }));
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          "start-menu": (currHighlight["start-menu"] as number) + 1,
+        }));
+      };
+
+      const handleArrowRightKeydown = () => {
+        if (focusedAtom !== "start-menu") return;
+
+        if (typeof highlightAtom["start-menu"] !== "number") return;
+
+        if (highlightAtom["start-menu"] === 0) return;
+
+        if (!startMenuFiles[(highlightAtom["start-menu"] as number) - 1].nested)
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          "start-menu": [1, 1],
+        }));
+      };
+
+      const handleDefaultKeydown = (e: KeyboardEvent) => {
+        if (focusedAtom !== "start-menu") return;
+
+        if (typeof highlightAtom["start-menu"] === "number") {
+          const keys = startMenuFiles.map(({ index, label }) => ({
+            index: index,
+            key: label[0].toLowerCase(),
+          }));
+
+          const key = keys.filter((key) => key.key === e.key.toLowerCase());
+
+          if (key.length === 0) return;
+
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            ["start-menu"]:
+              // Check if the key variable has more than one element or
+              // the currently highlighted file with the given property
+              // does not have the same index with the index of the
+              // first element of the key variable
+              key.length === 1 || currHighlight["start-menu"] !== key[0].index
+                ? startMenuFiles[key[0].index - 1].nested
+                  ? [key[0].index, 1]
+                  : key[0].index
+                : key[
+                    indexOf(key, {
+                      index: currHighlight["start-menu"] as number,
+                      key: key[0].key,
+                    }) + 2
+                  ].index,
+          }));
+        }
+
+        const keys = startMenuFiles[
+          highlightAtom["start-menu"][0] - 1
+        ].nested!.map(({ index, label }) => ({
+          index: index,
+          key: label[0].toLowerCase(),
+        }));
+
+        const key = keys.filter((key) => key.key === e.key.toLowerCase());
+
+        if (key.length === 0) return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          ["start-menu"]:
+            // Check if the key variable has more than one element or
+            // the currently highlighted file with the given property
+            // does not have the same index with the index of the
+            // first element of the key variable
+            key.length === 1 ||
+            (currHighlight["start-menu"] as number[])[1] !== key[0].index
+              ? // If true, return the highlighted index of the first element
+                [(currHighlight["start-menu"] as number[])[0], key[0].index]
+              : // Otherwise, get the element in the key variable with
+                // the index of currently highlighted file
+                [
+                  (currHighlight["start-menu"] as number[])[0],
+                  key[
+                    indexOf(key, {
+                      index: (currHighlight["start-menu"] as number[])[1],
+                      key: key[0].key,
+                    }) + 2
+                  ].index,
+                ],
+        }));
+      };
+
+      const handleEnterKeyup = () => {
+        if (focusedAtom !== "start-menu") return;
+
+        if (typeof highlightAtom["start-menu"] !== "number") return;
+
+        if (highlightAtom["start-menu"] === 0) return;
+
+        return (
+          optionsRef.current[
+            (highlightAtom["start-menu"] as number) - 1
+          ] as HTMLDivElement
+        ).click();
+      };
+
+      const keydownEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "ArrowUp":
+            handleArrowUpKeydown();
+            break;
+          case "ArrowDown":
+            handleArrowDownKeydown();
+            break;
+          case "ArrowRight":
+            handleArrowRightKeydown();
+            break;
+          default:
+            handleDefaultKeydown(e);
+        }
+      };
+
+      const keyupEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "Enter":
+            handleEnterKeyup();
+            break;
+        }
+      };
+
+      window.addEventListener("keydown", keydownEvents);
+      window.addEventListener("keyup", keyupEvents);
+
+      return () => {
+        window.removeEventListener("keydown", keydownEvents);
+        window.removeEventListener("keyup", keyupEvents);
+      };
     }
-  }, [optionsRef, setStartMenuOptionsRefAtom]);
+  }, [optionsRef, focusedAtom, highlightAtom, setHighlightAtom, startAtom]);
 
   return (
     <Container className="left-[-2%] bottom-[107%]">
@@ -145,11 +265,11 @@ export const StartMenu: FC = () => {
         </div>
       </div>
       <div className="flex-col">
-        {options.map(({ index, src, label, nested }) => {
+        {startMenuFiles.map(({ index, src, label, nested }) => {
           const highlighted =
-            typeof highlightAtom.startMenu === "number"
-              ? highlightAtom.startMenu === index
-              : (highlightAtom.startMenu as number[])[0] === index;
+            typeof highlightAtom["start-menu"] === "number"
+              ? highlightAtom["start-menu"] === index
+              : (highlightAtom["start-menu"] as number[])[0] === index;
 
           return (
             <Fragment key={src}>
@@ -164,22 +284,22 @@ export const StartMenu: FC = () => {
                   highlighted ? " bg-[#000080]" : ""
                 }`}
                 onMouseOver={() => {
-                  if (nested && typeof highlightAtom.startMenu !== "number")
+                  if (nested && typeof highlightAtom["start-menu"] !== "number")
                     return;
 
                   setHighlightAtom((currHighlight) => ({
                     ...currHighlight,
-                    startMenu: index,
+                    "start-menu": index,
                   }));
                 }}
                 onMouseLeave={() => {
                   if (!nested) return;
 
-                  if (typeof highlightAtom.startMenu !== "number") {
+                  if (typeof highlightAtom["start-menu"] !== "number") {
                     setHighlightAtom((currHighlight) => ({
                       ...currHighlight,
-                      startMenu: (
-                        currHighlight.startMenu as number[]
+                      "start-menu": (
+                        currHighlight["start-menu"] as number[]
                       )[0] as number,
                     }));
                   }
@@ -187,12 +307,18 @@ export const StartMenu: FC = () => {
                   clearTimeout(nestRef.current!);
                 }}
                 onMouseEnter={() => {
-                  if (nested && typeof highlightAtom.startMenu === "number") {
+                  if (
+                    nested &&
+                    typeof highlightAtom["start-menu"] === "number"
+                  ) {
                     nestRef.current = setTimeout(
                       () =>
                         setHighlightAtom((currHighlight) => ({
                           ...currHighlight,
-                          startMenu: [currHighlight.startMenu as number, 0],
+                          "start-menu": [
+                            currHighlight["start-menu"] as number,
+                            0,
+                          ],
                         })),
                       500
                     );
@@ -205,13 +331,14 @@ export const StartMenu: FC = () => {
                   setStartAtom(false);
                 }}
               >
-                {nested && !(typeof highlightAtom.startMenu === "number") && (
-                  <StartSubmenu
-                    index={index}
-                    event={optionsEvent}
-                    className="top-[-1%] left-[96.5%] text-[1.75vh]"
-                  />
-                )}
+                {nested &&
+                  !(typeof highlightAtom["start-menu"] === "number") && (
+                    <StartSubmenu
+                      index={index}
+                      event={optionsEvent}
+                      className="top-[-1%] left-[96.5%] text-[1.75vh]"
+                    />
+                  )}
                 <div className="h-[3.655vh] aspect-[1/1] mx-[1.522vh] pointer-events-none">
                   <img className="h-full" src={src} alt={label} />
                 </div>

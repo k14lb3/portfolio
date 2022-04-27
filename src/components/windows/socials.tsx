@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
-import { socialsIcons } from "@/utils/constants";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { socialsFiles } from "@/utils/constants";
 import { highlightState, focusedState } from "@/recoil/atoms";
 import Window, { WindowProps } from "@/components/window";
-import { openLink } from "@/utils/helpers";
+import { handleDefaultKeydown, openLink } from "@/utils/helpers";
 
 export const socialProps: WindowProps = {
   title: "Socials",
@@ -15,7 +15,7 @@ export const Socials: FC = () => {
   const iconsRef = useRef<HTMLDivElement[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const focusedAtom = useRecoilValue(focusedState);
 
   const iconsEvent: (() => void)[] = [
     () => openLink(anchorRef, "https://github.com/k14lb3"),
@@ -29,8 +29,8 @@ export const Socials: FC = () => {
         if (focusedAtom !== "socials") return;
 
         if (
-          highlightAtom.socials === socialsIcons.length ||
-          highlightAtom.socials === 90 + socialsIcons.length
+          highlightAtom.socials === socialsFiles.length ||
+          highlightAtom.socials === 90 + socialsFiles.length
         )
           return;
 
@@ -77,6 +77,14 @@ export const Socials: FC = () => {
           case "ArrowLeft":
             handleArrowLeftKeydown();
             break;
+          default:
+            handleDefaultKeydown(
+              e,
+              socialsFiles,
+              focusedAtom,
+              setHighlightAtom,
+              "socials"
+            );
         }
       };
 
@@ -112,7 +120,7 @@ export const Socials: FC = () => {
         }}
       />
       <div className="flex space-x-[2.3988vh]">
-        {socialsIcons.map(({ index, src, label }) => {
+        {socialsFiles.map(({ index, src, label }) => {
           const highlighted =
             focusedAtom === "socials" &&
             (highlightAtom.socials === index ||

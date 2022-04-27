@@ -1,6 +1,9 @@
 import { FC, RefObject } from "react";
 import { SetterOrUpdater } from "recoil";
+import { HighlightState } from "@/recoil/atoms";
 import { WindowProps } from "@/components/window";
+import { File } from "./constants";
+import { indexOf } from "lodash";
 
 export const generateRandomNumber = (
   min: number = 0,
@@ -55,4 +58,44 @@ export const openLink = (
   anchorRef.current!.removeAttribute("href");
   anchorRef.current!.removeAttribute("target");
   anchorRef.current!.removeAttribute("rel");
+};
+
+export const handleDefaultKeydown = (
+  e: KeyboardEvent,
+  files: File[],
+  focusedAtom: string,
+  setHighlightAtom: SetterOrUpdater<HighlightState>,
+  property: keyof HighlightState
+) => {
+  if (focusedAtom !== property) return;
+
+  const keys = files.map(({ index, label }) => ({
+    index: index,
+    key: label[0].toLowerCase(),
+  }));
+
+  const key = keys.filter((key) => key.key === e.key.toLowerCase());
+
+  if (key.length === 0) return;
+
+  setHighlightAtom((currHighlight) => ({
+    ...currHighlight,
+    [property]:
+      // Check if the key variable has more than one element or
+      // the currently highlighted file with the given property
+      // does not have the same index with the index of the
+      // first element of the key variable
+      key.length === 1 || currHighlight[property] !== 90 + key[0].index
+        ? // If true, return the highlighted index of the first element
+          90 + key[0].index
+        : // Otherwise, get the element in the key variable with
+          // the index of currently highlighted file
+          90 +
+          key[
+            indexOf(key, {
+              index: 90 + (currHighlight[property] as number),
+              key: key[0].key,
+            }) + 2
+          ].index,
+  }));
 };

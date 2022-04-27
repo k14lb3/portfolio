@@ -19,7 +19,7 @@ export const Background: FC = ({ children }) => {
         setAspectRatio(false);
       }
     }
-  }, [width]);
+  }, [height, width]);
 
   return (
     <div

@@ -1,22 +1,20 @@
 import { FC, useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
-import { desktopIcons } from "@/utils/constants";
+import { desktopFiles } from "@/utils/constants";
 import {
   highlightState,
-  desktopIconsRefState,
   windowsState,
   focusedState,
   topMostWindowState,
 } from "@/recoil/atoms";
-import { launchFile, openLink } from "@/utils/helpers";
+import { handleDefaultKeydown, launchFile, openLink } from "@/utils/helpers";
 import { Socials, socialProps } from "@/components/windows";
 
 export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const setDesktopIconsRefAtom = useSetRecoilState(desktopIconsRefState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
   const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
@@ -44,15 +42,97 @@ export const Icons: FC = () => {
 
   useEffect(() => {
     if (iconsRef.current) {
-      const refs = _.cloneDeep(iconsRef);
-      setDesktopIconsRefAtom(refs.current);
+      const handleArrowUpKeydown = () => {
+        if (focusedAtom !== "desktop") return;
+
+        if (highlightAtom.desktop === 90)
+          return setHighlightAtom((currHighlight) => ({
+            ...currHighlight,
+            desktop: 90 + desktopFiles.length,
+          }));
+
+        if (highlightAtom.desktop === 1 || highlightAtom.desktop === 90 + 1)
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop:
+            (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop - 1,
+        }));
+      };
+
+      const handleArrowDownKeydown = () => {
+        if (focusedAtom !== "desktop") return;
+
+        if (
+          highlightAtom.desktop === desktopFiles.length ||
+          highlightAtom.desktop === 90 + desktopFiles.length
+        )
+          return;
+
+        return setHighlightAtom((currHighlight) => ({
+          ...currHighlight,
+          desktop:
+            (highlightAtom.desktop < 90 ? 90 : 0) + currHighlight.desktop + 1,
+        }));
+      };
+
+      const handleEnterKeyup = () => {
+        if (focusedAtom !== "desktop") return;
+
+        const dblclick = new MouseEvent("dblclick", {
+          view: window,
+          bubbles: true,
+        });
+
+        (iconsRef.current as HTMLDivElement[])[
+          (highlightAtom.desktop < 90
+            ? highlightAtom.desktop
+            : highlightAtom.desktop - 90) - 1
+        ].dispatchEvent(dblclick);
+      };
+
+      const keydownEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "ArrowUp":
+            handleArrowUpKeydown();
+            break;
+          case "ArrowDown":
+            handleArrowDownKeydown();
+            break;
+          default:
+            handleDefaultKeydown(
+              e,
+              desktopFiles,
+              focusedAtom,
+              setHighlightAtom,
+              "desktop"
+            );
+        }
+      };
+
+      const keyupEvents = (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "Enter":
+            handleEnterKeyup();
+            break;
+        }
+      };
+
+      window.addEventListener("keydown", keydownEvents);
+      window.addEventListener("keyup", keyupEvents);
+
+      return () => {
+        window.removeEventListener("keydown", keydownEvents);
+        window.removeEventListener("keyup", keyupEvents);
+      };
     }
-  }, [iconsRef]);
+  }, [iconsRef, focusedAtom, highlightAtom.desktop, setHighlightAtom]);
 
   return (
     <>
       <a ref={anchorRef} />
-      {desktopIcons.map(({ index, src, label }) => {
+      {desktopFiles.map(({ index, src, label }) => {
         const highlighted =
           focusedAtom === "desktop" &&
           (highlightAtom.desktop === index ||
@@ -61,10 +141,10 @@ export const Icons: FC = () => {
 
         return (
           <div
+            key={label}
             ref={(el) => {
               iconsRef.current[index - 1] = el as HTMLDivElement;
             }}
-            key={label}
             className="relative flex flex-col items-center mb-[2.3988vh]"
             onClick={() => {
               setFocusedAtom("desktop");

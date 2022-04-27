@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   useRecoilState,
   useRecoilValue,
@@ -6,10 +6,10 @@ import {
   useSetRecoilState,
 } from "recoil";
 import {
-  highlightState,
   windowsState,
   focusedState,
   topMostWindowState,
+  startState,
 } from "@/recoil/atoms";
 import { Start } from "./start";
 import { Clock } from "./clock";
@@ -17,8 +17,26 @@ import { Clock } from "./clock";
 const Taskbar: FC = () => {
   const resetFocusedAtom = useResetRecoilState(focusedState);
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
-  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+  const setStartAtom = useSetRecoilState(startState);
   const windowsAtom = useRecoilValue(windowsState);
+  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+
+  useEffect(() => {
+    const keyupEvents = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case " ":
+          setStartAtom((currStart) => !currStart);
+          setFocusedAtom("start-menu");
+          break;
+      }
+    };
+
+    window.addEventListener("keyup", keyupEvents);
+
+    return () => {
+      window.removeEventListener("keyup", keyupEvents);
+    };
+  }, [setFocusedAtom, setStartAtom]);
 
   return (
     <div

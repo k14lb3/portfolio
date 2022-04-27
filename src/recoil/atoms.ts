@@ -24,7 +24,7 @@ export const focusedState = atom({
 
 export interface HighlightState {
   desktop: number;
-  startMenu: number | number[];
+  "start-menu": number | number[];
   socials: number;
 }
 
@@ -32,7 +32,7 @@ export const highlightState = atom({
   key: "highlightState",
   default: {
     desktop: 1,
-    startMenu: 0,
+    "start-menu": 0,
     socials: 1,
   } as HighlightState,
 });
@@ -40,16 +40,6 @@ export const highlightState = atom({
 export const startState = atom({
   key: "startState",
   default: false as boolean,
-});
-
-export const desktopIconsRefState = atom({
-  key: "desktopIconsRefState",
-  default: [] as HTMLDivElement[],
-});
-
-export const startMenuOptionsRefState = atom({
-  key: "startMenuOptionsRefState",
-  default: [] as (HTMLDivElement | [HTMLDivElement, HTMLDivElement[]])[],
 });
 
 export const windowsState = atom({
