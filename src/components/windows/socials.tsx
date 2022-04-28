@@ -6,7 +6,7 @@ import Window, { WindowProps } from "@/components/window";
 import { handleDefaultKeydown, openLink } from "@/utils/helpers";
 
 export const socialProps: WindowProps = {
-  title: "Socials",
+  title: "socials",
   type: "explorer",
   className: "aspect-[5/4]",
 };

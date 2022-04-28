@@ -103,7 +103,14 @@ const Taskbar: FC = () => {
                               : "pt-[0.2998vh] "
                           }`}
                         >
-                          {props.title}
+                          {props.title
+                            .split("-")
+                            .map(
+                              (word) =>
+                                word[0].toUpperCase() +
+                                word.slice(1).toLowerCase()
+                            )
+                            .join(" ")}
                         </div>
                       </div>
                     </div>

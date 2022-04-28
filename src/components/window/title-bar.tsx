@@ -117,7 +117,7 @@ export const TitleBar: FC<TitleBarProps> = ({
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full ${
-        focusedAtom === title.toLowerCase() ? "bg-[#000080]" : "bg-[#808080]"
+        focusedAtom === title ? "bg-[#000080]" : "bg-[#808080]"
       } px-[0.2999vh] ${className ? ` ${className}` : ""}`}
       {...rest}
     >
@@ -137,7 +137,10 @@ export const TitleBar: FC<TitleBarProps> = ({
           </div>
         )}
         <div className="mr-[2.3988vh] ml-[0.4498vh] pb-[0.4498vh] text-white font-bold text-[1.75vh]">
-          {title}
+          {title
+            .split("-")
+            .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ")}
         </div>
       </div>
       <div className="relative flex">
@@ -158,7 +161,6 @@ export const TitleBar: FC<TitleBarProps> = ({
 };
 
 TitleBar.defaultProps = {
-  title: "",
   minimize: { visible: true, disabled: false },
   maximize: { visible: true, disabled: false },
 };

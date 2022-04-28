@@ -38,7 +38,7 @@ export const launchFile = (
   if (windows.length === 0) return windowsAtom.set([window]);
 
   if (windows.find(({ props }) => props.title === window.props.title)) {
-    setFocusedAtom(window.props.title.toLowerCase() as FocusedState);
+    setFocusedAtom(window.props.title as FocusedState);
     setTopMostWindowAtom!(window.props.title);
     return windows;
   }

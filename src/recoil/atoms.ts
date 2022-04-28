@@ -14,7 +14,7 @@ export const visitorsState = atom({
 
 export const bootState = atom({
   key: "bootState",
-  default: false as boolean,
+  default: true as boolean,
 });
 
 export type FocusedState =
@@ -22,7 +22,8 @@ export type FocusedState =
   | "about"
   | "socials"
   | "taskbar"
-  | "start-menu";
+  | "start-menu"
+  | "visitor-counter";
 
 export const focusedState = atom({
   key: "focusedWindow",

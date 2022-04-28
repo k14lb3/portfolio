@@ -5,7 +5,7 @@ import Window, { WindowProps } from "../window";
 import { indexOf } from "lodash";
 
 export const visitorCounterProps: WindowProps = {
-  title: "Visitor Counter",
+  title: "visitor-counter",
   type: "properties",
   icon: "/static/images/icons/internet.png",
   minimize: { visible: false },

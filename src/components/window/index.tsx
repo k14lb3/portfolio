@@ -17,6 +17,7 @@ import {
   windowsState,
   topMostWindowState,
   HighlightState,
+  FocusedState,
 } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
@@ -25,7 +26,7 @@ import { TitleBar } from "./title-bar";
 
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  title: string;
+  title: FocusedState;
   type: "explorer" | "properties";
   minimize?: { visible: false } | { visible: true; disabled: boolean };
   maximize?: { visible: false } | { visible: true; disabled: boolean };
@@ -63,8 +64,8 @@ const Window: FC<WindowProps> = ({
   const [drag, setDrag] = useState<boolean>(false);
 
   useEffect(() => {
+    setFocusedAtom(title);
     setTopMostWindowAtom(title);
-    setFocusedAtom(title.toLowerCase());
   }, [title, setFocusedAtom, setTopMostWindowAtom]);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const Window: FC<WindowProps> = ({
     if (type !== "explorer") return;
 
     setHighlightAtom((currHighlight) => {
-      const _title = title.toLowerCase() as keyof HighlightState;
+      const _title = title as keyof HighlightState;
 
       return {
         ...currHighlight,
@@ -159,7 +160,7 @@ const Window: FC<WindowProps> = ({
         onMouseDown={() => {
           setStartAtom(false);
           setTopMostWindowAtom(title);
-          setFocusedAtom(title.toLowerCase());
+          setFocusedAtom(title);
         }}
         {...rest}
       >
