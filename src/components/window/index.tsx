@@ -28,10 +28,10 @@ export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: FocusedState;
   type: "explorer" | "properties";
-  minimize?: { visible: false } | { visible: true; disabled: boolean };
-  maximize?: { visible: false } | { visible: true; disabled: boolean };
-  initPos?: Coordinates;
   icon?: string;
+  minimize: { visible: false } | { visible: true; disabled: boolean };
+  maximize: { visible: false } | { visible: true; disabled: boolean };
+  initPos?: Coordinates;
 }
 
 const Window: FC<WindowProps> = ({

@@ -9,6 +9,8 @@ export const socialProps: WindowProps = {
   title: "socials",
   type: "explorer",
   className: "aspect-[5/4]",
+  minimize: { visible: true, disabled: false },
+  maximize: { visible: true, disabled: false },
 };
 
 export const Socials: FC = () => {

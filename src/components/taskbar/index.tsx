@@ -60,7 +60,8 @@ const Taskbar: FC = () => {
             {windowsAtom.map(({ props }) => {
               const focused = focusedAtom === props.title;
               return (
-                props.type === "explorer" && (
+                props.minimize.visible &&
+                props.minimize.disabled === false && (
                   <div
                     key={`${props.title}-task`}
                     className={`relative h-[3.3vh] aspect-[80/11] border-solid border-[0.1vh] ${
