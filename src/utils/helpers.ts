@@ -1,6 +1,6 @@
 import { FC, RefObject } from "react";
 import { SetterOrUpdater } from "recoil";
-import { FocusedState, HighlightState } from "@/recoil/atoms";
+import { Focusable, Highlight } from "@/utils/constants";
 import { WindowProps } from "@/components/window";
 import { File } from "./constants";
 import { indexOf } from "lodash";
@@ -30,7 +30,7 @@ export const launchFile = (
       }[]
     >;
   },
-  setFocusedAtom: SetterOrUpdater<FocusedState>,
+  setFocusAtom: SetterOrUpdater<Focusable>,
   setWindowsPrecedenceAtom: SetterOrUpdater<string>
 ) => {
   const windows = windowsAtom.get();
@@ -38,7 +38,7 @@ export const launchFile = (
   if (windows.length === 0) return windowsAtom.set([window]);
 
   if (windows.find(({ props }) => props.title === window.props.title)) {
-    setFocusedAtom(window.props.title as FocusedState);
+    setFocusAtom(window.props.title as Focusable);
     setWindowsPrecedenceAtom!(window.props.title);
     return windows;
   }
@@ -63,11 +63,11 @@ export const openLink = (
 export const handleDefaultKeydown = (
   e: KeyboardEvent,
   files: File[],
-  focusedAtom: FocusedState,
-  setHighlightAtom: SetterOrUpdater<HighlightState>,
-  property: keyof HighlightState
+  focusAtom: Focusable,
+  setHighlightAtom: SetterOrUpdater<Highlight>,
+  property: keyof Highlight
 ) => {
-  if (focusedAtom !== property) return;
+  if (focusAtom !== property) return;
 
   const keys = files.map(({ index, label }) => ({
     index: index,

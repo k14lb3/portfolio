@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { socialsFiles } from "@/utils/constants";
-import { highlightState, focusedState } from "@/recoil/atoms";
+import { highlightState, focusState } from "@/recoil/atoms";
 import Window, { WindowProps } from "@/components/window";
 import { handleDefaultKeydown, openLink } from "@/utils/helpers";
 
@@ -17,7 +17,7 @@ export const Socials: FC = () => {
   const iconsRef = useRef<HTMLDivElement[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const focusedAtom = useRecoilValue(focusedState);
+  const focusAtom = useRecoilValue(focusState);
 
   const iconsEvent: (() => void)[] = [
     () => openLink(anchorRef, "https://github.com/k14lb3"),
@@ -28,7 +28,7 @@ export const Socials: FC = () => {
   useEffect(() => {
     if (iconsRef.current) {
       const handleArrowRightKeydown = () => {
-        if (focusedAtom !== "socials") return;
+        if (focusAtom !== "socials") return;
 
         if (
           highlightAtom.socials === socialsFiles.length ||
@@ -44,7 +44,7 @@ export const Socials: FC = () => {
       };
 
       const handleArrowLeftKeydown = () => {
-        if (focusedAtom !== "socials") return;
+        if (focusAtom !== "socials") return;
 
         if (highlightAtom.socials === 1 || highlightAtom.socials === 90 + 1)
           return;
@@ -57,7 +57,7 @@ export const Socials: FC = () => {
       };
 
       const handleEnterKeyup = () => {
-        if (focusedAtom !== "socials") return;
+        if (focusAtom !== "socials") return;
 
         const dblclick = new MouseEvent("dblclick", {
           view: window,
@@ -83,7 +83,7 @@ export const Socials: FC = () => {
             handleDefaultKeydown(
               e,
               socialsFiles,
-              focusedAtom,
+              focusAtom,
               setHighlightAtom,
               "socials"
             );
@@ -106,7 +106,7 @@ export const Socials: FC = () => {
         window.removeEventListener("keyup", keyupEvents);
       };
     }
-  }, [iconsRef, focusedAtom, highlightAtom.socials, setHighlightAtom]);
+  }, [iconsRef, focusAtom, highlightAtom.socials, setHighlightAtom]);
 
   return (
     <Window {...socialProps}>
@@ -114,7 +114,7 @@ export const Socials: FC = () => {
       <div
         className="absolute inset-0"
         onMouseDown={() => {
-          if (focusedAtom === "socials" && highlightAtom.socials > 90)
+          if (focusAtom === "socials" && highlightAtom.socials > 90)
             return setHighlightAtom((currHighlight) => ({
               ...currHighlight,
               socials: currHighlight.socials - 90,
@@ -124,11 +124,11 @@ export const Socials: FC = () => {
       <div className="flex space-x-[2.3988vh]">
         {socialsFiles.map(({ index, src, label }) => {
           const highlighted =
-            focusedAtom === "socials" &&
+            focusAtom === "socials" &&
             (highlightAtom.socials === index ||
               highlightAtom.socials === 90 + index);
           const focused =
-            focusedAtom === "socials" && highlightAtom.socials > 90;
+            focusAtom === "socials" && highlightAtom.socials > 90;
 
           return (
             <div

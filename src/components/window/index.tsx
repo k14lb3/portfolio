@@ -9,15 +9,13 @@ import {
 } from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
-import { Coordinates } from "@/utils/constants";
+import { Coordinates, Focusable, Highlight } from "@/utils/constants";
 import {
   startState,
   highlightState,
-  focusedState,
+  focusState,
   windowsState,
   windowsPrecedenceState,
-  HighlightState,
-  FocusedState,
 } from "@/recoil/atoms";
 import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
@@ -26,7 +24,7 @@ import { TitleBar } from "./title-bar";
 
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  title: FocusedState;
+  title: Focusable;
   type: "explorer" | "properties";
   icon?: string;
   minimize: { visible: false } | { visible: true; disabled: boolean };
@@ -50,10 +48,11 @@ const Window: FC<WindowProps> = ({
   const setStartAtom = useSetRecoilState(startState);
   const setHighlightAtom = useSetRecoilState(highlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
-  const [windowsPrecedenceAtom, setWindowsPrecedenceAtom] =
-    useRecoilState(windowsPrecedenceState);
-  const resetFocusedAtom = useResetRecoilState(focusedState);
-  const setFocusedAtom = useSetRecoilState(focusedState);
+  const [windowsPrecedenceAtom, setWindowsPrecedenceAtom] = useRecoilState(
+    windowsPrecedenceState
+  );
+  const resetFocusAtom = useResetRecoilState(focusState);
+  const setFocusAtom = useSetRecoilState(focusState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
     x: -9999,
     y: -9999,
@@ -64,9 +63,9 @@ const Window: FC<WindowProps> = ({
   const [drag, setDrag] = useState<boolean>(false);
 
   useEffect(() => {
-    setFocusedAtom(title);
+    setFocusAtom(title);
     setWindowsPrecedenceAtom(title);
-  }, [title, setFocusedAtom, setWindowsPrecedenceAtom]);
+  }, [title, setFocusAtom, setWindowsPrecedenceAtom]);
 
   useEffect(() => {
     if (parentRef && screenHeight) {
@@ -130,12 +129,12 @@ const Window: FC<WindowProps> = ({
       currHighlight.filter(({ props }) => props.title !== title)
     );
 
-    resetFocusedAtom();
+    resetFocusAtom();
 
     if (type !== "explorer") return;
 
     setHighlightAtom((currHighlight) => {
-      const _title = title as keyof HighlightState;
+      const _title = title as keyof Highlight;
 
       return {
         ...currHighlight,
@@ -160,7 +159,7 @@ const Window: FC<WindowProps> = ({
         onMouseDown={() => {
           setStartAtom(false);
           setWindowsPrecedenceAtom(title);
-          setFocusedAtom(title);
+          setFocusAtom(title);
         }}
         {...rest}
       >

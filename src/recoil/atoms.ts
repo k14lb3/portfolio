@@ -1,4 +1,5 @@
 import { WindowProps } from "@/components/window";
+import { Focusable, Highlight } from "@/utils/constants";
 import { FC } from "react";
 import { atom } from "recoil";
 
@@ -17,26 +18,12 @@ export const bootState = atom<boolean>({
   default: false,
 });
 
-export type FocusedState =
-  | "desktop"
-  | "about"
-  | "socials"
-  | "taskbar"
-  | "start-menu"
-  | "visitor-counter";
-
-export const focusedState = atom<FocusedState>({
+export const focusState = atom<Focusable>({
   key: "focusedWindow",
   default: "desktop",
 });
 
-export interface HighlightState {
-  desktop: number;
-  "start-menu": number | number[];
-  socials: number;
-}
-
-export const highlightState = atom<HighlightState>({
+export const highlightState = atom<Highlight>({
   key: "highlightState",
   default: {
     desktop: 1,
@@ -57,7 +44,7 @@ export const windowsState = atom<
   default: [],
 });
 
-export const windowsPrecedenceState = atom({
+export const windowsPrecedenceState = atom<string>({
   key: "windowsPrecedenceState",
-  default: "" as string,
+  default: "",
 });

@@ -3,6 +3,20 @@ export interface Coordinates {
   y: number;
 }
 
+export type Focusable =
+  | "desktop"
+  | "about"
+  | "socials"
+  | "taskbar"
+  | "start-menu"
+  | "visitor-counter";
+
+export interface Highlight {
+  desktop: number;
+  "start-menu": number | number[];
+  socials: number;
+}
+
 export interface File {
   index: number;
   src: string;

@@ -20,7 +20,7 @@ import {
   highlightState,
   startState,
   windowsState,
-  focusedState,
+  focusState,
   windowsPrecedenceState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
@@ -31,7 +31,7 @@ const Root: FC = ({ children }) => {
   const setVisitorIpAtom = useSetRecoilState(visitorIpState);
   const setVisitorsAtom = useSetRecoilState(visitorsState);
   const setHighlightAtom = useSetRecoilState(highlightState);
-  const setFocusedAtom = useSetRecoilState(focusedState);
+  const setFocusAtom = useSetRecoilState(focusState);
   const startAtom = useRecoilValue(startState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
@@ -82,7 +82,7 @@ const Root: FC = ({ children }) => {
         launchFile(
           { component: About, props: aboutProps },
           { get: () => windowsAtom, set: setWindowsAtom },
-          setFocusedAtom,
+          setFocusAtom,
           setWindowsPrecedence
         );
         setLaunching(false);

@@ -5,7 +5,7 @@ import { desktopFiles } from "@/utils/constants";
 import {
   highlightState,
   windowsState,
-  focusedState,
+  focusState,
   windowsPrecedenceState,
 } from "@/recoil/atoms";
 import { handleDefaultKeydown, launchFile, openLink } from "@/utils/helpers";
@@ -16,7 +16,7 @@ export const Icons: FC = () => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const [focusAtom, setFocusAtom] = useRecoilState(focusState);
   const setWindowsPrecedenceAtom = useSetRecoilState(windowsPrecedenceState);
 
   const iconsEvent: VoidFunction[] = [
@@ -26,7 +26,7 @@ export const Icons: FC = () => {
       launchFile(
         { component: Socials, props: socialProps },
         { get: () => windowsAtom, set: setWindowsAtom },
-        setFocusedAtom,
+        setFocusAtom,
         setWindowsPrecedenceAtom
       ),
     () => openLink(anchorRef, "/static/karlivan-alberto_resume.pdf"),
@@ -36,7 +36,7 @@ export const Icons: FC = () => {
   useEffect(() => {
     if (iconsRef.current) {
       const handleArrowUpKeydown = () => {
-        if (focusedAtom !== "desktop") return;
+        if (focusAtom !== "desktop") return;
 
         if (highlightAtom.desktop === 90)
           return setHighlightAtom((currHighlight) => ({
@@ -55,7 +55,7 @@ export const Icons: FC = () => {
       };
 
       const handleArrowDownKeydown = () => {
-        if (focusedAtom !== "desktop") return;
+        if (focusAtom !== "desktop") return;
 
         if (
           highlightAtom.desktop === desktopFiles.length ||
@@ -71,7 +71,7 @@ export const Icons: FC = () => {
       };
 
       const handleEnterKeyup = () => {
-        if (focusedAtom !== "desktop") return;
+        if (focusAtom !== "desktop") return;
 
         const dblclick = new MouseEvent("dblclick", {
           view: window,
@@ -97,7 +97,7 @@ export const Icons: FC = () => {
             handleDefaultKeydown(
               e,
               desktopFiles,
-              focusedAtom,
+              focusAtom,
               setHighlightAtom,
               "desktop"
             );
@@ -120,17 +120,17 @@ export const Icons: FC = () => {
         window.removeEventListener("keyup", keyupEvents);
       };
     }
-  }, [iconsRef, focusedAtom, highlightAtom.desktop, setHighlightAtom]);
+  }, [iconsRef, focusAtom, highlightAtom.desktop, setHighlightAtom]);
 
   return (
     <>
       <a ref={anchorRef} />
       {desktopFiles.map(({ index, src, label }) => {
         const highlighted =
-          focusedAtom === "desktop" &&
+          focusAtom === "desktop" &&
           (highlightAtom.desktop === index ||
             highlightAtom.desktop === 90 + index);
-        const focused = focusedAtom === "desktop" && highlightAtom.desktop > 90;
+        const focused = focusAtom === "desktop" && highlightAtom.desktop > 90;
 
         return (
           <div
@@ -140,7 +140,7 @@ export const Icons: FC = () => {
             }}
             className="relative flex flex-col items-center mb-[2.3988vh]"
             onClick={() => {
-              setFocusedAtom("desktop");
+              setFocusAtom("desktop");
               setHighlightAtom((currHighlight) => ({
                 ...currHighlight,
                 desktop: 90 + index,

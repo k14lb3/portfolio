@@ -5,10 +5,10 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from "recoil";
+import { Focusable } from "@/utils/constants";
 import {
-  FocusedState,
   windowsState,
-  focusedState,
+  focusState,
   windowsPrecedenceState,
   startState,
 } from "@/recoil/atoms";
@@ -16,8 +16,8 @@ import { Start } from "./start";
 import { Clock } from "./clock";
 
 const Taskbar: FC = () => {
-  const resetFocusedAtom = useResetRecoilState(focusedState);
-  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const resetFocusAtom = useResetRecoilState(focusState);
+  const [focusAtom, setFocusAtom] = useRecoilState(focusState);
   const setStartAtom = useSetRecoilState(startState);
   const windowsAtom = useRecoilValue(windowsState);
   const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
@@ -28,7 +28,7 @@ const Taskbar: FC = () => {
         case "x":
         case "x":
           setStartAtom(true);
-          setFocusedAtom("start-menu");
+          setFocusAtom("start-menu");
           break;
         case "Escape":
           setStartAtom(false);
@@ -41,7 +41,7 @@ const Taskbar: FC = () => {
     return () => {
       window.removeEventListener("keyup", keyupEvents);
     };
-  }, [setFocusedAtom, setStartAtom]);
+  }, [setFocusAtom, setStartAtom]);
 
   return (
     <div className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0] border-solid border-t-[0.1vh] border-[#DFDFDF] z-[999]">
@@ -49,16 +49,16 @@ const Taskbar: FC = () => {
         <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">
           <div
             className="absolute inset-0"
-            onMouseDown={() => setFocusedAtom("taskbar")}
+            onMouseDown={() => setFocusAtom("taskbar")}
           />
           <Start />
           <div className="relative flex flex-grow items-center space-x-[0.4498vh] h-full mx-[0.5997vh]">
             <div
               className="absolute inset-0"
-              onMouseDown={() => setFocusedAtom("taskbar")}
+              onMouseDown={() => setFocusAtom("taskbar")}
             />
             {windowsAtom.map(({ props }) => {
-              const focused = focusedAtom === props.title;
+              const focused = focusAtom === props.title;
               return (
                 props.minimize.visible &&
                 props.minimize.disabled === false && (
@@ -70,14 +70,14 @@ const Taskbar: FC = () => {
                         : "border-black border-t-white border-l-white"
                     }`}
                     onClick={() => {
-                      if (focusedAtom !== props.title) {
-                        setFocusedAtom(props.title as FocusedState);
+                      if (focusAtom !== props.title) {
+                        setFocusAtom(props.title as Focusable);
                         setWindowsPrecedence(props.title);
 
                         return;
                       }
 
-                      setFocusedAtom("taskbar");
+                      setFocusAtom("taskbar");
                     }}
                   >
                     <div

@@ -13,7 +13,7 @@ import {
   highlightState,
   startState,
   windowsState,
-  focusedState,
+  focusState,
   windowsPrecedenceState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
@@ -44,7 +44,7 @@ export const StartMenu: FC = () => {
   const nestRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const optionsRef = useRef<HTMLDivElement[]>([]);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
+  const [focusAtom, setFocusAtom] = useRecoilState(focusState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
@@ -55,7 +55,7 @@ export const StartMenu: FC = () => {
         launchFile(
           { component: VisitorCounter, props: visitorCounterProps },
           { get: () => windowsAtom, set: setWindowsAtom },
-          setFocusedAtom,
+          setFocusAtom,
           setWindowsPrecedence
         ),
       () => {
@@ -75,7 +75,7 @@ export const StartMenu: FC = () => {
       launchFile(
         { component: About, props: aboutProps },
         { get: () => windowsAtom, set: setWindowsAtom },
-        setFocusedAtom,
+        setFocusAtom,
         setWindowsPrecedence
       ),
     () => {
@@ -87,7 +87,7 @@ export const StartMenu: FC = () => {
   useEffect(() => {
     if (optionsRef.current) {
       const handleArrowUpKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
@@ -107,7 +107,7 @@ export const StartMenu: FC = () => {
       };
 
       const handleArrowDownKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
@@ -124,7 +124,7 @@ export const StartMenu: FC = () => {
       };
 
       const handleArrowRightKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
@@ -140,7 +140,7 @@ export const StartMenu: FC = () => {
       };
 
       const handleDefaultKeydown = (e: KeyboardEvent) => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (typeof highlightAtom["start-menu"] === "number") {
           const keys = startMenuFiles.map(({ index, label }) => ({
@@ -209,7 +209,7 @@ export const StartMenu: FC = () => {
       };
 
       const handleEnterKeyup = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
@@ -254,7 +254,7 @@ export const StartMenu: FC = () => {
         window.removeEventListener("keyup", keyupEvents);
       };
     }
-  }, [optionsRef, focusedAtom, highlightAtom, setHighlightAtom, startAtom]);
+  }, [optionsRef, focusAtom, highlightAtom, setHighlightAtom, startAtom]);
 
   return (
     <Container className="left-[-2%] bottom-[107%]">

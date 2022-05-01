@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import _ from "lodash";
-import { highlightState, focusedState, startState } from "@/recoil/atoms";
+import { highlightState, focusState, startState } from "@/recoil/atoms";
 import { startMenuFiles } from "@/utils/constants";
 import { Container } from "./start-menu";
 
@@ -23,14 +23,14 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
   ...rest
 }) => {
   const optionsRef = useRef<HTMLDivElement[]>([]);
-  const focusedAtom = useRecoilValue(focusedState);
+  const focusAtom = useRecoilValue(focusState);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const setStartAtom = useSetRecoilState(startState);
 
   useEffect(() => {
     if (optionsRef.current) {
       const handleArrowUpKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if ((highlightAtom["start-menu"] as number[])[1] === 1) return;
 
@@ -44,7 +44,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
       };
 
       const handleArrowDownKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         if (
           (highlightAtom["start-menu"] as number[])[1] ===
@@ -62,7 +62,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
       };
 
       const handleArrowLeftKeydown = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
@@ -71,7 +71,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
       };
 
       const handleEnterKeyup = () => {
-        if (focusedAtom !== "start-menu") return;
+        if (focusAtom !== "start-menu") return;
 
         return optionsRef.current[
           (highlightAtom["start-menu"] as number[])[1] - 1
@@ -108,7 +108,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
         window.removeEventListener("keyup", keyupEvents);
       };
     }
-  }, [index, optionsRef, focusedAtom, highlightAtom, setHighlightAtom]);
+  }, [index, optionsRef, focusAtom, highlightAtom, setHighlightAtom]);
 
   return (
     <Container {...rest}>

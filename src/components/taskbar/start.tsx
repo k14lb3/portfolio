@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { startState, focusedState } from "@/recoil/atoms";
+import { startState, focusState } from "@/recoil/atoms";
 import { StartMenu } from "./start-menu";
 
 export const Start: FC = () => {
   const [startAtom, setStartAtom] = useRecoilState(startState);
-  const resetFocusedAtom = useResetRecoilState(focusedState);
+  const resetFocusAtom = useResetRecoilState(focusState);
   return (
     <div
       className={`relative h-[3.3vh] aspect-[27/11] border-solid border-[0.1vh] ${
@@ -14,7 +14,7 @@ export const Start: FC = () => {
           : "border-black border-t-white border-l-white"
       }`}
       onClick={() => setStartAtom(!startAtom)}
-      onMouseDown={() => resetFocusedAtom()}
+      onMouseDown={() => resetFocusAtom()}
     >
       {startAtom && <StartMenu />}
       <div
