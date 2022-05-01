@@ -2,19 +2,19 @@ import { WindowProps } from "@/components/window";
 import { FC } from "react";
 import { atom } from "recoil";
 
-export const visitorIpState = atom({
+export const visitorIpState = atom<string>({
   key: "visitorIpState",
-  default: "" as string,
+  default: "",
 });
 
-export const visitorsState = atom({
+export const visitorsState = atom<string[]>({
   key: "visitorsState",
-  default: [] as string[],
+  default: [],
 });
 
-export const bootState = atom({
+export const bootState = atom<boolean>({
   key: "bootState",
-  default: false as boolean,
+  default: false,
 });
 
 export type FocusedState =
@@ -25,9 +25,9 @@ export type FocusedState =
   | "start-menu"
   | "visitor-counter";
 
-export const focusedState = atom({
+export const focusedState = atom<FocusedState>({
   key: "focusedWindow",
-  default: "desktop" as FocusedState,
+  default: "desktop",
 });
 
 export interface HighlightState {
@@ -36,23 +36,25 @@ export interface HighlightState {
   socials: number;
 }
 
-export const highlightState = atom({
+export const highlightState = atom<HighlightState>({
   key: "highlightState",
   default: {
     desktop: 1,
     "start-menu": 0,
     socials: 1,
-  } as HighlightState,
+  },
 });
 
-export const startState = atom({
+export const startState = atom<boolean>({
   key: "startState",
-  default: false as boolean,
+  default: false,
 });
 
-export const windowsState = atom({
+export const windowsState = atom<
+  { component: FC<Partial<WindowProps>>; props: WindowProps }[]
+>({
   key: "windowsState",
-  default: [] as { component: FC<Partial<WindowProps>>; props: WindowProps }[],
+  default: [],
 });
 
 export const windowsPrecedenceState = atom({
