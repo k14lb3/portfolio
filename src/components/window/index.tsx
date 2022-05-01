@@ -15,7 +15,7 @@ import {
   highlightState,
   focusedState,
   windowsState,
-  topMostWindowState,
+  windowsPrecedenceState,
   HighlightState,
   FocusedState,
 } from "@/recoil/atoms";
@@ -50,8 +50,8 @@ const Window: FC<WindowProps> = ({
   const setStartAtom = useSetRecoilState(startState);
   const setHighlightAtom = useSetRecoilState(highlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
-  const [topMostWindowAtom, setTopMostWindowAtom] =
-    useRecoilState(topMostWindowState);
+  const [windowsPrecedenceAtom, setWindowsPrecedenceAtom] =
+    useRecoilState(windowsPrecedenceState);
   const resetFocusedAtom = useResetRecoilState(focusedState);
   const setFocusedAtom = useSetRecoilState(focusedState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
@@ -65,8 +65,8 @@ const Window: FC<WindowProps> = ({
 
   useEffect(() => {
     setFocusedAtom(title);
-    setTopMostWindowAtom(title);
-  }, [title, setFocusedAtom, setTopMostWindowAtom]);
+    setWindowsPrecedenceAtom(title);
+  }, [title, setFocusedAtom, setWindowsPrecedenceAtom]);
 
   useEffect(() => {
     if (parentRef && screenHeight) {
@@ -155,11 +155,11 @@ const Window: FC<WindowProps> = ({
           left: `${windowPos.x}vh`,
         }}
         className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
-          topMostWindowAtom === title ? " z-[99]" : ""
+          windowsPrecedenceAtom === title ? " z-[99]" : ""
         }${positioned ? "" : "invisible"}${className ? ` ${className}` : ""}`}
         onMouseDown={() => {
           setStartAtom(false);
-          setTopMostWindowAtom(title);
+          setWindowsPrecedenceAtom(title);
           setFocusedAtom(title);
         }}
         {...rest}

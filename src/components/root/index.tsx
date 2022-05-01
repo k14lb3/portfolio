@@ -21,7 +21,7 @@ import {
   startState,
   windowsState,
   focusedState,
-  topMostWindowState,
+  windowsPrecedenceState,
 } from "@/recoil/atoms";
 import Boot from "@/components/boot";
 import { About, aboutProps } from "@/components/windows";
@@ -34,7 +34,7 @@ const Root: FC = ({ children }) => {
   const setFocusedAtom = useSetRecoilState(focusedState);
   const startAtom = useRecoilValue(startState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+  const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
   const [launching, setLaunching] = useState<boolean>(false);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const Root: FC = ({ children }) => {
           { component: About, props: aboutProps },
           { get: () => windowsAtom, set: setWindowsAtom },
           setFocusedAtom,
-          setTopMostWindowAtom
+          setWindowsPrecedence
         );
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));

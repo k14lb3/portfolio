@@ -55,7 +55,7 @@ export const windowsState = atom({
   default: [] as { component: FC<Partial<WindowProps>>; props: WindowProps }[],
 });
 
-export const topMostWindowState = atom({
-  key: "topMostWindowState",
+export const windowsPrecedenceState = atom({
+  key: "windowsPrecedenceState",
   default: "" as string,
 });

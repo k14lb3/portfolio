@@ -31,7 +31,7 @@ export const launchFile = (
     >;
   },
   setFocusedAtom: SetterOrUpdater<FocusedState>,
-  setTopMostWindowAtom: SetterOrUpdater<string>
+  setWindowsPrecedenceAtom: SetterOrUpdater<string>
 ) => {
   const windows = windowsAtom.get();
 
@@ -39,7 +39,7 @@ export const launchFile = (
 
   if (windows.find(({ props }) => props.title === window.props.title)) {
     setFocusedAtom(window.props.title as FocusedState);
-    setTopMostWindowAtom!(window.props.title);
+    setWindowsPrecedenceAtom!(window.props.title);
     return windows;
   }
 

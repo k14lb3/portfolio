@@ -6,7 +6,7 @@ import {
   highlightState,
   windowsState,
   focusedState,
-  topMostWindowState,
+  windowsPrecedenceState,
 } from "@/recoil/atoms";
 import { handleDefaultKeydown, launchFile, openLink } from "@/utils/helpers";
 import { Socials, socialProps } from "@/components/windows";
@@ -17,7 +17,7 @@ export const Icons: FC = () => {
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
-  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+  const setWindowsPrecedenceAtom = useSetRecoilState(windowsPrecedenceState);
 
   const iconsEvent: VoidFunction[] = [
     () => {},
@@ -27,7 +27,7 @@ export const Icons: FC = () => {
         { component: Socials, props: socialProps },
         { get: () => windowsAtom, set: setWindowsAtom },
         setFocusedAtom,
-        setTopMostWindowAtom
+        setWindowsPrecedenceAtom
       ),
     () => openLink(anchorRef, "/static/karlivan-alberto_resume.pdf"),
     () => openLink(anchorRef, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),

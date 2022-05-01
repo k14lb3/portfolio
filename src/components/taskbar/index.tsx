@@ -9,7 +9,7 @@ import {
   FocusedState,
   windowsState,
   focusedState,
-  topMostWindowState,
+  windowsPrecedenceState,
   startState,
 } from "@/recoil/atoms";
 import { Start } from "./start";
@@ -20,7 +20,7 @@ const Taskbar: FC = () => {
   const [focusedAtom, setFocusedAtom] = useRecoilState(focusedState);
   const setStartAtom = useSetRecoilState(startState);
   const windowsAtom = useRecoilValue(windowsState);
-  const setTopMostWindowAtom = useSetRecoilState(topMostWindowState);
+  const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
 
   useEffect(() => {
     const keyupEvents = (e: KeyboardEvent) => {
@@ -72,7 +72,7 @@ const Taskbar: FC = () => {
                     onClick={() => {
                       if (focusedAtom !== props.title) {
                         setFocusedAtom(props.title as FocusedState);
-                        setTopMostWindowAtom(props.title);
+                        setWindowsPrecedence(props.title);
 
                         return;
                       }
