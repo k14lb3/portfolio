@@ -1,6 +1,6 @@
 import { FC, RefObject } from "react";
 import { SetterOrUpdater } from "recoil";
-import { Focusable, Highlight } from "@/utils/constants";
+import { WindowTitle, Focusable, Highlight } from "@/utils/constants";
 import { WindowProps } from "@/components/window";
 import { File } from "./constants";
 import { indexOf } from "lodash";
@@ -31,7 +31,7 @@ export const launchFile = (
     >;
   },
   setFocusAtom: SetterOrUpdater<Focusable>,
-  setWindowsPrecedenceAtom: SetterOrUpdater<string>
+  setTopMostWindowSelector: SetterOrUpdater<WindowTitle>
 ) => {
   const windows = windowsAtom.get();
 
@@ -39,7 +39,7 @@ export const launchFile = (
 
   if (windows.find(({ props }) => props.title === window.props.title)) {
     setFocusAtom(window.props.title as Focusable);
-    setWindowsPrecedenceAtom!(window.props.title);
+    setTopMostWindowSelector!(window.props.title as WindowTitle);
     return windows;
   }
 

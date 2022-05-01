@@ -1,5 +1,5 @@
 import { WindowProps } from "@/components/window";
-import { Focusable, Highlight } from "@/utils/constants";
+import { WindowTitle, Focusable, Highlight } from "@/utils/constants";
 import { FC } from "react";
 import { atom } from "recoil";
 
@@ -15,7 +15,7 @@ export const visitorsState = atom<string[]>({
 
 export const bootState = atom<boolean>({
   key: "bootState",
-  default: false,
+  default: true,
 });
 
 export const focusState = atom<Focusable>({
@@ -44,7 +44,7 @@ export const windowsState = atom<
   default: [],
 });
 
-export const windowsPrecedenceState = atom<string>({
+export const windowsPrecedenceState = atom<WindowTitle[]>({
   key: "windowsPrecedenceState",
-  default: "",
+  default: [],
 });

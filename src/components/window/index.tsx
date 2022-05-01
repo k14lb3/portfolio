@@ -7,9 +7,18 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import _ from "lodash";
-import { Coordinates, Focusable, Highlight } from "@/utils/constants";
+import {
+  useRecoilState,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
+import _, { indexOf } from "lodash";
+import {
+  Coordinates,
+  WindowTitle,
+  Focusable,
+  Highlight,
+} from "@/utils/constants";
 import {
   startState,
   highlightState,
@@ -21,6 +30,7 @@ import { useWindowDimensions, useMousePosition } from "@/hooks";
 import { convertPxToVh } from "@/utils/helpers";
 import { Button } from "@/components/ui";
 import { TitleBar } from "./title-bar";
+import { topMostWindowState } from "@/recoil/selectors";
 
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -51,6 +61,7 @@ const Window: FC<WindowProps> = ({
   const [windowsPrecedenceAtom, setWindowsPrecedenceAtom] = useRecoilState(
     windowsPrecedenceState
   );
+  const setTopMostWindowSelector = useSetRecoilState(topMostWindowState);
   const resetFocusAtom = useResetRecoilState(focusState);
   const setFocusAtom = useSetRecoilState(focusState);
   const [windowPos, setWindowPos] = useState<Coordinates>({
@@ -64,8 +75,8 @@ const Window: FC<WindowProps> = ({
 
   useEffect(() => {
     setFocusAtom(title);
-    setWindowsPrecedenceAtom(title);
-  }, [title, setFocusAtom, setWindowsPrecedenceAtom]);
+    setTopMostWindowSelector(title as WindowTitle);
+  }, [title, setFocusAtom, setTopMostWindowSelector]);
 
   useEffect(() => {
     if (parentRef && screenHeight) {
@@ -131,6 +142,10 @@ const Window: FC<WindowProps> = ({
 
     resetFocusAtom();
 
+    setWindowsPrecedenceAtom((currWindowsPrecedence) =>
+      currWindowsPrecedence.filter((_title) => _title !== title)
+    );
+
     if (type !== "explorer") return;
 
     setHighlightAtom((currHighlight) => {
@@ -152,13 +167,14 @@ const Window: FC<WindowProps> = ({
         style={{
           top: `${windowPos.y}vh`,
           left: `${windowPos.x}vh`,
+          zIndex: indexOf(windowsPrecedenceAtom, title) + 1,
         }}
         className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
-          windowsPrecedenceAtom === title ? " z-[99]" : ""
-        }${positioned ? "" : "invisible"}${className ? ` ${className}` : ""}`}
+          positioned ? "" : "invisible"
+        }${className ? ` ${className}` : ""}`}
         onMouseDown={() => {
           setStartAtom(false);
-          setWindowsPrecedenceAtom(title);
+          setTopMostWindowSelector(title as WindowTitle);
           setFocusAtom(title);
         }}
         {...rest}

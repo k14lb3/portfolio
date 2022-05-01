@@ -2,12 +2,8 @@ import { FC, useEffect, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import _ from "lodash";
 import { desktopFiles } from "@/utils/constants";
-import {
-  highlightState,
-  windowsState,
-  focusState,
-  windowsPrecedenceState,
-} from "@/recoil/atoms";
+import { highlightState, windowsState, focusState } from "@/recoil/atoms";
+import { topMostWindowState } from "@/recoil/selectors";
 import { handleDefaultKeydown, launchFile, openLink } from "@/utils/helpers";
 import { Socials, socialProps } from "@/components/windows";
 
@@ -15,9 +11,9 @@ export const Icons: FC = () => {
   const iconsRef = useRef<any[]>([]);
   const anchorRef = useRef<HTMLAnchorElement>(null);
   const [highlightAtom, setHighlightAtom] = useRecoilState(highlightState);
-  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
   const [focusAtom, setFocusAtom] = useRecoilState(focusState);
-  const setWindowsPrecedenceAtom = useSetRecoilState(windowsPrecedenceState);
+  const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
+  const setTopMostWindowSelector = useSetRecoilState(topMostWindowState);
 
   const iconsEvent: VoidFunction[] = [
     () => {},
@@ -27,7 +23,7 @@ export const Icons: FC = () => {
         { component: Socials, props: socialProps },
         { get: () => windowsAtom, set: setWindowsAtom },
         setFocusAtom,
-        setWindowsPrecedenceAtom
+        setTopMostWindowSelector
       ),
     () => openLink(anchorRef, "/static/karlivan-alberto_resume.pdf"),
     () => openLink(anchorRef, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),

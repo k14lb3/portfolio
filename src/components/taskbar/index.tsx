@@ -1,26 +1,16 @@
 import { FC, useEffect } from "react";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
-import { Focusable } from "@/utils/constants";
-import {
-  windowsState,
-  focusState,
-  windowsPrecedenceState,
-  startState,
-} from "@/recoil/atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { WindowTitle, Focusable } from "@/utils/constants";
+import { windowsState, focusState, startState } from "@/recoil/atoms";
+import { topMostWindowState } from "@/recoil/selectors";
 import { Start } from "./start";
 import { Clock } from "./clock";
 
 const Taskbar: FC = () => {
-  const resetFocusAtom = useResetRecoilState(focusState);
   const [focusAtom, setFocusAtom] = useRecoilState(focusState);
   const setStartAtom = useSetRecoilState(startState);
   const windowsAtom = useRecoilValue(windowsState);
-  const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
+  const setTopMostWindowSelector = useSetRecoilState(topMostWindowState);
 
   useEffect(() => {
     const keyupEvents = (e: KeyboardEvent) => {
@@ -72,7 +62,7 @@ const Taskbar: FC = () => {
                     onClick={() => {
                       if (focusAtom !== props.title) {
                         setFocusAtom(props.title as Focusable);
-                        setWindowsPrecedence(props.title);
+                        setTopMostWindowSelector(props.title as WindowTitle);
 
                         return;
                       }

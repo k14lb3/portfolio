@@ -3,13 +3,9 @@ export interface Coordinates {
   y: number;
 }
 
-export type Focusable =
-  | "desktop"
-  | "about"
-  | "socials"
-  | "taskbar"
-  | "start-menu"
-  | "visitor-counter";
+export type WindowTitle = "about" | "socials" | "visitor-counter";
+
+export type Focusable = "desktop" | "taskbar" | "start-menu" | WindowTitle;
 
 export interface Highlight {
   desktop: number;

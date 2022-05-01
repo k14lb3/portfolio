@@ -14,13 +14,13 @@ import {
   startState,
   windowsState,
   focusState,
-  windowsPrecedenceState,
 } from "@/recoil/atoms";
 import { launchFile } from "@/utils/helpers";
 import { startMenuFiles } from "@/utils/constants";
 import { About, aboutProps } from "@/components/windows";
 import { VisitorCounter, visitorCounterProps } from "@/components/windows";
 import { StartSubmenu } from "./start-submenu";
+import { topMostWindowState } from "@/recoil/selectors";
 
 export const Container: FC<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
@@ -47,7 +47,7 @@ export const StartMenu: FC = () => {
   const [focusAtom, setFocusAtom] = useRecoilState(focusState);
   const [startAtom, setStartAtom] = useRecoilState(startState);
   const [windowsAtom, setWindowsAtom] = useRecoilState(windowsState);
-  const setWindowsPrecedence = useSetRecoilState(windowsPrecedenceState);
+  const setTopMostWindowSelector = useSetRecoilState(topMostWindowState);
 
   const optionsEvent = [
     [
@@ -56,7 +56,7 @@ export const StartMenu: FC = () => {
           { component: VisitorCounter, props: visitorCounterProps },
           { get: () => windowsAtom, set: setWindowsAtom },
           setFocusAtom,
-          setWindowsPrecedence
+          setTopMostWindowSelector
         ),
       () => {
         anchorRef.current!.href =
@@ -76,7 +76,7 @@ export const StartMenu: FC = () => {
         { component: About, props: aboutProps },
         { get: () => windowsAtom, set: setWindowsAtom },
         setFocusAtom,
-        setWindowsPrecedence
+        setTopMostWindowSelector
       ),
     () => {
       window.close();
