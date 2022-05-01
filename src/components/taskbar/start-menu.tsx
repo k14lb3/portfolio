@@ -91,14 +91,13 @@ export const StartMenu: FC = () => {
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
-        if (
-          highlightAtom["start-menu"] === 0 ||
-          highlightAtom["start-menu"] === 1
-        )
+        if (highlightAtom["start-menu"] === 0)
           return setHighlightAtom((currHighlight) => ({
             ...currHighlight,
             "start-menu": startMenuFiles.length,
           }));
+
+        if (highlightAtom["start-menu"] === 1) return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
@@ -111,11 +110,7 @@ export const StartMenu: FC = () => {
 
         if (typeof highlightAtom["start-menu"] !== "number") return;
 
-        if (highlightAtom["start-menu"] === startMenuFiles.length)
-          return setHighlightAtom((currHighlight) => ({
-            ...currHighlight,
-            "start-menu": 1,
-          }));
+        if (highlightAtom["start-menu"] === startMenuFiles.length) return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
