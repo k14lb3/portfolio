@@ -41,8 +41,9 @@ export const About: FC = () => {
               <div>Tech Stack:</div>
               <div className="ml-[2.3988vh] w-fit">
                 <ul>
-                  <li className="hover:text-[#000080] hover:underline">
+                  <li>
                     <a
+                      className="hover:text-[#000080] hover:underline"
                       href="https://reactjs.org/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -50,8 +51,9 @@ export const About: FC = () => {
                       React
                     </a>
                   </li>
-                  <li className="hover:text-[#000080] hover:underline">
+                  <li>
                     <a
+                      className="hover:text-[#000080] hover:underline"
                       href="https://nextjs.org/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -59,8 +61,9 @@ export const About: FC = () => {
                       Next.js
                     </a>
                   </li>
-                  <li className="hover:text-[#000080] hover:underline">
+                  <li>
                     <a
+                      className="hover:text-[#000080] hover:underline"
                       href="https://firebase.google.com/"
                       target="_blank"
                       rel="noopener noreferrer"
