@@ -18,7 +18,7 @@
 
 @layer base {
   html {
-    @apply font-mss overflow-hidden cursor-default;
+    @apply font-mss text-[1.7vh] overflow-hidden cursor-default;
   }
 }
 
