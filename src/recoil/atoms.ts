@@ -15,7 +15,7 @@ export const visitorsState = atom<string[]>({
 
 export const bootState = atom<boolean>({
   key: "bootState",
-  default: true,
+  default: false,
 });
 
 export const focusState = atom<Focusable>({
