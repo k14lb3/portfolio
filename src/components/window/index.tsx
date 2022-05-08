@@ -7,11 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  useRecoilState,
-  useResetRecoilState,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import _, { indexOf } from "lodash";
 import {
   Coordinates,
@@ -36,6 +32,7 @@ export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: Focusable;
   type: "explorer" | "properties";
+  plain?: boolean;
   icon?: string;
   minimize: { visible: false } | { visible: true; disabled: boolean };
   maximize: { visible: false } | { visible: true; disabled: boolean };
@@ -45,6 +42,7 @@ export interface WindowProps
 const Window: FC<WindowProps> = ({
   title,
   type,
+  plain,
   icon,
   minimize,
   maximize,
@@ -200,7 +198,7 @@ const Window: FC<WindowProps> = ({
                   {children}
                 </div>
               </div>
-            ) : (
+            ) : !plain ? (
               <div className="flex flex-col flex-grow p-[0.8996vh] pt-[1.1994vh]">
                 <div className="flex-grow mb-[0.8996vh] border-solid border-[0.1vh] border-black border-t-white border-l-white">
                   <div className="relative h-full px-[1.1994vh] bg-[#C0C0C0] border-solid border-[0.1vh] border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]">
@@ -213,6 +211,8 @@ const Window: FC<WindowProps> = ({
                   </Button>
                 </div>
               </div>
+            ) : (
+              <>{children}</>
             )}
           </div>
         </div>

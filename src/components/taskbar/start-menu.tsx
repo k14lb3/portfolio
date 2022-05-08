@@ -19,6 +19,7 @@ import { launchFile } from "@/utils/helpers";
 import { startMenuFiles } from "@/utils/constants";
 import { About, aboutProps } from "@/components/windows";
 import { VisitorCounter, visitorCounterProps } from "@/components/windows";
+import { Calculator, calculatorProps } from "@/components/windows";
 import { StartSubmenu } from "./start-submenu";
 import { topMostWindowState } from "@/recoil/selectors";
 
@@ -58,17 +59,13 @@ export const StartMenu: FC = () => {
           setFocusAtom,
           setTopMostWindowSelector
         ),
-      () => {
-        anchorRef.current!.href =
-          "https://www.google.com/search?q=calculator&rlz=1C1NHXL_enAE736AE739&ei=COxkYq6xC6eMr7wP9NmgkAQ&ved=0ahUKEwiu1b-Uh6z3AhUnxosBHfQsCEIQ4dUDCA4&uact=5&oq=calculator&gs_lcp=Cgdnd3Mtd2l6EAMyBwgAELEDEEMyBwgAELEDEEMyBwgAELEDEEMyBAgAEEMyBAgAEEMyBwgAELEDEEMyBwgAELEDEEMyCwgAEIAEELEDEIMBMgcIABCxAxBDMggIABCxAxCDAToFCAAQkQI6CAgAEIAEELEDOgUIABCABDoKCC4QxwEQ0QMQQzoOCC4QgAQQsQMQxwEQ0QM6EQguEIAEELEDEIMBEMcBEKMCOg0ILhCxAxDHARDRAxBDSgQIQRgASgQIRhgAUABYtBFgrhJoAHABeACAAZYBiAHWCZIBAzIuOZgBAKABAcABAQ&sclient=gws-wiz";
-        anchorRef.current!.target = "_blank";
-        anchorRef.current!.rel = "noopener noreferrer";
-        anchorRef.current!.click();
-
-        anchorRef.current!.removeAttribute("href");
-        anchorRef.current!.removeAttribute("target");
-        anchorRef.current!.removeAttribute("rel");
-      },
+      () =>
+        launchFile(
+          { component: Calculator, props: calculatorProps },
+          { get: () => windowsAtom, set: setWindowsAtom },
+          setFocusAtom,
+          setTopMostWindowSelector
+        ),
     ],
     () => {},
     () =>

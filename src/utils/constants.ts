@@ -3,7 +3,7 @@ export interface Coordinates {
   y: number;
 }
 
-export type WindowTitle = "about" | "socials" | "visitor-counter";
+export type WindowTitle = "about" | "socials" | "visitor-counter" | "calculator";
 
 export type Focusable = "desktop" | "taskbar" | "start-menu" | WindowTitle;
 
