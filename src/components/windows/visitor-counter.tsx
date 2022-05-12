@@ -1,13 +1,13 @@
-import { FC } from "react";
-import { useRecoilValue } from "recoil";
-import { visitorIpState, visitorsState } from "@/recoil/atoms";
-import Window, { WindowProps } from "../window";
-import { indexOf } from "lodash";
+import { FC } from 'react';
+import { useRecoilValue } from 'recoil';
+import { visitorIpState, visitorsState } from '@/recoil/atoms';
+import Window, { WindowProps } from '../window';
+import { indexOf } from 'lodash';
 
 export const visitorCounterProps: WindowProps = {
-  title: "visitor-counter",
-  type: "properties",
-  icon: "/static/images/icons/internet.png",
+  title: 'visitor-counter',
+  type: 'properties',
+  icon: '/static/images/icons/internet.png',
   minimize: { visible: false },
   maximize: { visible: false },
 };
@@ -21,23 +21,23 @@ export const VisitorCounter: FC = () => {
 
     switch (index) {
       case 1:
-        return "first";
+        return 'first';
       case 2:
-        return "second";
+        return 'second';
       case 3:
-        return "third";
+        return 'third';
       case 4:
-        return "fourth";
+        return 'fourth';
       case 5:
-        return "fifth";
+        return 'fifth';
       case 6:
-        return "sixth";
+        return 'sixth';
       case 7:
-        return "seventh";
+        return 'seventh';
       case 8:
-        return "eight";
+        return 'eight';
       case 9:
-        return "ninth";
+        return 'ninth';
       default:
         return `${index}th`;
     }

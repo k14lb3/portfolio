@@ -1,12 +1,12 @@
-import { FC } from "react";
-import Image from "next/image";
-import Window, { WindowProps } from "@/components/window";
+import { FC } from 'react';
+import Image from 'next/image';
+import Window, { WindowProps } from '@/components/window';
 
 export const aboutProps: WindowProps = {
-  className: "h-[64.47vh] aspect-[205/214]",
-  title: "about",
-  type: "properties",
-  icon: "/static/images/icons/about.png",
+  className: 'h-[64.47vh] aspect-[205/214]',
+  title: 'about',
+  type: 'properties',
+  icon: '/static/images/icons/about.png',
   minimize: { visible: false },
   maximize: { visible: false },
 };
@@ -81,7 +81,7 @@ export const About: FC = () => {
             <p className="text-[2vh]">
               &quot;Hard workers who do things they like are unstoppable.&quot;
               <br />
-              {"- "}
+              {'- '}
               <a
                 className="hover:text-[#000080] hover:underline"
                 href="https://myanimelist.net/anime/46352/Blue_Period"

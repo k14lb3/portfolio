@@ -1,11 +1,11 @@
-import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
+import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps
   extends DetailedHTMLProps<
     ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  size?: "default" | "large";
+  size?: 'default' | 'large';
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -17,13 +17,13 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       className={`group h-[3.45vh] block${
-        size === "default"
-          ? " aspect-[150/46] "
-          : size === "large"
-          ? " aspect-[210/46] "
-          : ""
+        size === 'default'
+          ? ' aspect-[150/46] '
+          : size === 'large'
+          ? ' aspect-[210/46] '
+          : ''
       }border-solid border-[0.1vh] border-black border-t-white border-l-white focus:border-black active:border-black outline-none${
-        className ? ` ${className}` : ""
+        className ? ` ${className}` : ''
       }`}
       {...rest}
     >
@@ -49,5 +49,5 @@ export const Button: FC<ButtonProps> = ({
 };
 
 Button.defaultProps = {
-  size: "default",
+  size: 'default',
 };

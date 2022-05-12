@@ -4,10 +4,10 @@ import {
   DetailedHTMLProps,
   useState,
   useRef,
-} from "react";
-import Window, { WindowProps } from "@/components/window";
-import { InputText } from "@/components/ui";
-import { isNaN } from "lodash";
+} from 'react';
+import Window, { WindowProps } from '@/components/window';
+import { InputText } from '@/components/ui';
+import { isNaN } from 'lodash';
 
 const Button: FC<
   DetailedHTMLProps<
@@ -23,7 +23,7 @@ const Button: FC<
 					border-black border-t-white border-l-white 
 					active:border-white active:border-t-black 
 					active:border-l-black text-[1.75vh] font-bold${
-            className ? ` ${className}` : ""
+            className ? ` ${className}` : ''
           }`}
       {...rest}
     >
@@ -46,23 +46,23 @@ const Button: FC<
 };
 
 export const calculatorProps: WindowProps = {
-  className: "h-[36.73vh] aspect-[552/490]",
-  title: "calculator",
-  type: "properties",
+  className: 'h-[36.73vh] aspect-[552/490]',
+  title: 'calculator',
+  type: 'properties',
   plain: true,
-  icon: "/static/images/icons/calculator.png",
+  icon: '/static/images/icons/calculator.png',
   minimize: { visible: true, disabled: false },
   maximize: { visible: true, disabled: true },
 };
 
 export const Calculator: FC = () => {
-  const [value, setValue] = useState<string>("0.");
+  const [value, setValue] = useState<string>('0.');
   const [operator, setOperator] = useState<{
     symbol: string;
     accumulator: number;
     next: number;
   }>({
-    symbol: "",
+    symbol: '',
     accumulator: 0,
     next: 0,
   });
@@ -71,27 +71,27 @@ export const Calculator: FC = () => {
   const [willClear, setWillClear] = useState<boolean>(false);
 
   const deleteFunctions = (label: string): boolean => {
-    if (label === "back") {
+    if (label === 'back') {
       setValue((currValue) => {
-        if (currValue.length === 2) return "0.";
-        if (currValue[currValue.length - 1] === ".")
-          return currValue.slice(0, -2) + ".";
+        if (currValue.length === 2) return '0.';
+        if (currValue[currValue.length - 1] === '.')
+          return currValue.slice(0, -2) + '.';
         return currValue.slice(0, -1);
       });
 
       return true;
     }
 
-    if (label === "ce") {
-      setValue("0.");
+    if (label === 'ce') {
+      setValue('0.');
       setDecimal(false);
       return true;
     }
 
-    if (label === "c") {
-      setValue("0.");
+    if (label === 'c') {
+      setValue('0.');
       setOperator({
-        symbol: "",
+        symbol: '',
         accumulator: 0,
         next: 0,
       });
@@ -104,17 +104,17 @@ export const Calculator: FC = () => {
   };
 
   const memoryFunctions = (label: string): boolean => {
-    if (label === "mc" || label === "mr" || label === "ms" || label === "m+") {
+    if (label === 'mc' || label === 'mr' || label === 'ms' || label === 'm+') {
       setWillClear(false);
 
-      if (label === "mc") {
+      if (label === 'mc') {
         setMemory(0);
         setDecimal(false);
-      } else if (label === "mr") {
-        setValue(memory + ".");
-      } else if (label === "ms") {
+      } else if (label === 'mr') {
+        setValue(memory + '.');
+      } else if (label === 'ms') {
         setMemory(parseInt(value));
-      } else if (label === "m+") {
+      } else if (label === 'm+') {
         setMemory((currMemory) => parseInt(value) + currMemory);
       }
 
@@ -126,38 +126,38 @@ export const Calculator: FC = () => {
 
   const operatorFunctions = (label: string) => {
     if (
-      label === "/" ||
-      label === "*" ||
-      label === "-" ||
-      label === "+" ||
-      label === "=" ||
-      label === "sqrt" ||
-      label === "%" ||
-      label === "1/x"
+      label === '/' ||
+      label === '*' ||
+      label === '-' ||
+      label === '+' ||
+      label === '=' ||
+      label === 'sqrt' ||
+      label === '%' ||
+      label === '1/x'
     ) {
       setWillClear(true);
 
-      if (label === "sqrt") return true;
+      if (label === 'sqrt') return true;
 
-      if (label === "%") return true;
+      if (label === '%') return true;
 
-      if (label === "1/x") {
+      if (label === '1/x') {
         setValue((currValue) => {
           const value = parseFloat(currValue);
 
-          if (value === 0) return "Cannot divide by zero.";
+          if (value === 0) return 'Cannot divide by zero.';
 
           const answer = 1 / value;
 
-          return Number.isInteger(answer) ? answer + "." : answer.toString();
+          return Number.isInteger(answer) ? answer + '.' : answer.toString();
         });
 
         return true;
       }
-      if (label === "=") {
+      if (label === '=') {
         let foo = operator.next === 0;
 
-        console.log("foo", foo);
+        console.log('foo', foo);
 
         if (foo)
           setOperator((currOperator) => ({
@@ -170,7 +170,7 @@ export const Calculator: FC = () => {
             operator.accumulator +
             operator.symbol +
             (foo ? value : operator.next)
-          }`
+          }`,
         );
 
         setOperator((currOperator) => ({
@@ -178,7 +178,7 @@ export const Calculator: FC = () => {
           accumulator: answer,
         }));
 
-        setValue(Number.isInteger(answer) ? answer + "." : answer);
+        setValue(Number.isInteger(answer) ? answer + '.' : answer);
 
         return true;
       }
@@ -201,7 +201,7 @@ export const Calculator: FC = () => {
         setValue((currValue) => {
           if (willClear) {
             setWillClear(false);
-            return "0." + label;
+            return '0.' + label;
           }
 
           return currValue + label;
@@ -211,23 +211,23 @@ export const Calculator: FC = () => {
       }
 
       setValue((currValue) => {
-        if (currValue === "0." || willClear) {
+        if (currValue === '0.' || willClear) {
           if (willClear) setWillClear(false);
 
-          return label + ".";
+          return label + '.';
         }
-        return currValue.slice(0, -1) + label + ".";
+        return currValue.slice(0, -1) + label + '.';
       });
 
       return true;
     }
 
-    if (label === "+/-")
+    if (label === '+/-')
       return setValue((currValue) =>
-        currValue[0] !== "-" ? "-" + currValue : currValue.slice(1)
+        currValue[0] !== '-' ? '-' + currValue : currValue.slice(1),
       );
 
-    if (label === ".") return setDecimal(true);
+    if (label === '.') return setDecimal(true);
 
     return false;
   };
@@ -260,64 +260,64 @@ export const Calculator: FC = () => {
               className="h-full pt-[0.5997vh] border-solid border-[0.1vh]
             border-[#DFDFDF] border-t-black border-l-black text-center"
             >
-              {memory !== 0 && "M"}
+              {memory !== 0 && 'M'}
             </div>
           </div>
           <div className="flex space-x-[0.5997vh] text-[#800000]">
             <Button
               className="aspect-[7/4]"
               label="Back"
-              onClick={() => click("back")}
+              onClick={() => click('back')}
             />
             <Button
               className="aspect-[7/4]"
               label="CE"
-              onClick={() => click("ce")}
+              onClick={() => click('ce')}
             />
             <Button
               className="aspect-[7/4]"
               label="C"
-              onClick={() => click("c")}
+              onClick={() => click('c')}
             />
           </div>
         </div>
         <div className="flex space-x-[2.3988vh]">
           <div className="grid grid-rows-4 gap-y-[0.8995vh] text-[#ff0000]">
-            <Button label="MC" onClick={() => click("mc")} />
-            <Button label="MR" onClick={() => click("mr")} />
-            <Button label="MS" onClick={() => click("ms")} />
-            <Button label="M+" onClick={() => click("m+")} />
+            <Button label="MC" onClick={() => click('mc')} />
+            <Button label="MR" onClick={() => click('mr')} />
+            <Button label="MS" onClick={() => click('ms')} />
+            <Button label="M+" onClick={() => click('m+')} />
           </div>
           <div className="flex space-x-[0.5997vh]">
             <div className="grid grid-cols-3 gap-y-[0.8995vh] gap-x-[0.5997vh] text-[#0000ff]">
-              <Button label="7" onClick={() => click("7")} />
-              <Button label="8" onClick={() => click("8")} />
-              <Button label="9" onClick={() => click("9")} />
-              <Button label="4" onClick={() => click("4")} />
-              <Button label="5" onClick={() => click("5")} />
-              <Button label="6" onClick={() => click("6")} />
-              <Button label="1" onClick={() => click("1")} />
-              <Button label="2" onClick={() => click("2")} />
-              <Button label="3" onClick={() => click("3")} />
-              <Button label="0" onClick={() => click("0")} />
-              <Button label="+/-" onClick={() => click("+/-")} />
-              <Button label="." onClick={() => click(".")} />
+              <Button label="7" onClick={() => click('7')} />
+              <Button label="8" onClick={() => click('8')} />
+              <Button label="9" onClick={() => click('9')} />
+              <Button label="4" onClick={() => click('4')} />
+              <Button label="5" onClick={() => click('5')} />
+              <Button label="6" onClick={() => click('6')} />
+              <Button label="1" onClick={() => click('1')} />
+              <Button label="2" onClick={() => click('2')} />
+              <Button label="3" onClick={() => click('3')} />
+              <Button label="0" onClick={() => click('0')} />
+              <Button label="+/-" onClick={() => click('+/-')} />
+              <Button label="." onClick={() => click('.')} />
             </div>
             <div className="flex space-x-[0.5997vh]">
               <div className="space-y-[0.8995vh] text-[#ff0000]">
-                <Button label="/" onClick={() => click("/")} />
-                <Button label="*" onClick={() => click("*")} />
-                <Button label="-" onClick={() => click("-")} />
-                <Button label="+" onClick={() => click("+")} />
+                <Button label="/" onClick={() => click('/')} />
+                <Button label="*" onClick={() => click('*')} />
+                <Button label="-" onClick={() => click('-')} />
+                <Button label="+" onClick={() => click('+')} />
               </div>
               <div className="space-y-[0.8995vh] text-[#0000ff]">
-                <Button label="sqrt" onClick={() => click("sqrt")} />
-                <Button label="%" onClick={() => click("%")} />
-                <Button label="1/x" onClick={() => click("1/x")} />
+                <Button label="sqrt" onClick={() => click('sqrt')} />
+                <Button label="%" onClick={() => click('%')} />
+                <Button label="1/x" onClick={() => click('1/x')} />
                 <Button
                   className="text-[#ff0000]"
                   label="="
-                  onClick={() => click("=")}
+                  onClick={() => click('=')}
                 />
               </div>
             </div>

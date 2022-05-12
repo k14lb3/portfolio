@@ -1,10 +1,10 @@
-import { FC, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { WindowTitle, Focusable } from "@/utils/constants";
-import { windowsState, focusState, startState } from "@/recoil/atoms";
-import { topMostWindowState } from "@/recoil/selectors";
-import { Start } from "./start";
-import { Clock } from "./clock";
+import { FC, useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { WindowTitle, Focusable } from '@/utils/constants';
+import { windowsState, focusState, startState } from '@/recoil/atoms';
+import { topMostWindowState } from '@/recoil/selectors';
+import { Start } from './start';
+import { Clock } from './clock';
 
 const Taskbar: FC = () => {
   const [focusAtom, setFocusAtom] = useRecoilState(focusState);
@@ -15,21 +15,21 @@ const Taskbar: FC = () => {
   useEffect(() => {
     const keyupEvents = (e: KeyboardEvent) => {
       switch (e.key) {
-        case "x":
-        case "x":
+        case 'x':
+        case 'x':
           setStartAtom(true);
-          setFocusAtom("start-menu");
+          setFocusAtom('start-menu');
           break;
-        case "Escape":
+        case 'Escape':
           setStartAtom(false);
           break;
       }
     };
 
-    window.addEventListener("keyup", keyupEvents);
+    window.addEventListener('keyup', keyupEvents);
 
     return () => {
-      window.removeEventListener("keyup", keyupEvents);
+      window.removeEventListener('keyup', keyupEvents);
     };
   }, [setFocusAtom, setStartAtom]);
 
@@ -39,13 +39,13 @@ const Taskbar: FC = () => {
         <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">
           <div
             className="absolute inset-0"
-            onMouseDown={() => setFocusAtom("taskbar")}
+            onMouseDown={() => setFocusAtom('taskbar')}
           />
           <Start />
           <div className="relative flex flex-grow items-center space-x-[0.4498vh] h-full mx-[0.5997vh]">
             <div
               className="absolute inset-0"
-              onMouseDown={() => setFocusAtom("taskbar")}
+              onMouseDown={() => setFocusAtom('taskbar')}
             />
             {windowsAtom.map(({ props }) => {
               const focused = focusAtom === props.title;
@@ -56,8 +56,8 @@ const Taskbar: FC = () => {
                     key={`${props.title}-task`}
                     className={`relative h-[3.3vh] aspect-[80/11] border-solid border-[0.1vh] ${
                       focused
-                        ? "border-white border-t-black border-l-black"
-                        : "border-black border-t-white border-l-white"
+                        ? 'border-white border-t-black border-l-black'
+                        : 'border-black border-t-white border-l-white'
                     }`}
                     onClick={() => {
                       if (focusAtom !== props.title) {
@@ -67,19 +67,19 @@ const Taskbar: FC = () => {
                         return;
                       }
 
-                      setFocusAtom("taskbar");
+                      setFocusAtom('taskbar');
                     }}
                   >
                     <div
                       className={`h-full border-solid border-[0.1vh] ${
                         focused
-                          ? "pt-[0.1522vh] border-[#DFDFDF] border-t-[#808080] border-l-[#808080] bg-white"
-                          : "border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]"
+                          ? 'pt-[0.1522vh] border-[#DFDFDF] border-t-[#808080] border-l-[#808080] bg-white'
+                          : 'border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]'
                       }`}
                     >
                       <div
                         className={`flex items-center h-full w-full px-[0.4498vh] ${
-                          focused ? "bg-checkered" : "bg-[#C0C0C0]"
+                          focused ? 'bg-checkered' : 'bg-[#C0C0C0]'
                         }`}
                       >
                         <div className="flex items-center h-[2.4vh] aspect-square">
@@ -88,24 +88,24 @@ const Taskbar: FC = () => {
                             src={
                               props.icon
                                 ? props.icon
-                                : "/static/images/icons/folder-opened.png"
+                                : '/static/images/icons/folder-opened.png'
                             }
                             alt={props.title}
                           />
                         </div>
                         <div
                           className={`h-full ml-[0.4498vh] text-[1.75vh] ${
-                            focused ? "font-bold" : "pt-[0.2998vh] "
+                            focused ? 'font-bold' : 'pt-[0.2998vh] '
                           }`}
                         >
                           {props.title
-                            .split("-")
+                            .split('-')
                             .map(
                               (word) =>
                                 word[0].toUpperCase() +
-                                word.slice(1).toLowerCase()
+                                word.slice(1).toLowerCase(),
                             )
-                            .join(" ")}
+                            .join(' ')}
                         </div>
                       </div>
                     </div>

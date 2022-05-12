@@ -1,16 +1,16 @@
-import { focusState } from "@/recoil/atoms";
-import { FC, useState, useEffect } from "react";
-import { useResetRecoilState } from "recoil";
+import { focusState } from '@/recoil/atoms';
+import { FC, useState, useEffect } from 'react';
+import { useResetRecoilState } from 'recoil';
 
 export const Clock: FC = () => {
-  const [time, setTime] = useState<string>("");
+  const [time, setTime] = useState<string>('');
   const resetFocusAtom = useResetRecoilState(focusState);
 
   const setClock = () => {
     const date = new Date();
 
     setTime(
-      date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     );
   };
 

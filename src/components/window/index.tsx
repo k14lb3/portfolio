@@ -6,32 +6,32 @@ import {
   useRef,
   useEffect,
   useState,
-} from "react";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
-import _, { indexOf } from "lodash";
+} from 'react';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import _, { indexOf } from 'lodash';
 import {
   Coordinates,
   WindowTitle,
   Focusable,
   Highlight,
-} from "@/utils/constants";
+} from '@/utils/constants';
 import {
   startState,
   highlightState,
   focusState,
   windowsState,
   windowsPrecedenceState,
-} from "@/recoil/atoms";
-import { useWindowDimensions, useMousePosition } from "@/hooks";
-import { convertPxToVh } from "@/utils/helpers";
-import { Button } from "@/components/ui";
-import { TitleBar } from "./title-bar";
-import { topMostWindowState } from "@/recoil/selectors";
+} from '@/recoil/atoms';
+import { useWindowDimensions, useMousePosition } from '@/hooks';
+import { convertPxToVh } from '@/utils/helpers';
+import { Button } from '@/components/ui';
+import { TitleBar } from './title-bar';
+import { topMostWindowState } from '@/recoil/selectors';
 
 export interface WindowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: Focusable;
-  type: "explorer" | "properties";
+  type: 'explorer' | 'properties';
   plain?: boolean;
   icon?: string;
   minimize: { visible: false } | { visible: true; disabled: boolean };
@@ -57,7 +57,7 @@ const Window: FC<WindowProps> = ({
   const setHighlightAtom = useSetRecoilState(highlightState);
   const setWindowsAtom = useSetRecoilState(windowsState);
   const [windowsPrecedenceAtom, setWindowsPrecedenceAtom] = useRecoilState(
-    windowsPrecedenceState
+    windowsPrecedenceState,
   );
   const setTopMostWindowSelector = useSetRecoilState(topMostWindowState);
   const resetFocusAtom = useResetRecoilState(focusState);
@@ -86,12 +86,12 @@ const Window: FC<WindowProps> = ({
         x: convertPxToVh(
           (small ? screenWidth : screenWidthRatioed)! / 2 -
             parentRef.current!.clientWidth / 2,
-          screenHeight!
+          screenHeight!,
         ),
         y:
           convertPxToVh(
             screenHeight! / 2 - parentRef.current!.clientHeight / 2,
-            screenHeight!
+            screenHeight!,
           ) - 4.5,
       };
 
@@ -116,11 +116,11 @@ const Window: FC<WindowProps> = ({
     setInitDragPos({
       x: convertPxToVh(
         mousePos.x - parentRef.current!.offsetLeft,
-        screenHeight!
+        screenHeight!,
       ),
       y: convertPxToVh(
         mousePos.y - parentRef.current!.offsetTop,
-        screenHeight!
+        screenHeight!,
       ),
     });
 
@@ -135,16 +135,16 @@ const Window: FC<WindowProps> = ({
 
   const closeWindow = () => {
     setWindowsAtom((currHighlight) =>
-      currHighlight.filter(({ props }) => props.title !== title)
+      currHighlight.filter(({ props }) => props.title !== title),
     );
 
     resetFocusAtom();
 
     setWindowsPrecedenceAtom((currWindowsPrecedence) =>
-      currWindowsPrecedence.filter((_title) => _title !== title)
+      currWindowsPrecedence.filter((_title) => _title !== title),
     );
 
-    if (type !== "explorer") return;
+    if (type !== 'explorer') return;
 
     setHighlightAtom((currHighlight) => {
       const _title = title as keyof Highlight;
@@ -168,8 +168,8 @@ const Window: FC<WindowProps> = ({
           zIndex: indexOf(windowsPrecedenceAtom, title) + 1,
         }}
         className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
-          positioned ? "" : "invisible"
-        }${className ? ` ${className}` : ""}`}
+          positioned ? '' : 'invisible'
+        }${className ? ` ${className}` : ''}`}
         onMouseDown={() => {
           setStartAtom(false);
           setTopMostWindowSelector(title as WindowTitle);
@@ -180,7 +180,7 @@ const Window: FC<WindowProps> = ({
         <div className="h-full w-full border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
           <div
             className={`flex flex-col h-full w-full bg-[#C0C0C0] ${
-              type! === "explorer" ? "p-[0.3vh]" : "p-[0.15vh] "
+              type! === 'explorer' ? 'p-[0.3vh]' : 'p-[0.15vh] '
             }`}
           >
             <TitleBar
@@ -192,7 +192,7 @@ const Window: FC<WindowProps> = ({
               closeWindow={closeWindow}
               onMouseDown={handleMouseDown}
             />
-            {type === "explorer" ? (
+            {type === 'explorer' ? (
               <div className="h-full border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080] mt-[0.2999vh]">
                 <div className="relative h-full py-[1.1994vh] px-[1.1994vh] bg-white border-solid border-[0.1vh] border-[#DFDFDF] border-t-black border-l-black">
                   {children}
@@ -224,17 +224,17 @@ const Window: FC<WindowProps> = ({
             left: `${draggerPos.x}vh`,
             height: `${convertPxToVh(
               parentRef.current!.clientHeight,
-              screenHeight!
+              screenHeight!,
             )}vh`,
             width: `${convertPxToVh(
               parentRef.current!.clientWidth,
-              screenHeight!
+              screenHeight!,
             )}vh`,
           }}
           className="absolute border-dotted border-[0.1vh] border-[#FF7F7F] z-[999]"
           onMouseUp={handleMouseUp}
         >
-          {type === "explorer" && (
+          {type === 'explorer' && (
             <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]">
               <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]">
                 <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]"></div>

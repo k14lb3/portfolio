@@ -5,30 +5,30 @@ import {
   HTMLAttributes,
   useRef,
   useEffect,
-} from "react";
-import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import _, { indexOf } from "lodash";
+} from 'react';
+import { useRouter } from 'next/router';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import _, { indexOf } from 'lodash';
 import {
   highlightState,
   startState,
   windowsState,
   focusState,
-} from "@/recoil/atoms";
-import { launchFile } from "@/utils/helpers";
-import { startMenuFiles } from "@/utils/constants";
-import { About, aboutProps } from "@/components/windows";
-import { VisitorCounter, visitorCounterProps } from "@/components/windows";
-import { Calculator, calculatorProps } from "@/components/windows";
-import { StartSubmenu } from "./start-submenu";
-import { topMostWindowState } from "@/recoil/selectors";
+} from '@/recoil/atoms';
+import { launchFile } from '@/utils/helpers';
+import { startMenuFiles } from '@/utils/constants';
+import { About, aboutProps } from '@/components/windows';
+import { VisitorCounter, visitorCounterProps } from '@/components/windows';
+import { Calculator, calculatorProps } from '@/components/windows';
+import { StartSubmenu } from './start-submenu';
+import { topMostWindowState } from '@/recoil/selectors';
 
 export const Container: FC<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > = ({ className, children, ...rest }) => (
   <div
     className={`absolute bg-[#C0C0C0] border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF] ${
-      className ? ` ${className}` : ""
+      className ? ` ${className}` : ''
     }`}
     onClick={(e) => e.stopPropagation()}
     {...rest}
@@ -57,14 +57,14 @@ export const StartMenu: FC = () => {
           { component: VisitorCounter, props: visitorCounterProps },
           { get: () => windowsAtom, set: setWindowsAtom },
           setFocusAtom,
-          setTopMostWindowSelector
+          setTopMostWindowSelector,
         ),
       () =>
         launchFile(
           { component: Calculator, props: calculatorProps },
           { get: () => windowsAtom, set: setWindowsAtom },
           setFocusAtom,
-          setTopMostWindowSelector
+          setTopMostWindowSelector,
         ),
     ],
     () => {},
@@ -73,68 +73,68 @@ export const StartMenu: FC = () => {
         { component: About, props: aboutProps },
         { get: () => windowsAtom, set: setWindowsAtom },
         setFocusAtom,
-        setTopMostWindowSelector
+        setTopMostWindowSelector,
       ),
     () => {
       window.close();
-      router.push("https://www.linkedin.com/in/karlivanalberto/");
+      router.push('https://www.linkedin.com/in/karlivanalberto/');
     },
   ];
 
   useEffect(() => {
     if (optionsRef.current) {
       const handleArrowUpKeydown = () => {
-        if (focusAtom !== "start-menu") return;
+        if (focusAtom !== 'start-menu') return;
 
-        if (typeof highlightAtom["start-menu"] !== "number") return;
+        if (typeof highlightAtom['start-menu'] !== 'number') return;
 
-        if (highlightAtom["start-menu"] === 0)
+        if (highlightAtom['start-menu'] === 0)
           return setHighlightAtom((currHighlight) => ({
             ...currHighlight,
-            "start-menu": startMenuFiles.length,
+            'start-menu': startMenuFiles.length,
           }));
 
-        if (highlightAtom["start-menu"] === 1) return;
+        if (highlightAtom['start-menu'] === 1) return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          "start-menu": (currHighlight["start-menu"] as number) - 1,
+          'start-menu': (currHighlight['start-menu'] as number) - 1,
         }));
       };
 
       const handleArrowDownKeydown = () => {
-        if (focusAtom !== "start-menu") return;
+        if (focusAtom !== 'start-menu') return;
 
-        if (typeof highlightAtom["start-menu"] !== "number") return;
+        if (typeof highlightAtom['start-menu'] !== 'number') return;
 
-        if (highlightAtom["start-menu"] === startMenuFiles.length) return;
+        if (highlightAtom['start-menu'] === startMenuFiles.length) return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          "start-menu": (currHighlight["start-menu"] as number) + 1,
+          'start-menu': (currHighlight['start-menu'] as number) + 1,
         }));
       };
 
       const handleArrowRightKeydown = () => {
-        if (focusAtom !== "start-menu") return;
+        if (focusAtom !== 'start-menu') return;
 
-        if (typeof highlightAtom["start-menu"] !== "number") return;
+        if (typeof highlightAtom['start-menu'] !== 'number') return;
 
-        if (highlightAtom["start-menu"] === 0) return;
+        if (highlightAtom['start-menu'] === 0) return;
 
-        if (!startMenuFiles[(highlightAtom["start-menu"] as number) - 1].nested)
+        if (!startMenuFiles[(highlightAtom['start-menu'] as number) - 1].nested)
           return;
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          "start-menu": [1, 1],
+          'start-menu': [1, 1],
         }));
       };
 
       const handleDefaultKeydown = (e: KeyboardEvent) => {
-        if (focusAtom !== "start-menu") return;
+        if (focusAtom !== 'start-menu') return;
 
-        if (typeof highlightAtom["start-menu"] === "number") {
+        if (typeof highlightAtom['start-menu'] === 'number') {
           const keys = startMenuFiles.map(({ index, label }) => ({
             index: index,
             key: label[0].toLowerCase(),
@@ -146,18 +146,18 @@ export const StartMenu: FC = () => {
 
           return setHighlightAtom((currHighlight) => ({
             ...currHighlight,
-            ["start-menu"]:
+            ['start-menu']:
               // Check if the key variable has more than one element or
               // the currently highlighted file with the given property
               // does not have the same index with the index of the
               // first element of the key variable
-              key.length === 1 || currHighlight["start-menu"] !== key[0].index
+              key.length === 1 || currHighlight['start-menu'] !== key[0].index
                 ? startMenuFiles[key[0].index - 1].nested
                   ? [key[0].index, 1]
                   : key[0].index
                 : key[
                     indexOf(key, {
-                      index: currHighlight["start-menu"] as number,
+                      index: currHighlight['start-menu'] as number,
                       key: key[0].key,
                     }) + 2
                   ].index,
@@ -165,7 +165,7 @@ export const StartMenu: FC = () => {
         }
 
         const keys = startMenuFiles[
-          highlightAtom["start-menu"][0] - 1
+          highlightAtom['start-menu'][0] - 1
         ].nested!.map(({ index, label }) => ({
           index: index,
           key: label[0].toLowerCase(),
@@ -177,22 +177,22 @@ export const StartMenu: FC = () => {
 
         return setHighlightAtom((currHighlight) => ({
           ...currHighlight,
-          ["start-menu"]:
+          ['start-menu']:
             // Check if the key variable has more than one element or
             // the currently highlighted file with the given property
             // does not have the same index with the index of the
             // first element of the key variable
             key.length === 1 ||
-            (currHighlight["start-menu"] as number[])[1] !== key[0].index
+            (currHighlight['start-menu'] as number[])[1] !== key[0].index
               ? // If true, return the highlighted index of the first element
-                [(currHighlight["start-menu"] as number[])[0], key[0].index]
+                [(currHighlight['start-menu'] as number[])[0], key[0].index]
               : // Otherwise, get the element in the key variable with
                 // the index of currently highlighted file
                 [
-                  (currHighlight["start-menu"] as number[])[0],
+                  (currHighlight['start-menu'] as number[])[0],
                   key[
                     indexOf(key, {
-                      index: (currHighlight["start-menu"] as number[])[1],
+                      index: (currHighlight['start-menu'] as number[])[1],
                       key: key[0].key,
                     }) + 2
                   ].index,
@@ -201,28 +201,28 @@ export const StartMenu: FC = () => {
       };
 
       const handleEnterKeyup = () => {
-        if (focusAtom !== "start-menu") return;
+        if (focusAtom !== 'start-menu') return;
 
-        if (typeof highlightAtom["start-menu"] !== "number") return;
+        if (typeof highlightAtom['start-menu'] !== 'number') return;
 
-        if (highlightAtom["start-menu"] === 0) return;
+        if (highlightAtom['start-menu'] === 0) return;
 
         return (
           optionsRef.current[
-            (highlightAtom["start-menu"] as number) - 1
+            (highlightAtom['start-menu'] as number) - 1
           ] as HTMLDivElement
         ).click();
       };
 
       const keydownEvents = (e: KeyboardEvent) => {
         switch (e.key) {
-          case "ArrowUp":
+          case 'ArrowUp':
             handleArrowUpKeydown();
             break;
-          case "ArrowDown":
+          case 'ArrowDown':
             handleArrowDownKeydown();
             break;
-          case "ArrowRight":
+          case 'ArrowRight':
             handleArrowRightKeydown();
             break;
           default:
@@ -232,18 +232,18 @@ export const StartMenu: FC = () => {
 
       const keyupEvents = (e: KeyboardEvent) => {
         switch (e.key) {
-          case "Enter":
+          case 'Enter':
             handleEnterKeyup();
             break;
         }
       };
 
-      window.addEventListener("keydown", keydownEvents);
-      window.addEventListener("keyup", keyupEvents);
+      window.addEventListener('keydown', keydownEvents);
+      window.addEventListener('keyup', keyupEvents);
 
       return () => {
-        window.removeEventListener("keydown", keydownEvents);
-        window.removeEventListener("keyup", keyupEvents);
+        window.removeEventListener('keydown', keydownEvents);
+        window.removeEventListener('keyup', keyupEvents);
       };
     }
   }, [optionsRef, focusAtom, highlightAtom, setHighlightAtom, startAtom]);
@@ -259,13 +259,13 @@ export const StartMenu: FC = () => {
       <div className="flex-col">
         {startMenuFiles.map(({ index, src, label, nested }) => {
           const highlighted =
-            typeof highlightAtom["start-menu"] === "number"
-              ? highlightAtom["start-menu"] === index
-              : (highlightAtom["start-menu"] as number[])[0] === index;
+            typeof highlightAtom['start-menu'] === 'number'
+              ? highlightAtom['start-menu'] === index
+              : (highlightAtom['start-menu'] as number[])[0] === index;
 
           return (
             <Fragment key={src}>
-              {label === "Shut Down" && (
+              {label === 'Shut Down' && (
                 <div className="relative mt-[0.3044vh] mb-[0.761vh] border-solid border-[0.1vh] border-t-[#808080] border-b-white  " />
               )}
               <div
@@ -273,25 +273,25 @@ export const StartMenu: FC = () => {
                   optionsRef.current[index - 1] = el as HTMLDivElement;
                 }}
                 className={`flex h-[4.873vh] aspect-[274/64] items-center${
-                  highlighted ? " bg-[#000080]" : ""
+                  highlighted ? ' bg-[#000080]' : ''
                 }`}
                 onMouseOver={() => {
-                  if (nested && typeof highlightAtom["start-menu"] !== "number")
+                  if (nested && typeof highlightAtom['start-menu'] !== 'number')
                     return;
 
                   setHighlightAtom((currHighlight) => ({
                     ...currHighlight,
-                    "start-menu": index,
+                    'start-menu': index,
                   }));
                 }}
                 onMouseLeave={() => {
                   if (!nested) return;
 
-                  if (typeof highlightAtom["start-menu"] !== "number") {
+                  if (typeof highlightAtom['start-menu'] !== 'number') {
                     setHighlightAtom((currHighlight) => ({
                       ...currHighlight,
-                      "start-menu": (
-                        currHighlight["start-menu"] as number[]
+                      'start-menu': (
+                        currHighlight['start-menu'] as number[]
                       )[0] as number,
                     }));
                   }
@@ -301,18 +301,18 @@ export const StartMenu: FC = () => {
                 onMouseEnter={() => {
                   if (
                     nested &&
-                    typeof highlightAtom["start-menu"] === "number"
+                    typeof highlightAtom['start-menu'] === 'number'
                   ) {
                     nestRef.current = setTimeout(
                       () =>
                         setHighlightAtom((currHighlight) => ({
                           ...currHighlight,
-                          "start-menu": [
-                            currHighlight["start-menu"] as number,
+                          'start-menu': [
+                            currHighlight['start-menu'] as number,
                             0,
                           ],
                         })),
-                      500
+                      500,
                     );
                   }
                 }}
@@ -324,7 +324,7 @@ export const StartMenu: FC = () => {
                 }}
               >
                 {nested &&
-                  !(typeof highlightAtom["start-menu"] === "number") && (
+                  !(typeof highlightAtom['start-menu'] === 'number') && (
                     <StartSubmenu
                       index={index}
                       event={optionsEvent}
@@ -336,7 +336,7 @@ export const StartMenu: FC = () => {
                 </div>
                 <div
                   className={`text-[2.1vh]${
-                    highlighted ? " text-white" : ""
+                    highlighted ? ' text-white' : ''
                   } pointer-events-none`}
                 >
                   <span className="underline">{label[0]}</span>
@@ -346,16 +346,16 @@ export const StartMenu: FC = () => {
                   <div className="w-full pointer-events-none">
                     <div
                       style={{
-                        maskImage: "url(/static/images/start/menu/arrow.png)",
+                        maskImage: 'url(/static/images/start/menu/arrow.png)',
                         WebkitMaskImage:
-                          "url(/static/images/start/menu/arrow.png)",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskRepeat: "no-repeat",
-                        maskSize: "auto 1.067h",
-                        WebkitMaskSize: "auto 1.067vh",
+                          'url(/static/images/start/menu/arrow.png)',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskSize: 'auto 1.067h',
+                        WebkitMaskSize: 'auto 1.067vh',
                       }}
                       className={`h-[1.067vh] aspect-[8/14] ml-auto mr-[0.9132vh] ${
-                        highlighted ? "bg-white" : "bg-black"
+                        highlighted ? 'bg-white' : 'bg-black'
                       } pointer-events-none`}
                     />
                   </div>

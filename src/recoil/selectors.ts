@@ -1,9 +1,9 @@
-import { selector } from "recoil";
-import { WindowTitle } from "@/utils/constants";
-import { windowsPrecedenceState } from "./atoms";
+import { selector } from 'recoil';
+import { WindowTitle } from '@/utils/constants';
+import { windowsPrecedenceState } from './atoms';
 
 export const topMostWindowState = selector<WindowTitle>({
-  key: "topMostWindowState",
+  key: 'topMostWindowState',
   get: ({ get }) => {
     const windowsPrecedenceAtom = get(windowsPrecedenceState);
 

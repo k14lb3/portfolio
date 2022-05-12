@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from 'react';
 
 interface WindowDimensions {
   width: number | undefined;
@@ -21,8 +21,8 @@ export const useWindowDimensions = (): WindowDimensions => {
 
     resize();
 
-    window.addEventListener("resize", resize);
-    return (): void => window.removeEventListener("resize", resize);
+    window.addEventListener('resize', resize);
+    return (): void => window.removeEventListener('resize', resize);
   }, []);
 
   return windowDimensions;

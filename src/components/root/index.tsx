@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from 'react';
 import {
   serverTimestamp,
   query,
@@ -8,11 +8,11 @@ import {
   getDoc,
   orderBy,
   setDoc,
-} from "firebase/firestore";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import _ from "lodash";
-import { db } from "@/firebase";
-import { generateRandomNumber, launchFile } from "@/utils/helpers";
+} from 'firebase/firestore';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import _ from 'lodash';
+import { db } from '@/firebase';
+import { generateRandomNumber, launchFile } from '@/utils/helpers';
 import {
   bootState,
   visitorIpState,
@@ -21,10 +21,10 @@ import {
   startState,
   windowsState,
   focusState,
-} from "@/recoil/atoms";
-import { topMostWindowState } from "@/recoil/selectors";
-import Boot from "@/components/boot";
-import { About, aboutProps } from "@/components/windows";
+} from '@/recoil/atoms';
+import { topMostWindowState } from '@/recoil/selectors';
+import Boot from '@/components/boot';
+import { About, aboutProps } from '@/components/windows';
 
 const Root: FC = ({ children }) => {
   const bootAtom = useRecoilValue(bootState);
@@ -40,10 +40,10 @@ const Root: FC = ({ children }) => {
   useEffect(() => {
     const getIp = async () => {
       const data = await (
-        await fetch("https://geolocation-db.com/json/")
+        await fetch('https://geolocation-db.com/json/')
       ).json();
 
-      const ip = data["IPv4"];
+      const ip = data['IPv4'];
 
       return ip;
     };
@@ -53,11 +53,11 @@ const Root: FC = ({ children }) => {
 
       setVisitorIpAtom(ip);
 
-      const visitorDoc = await getDoc(doc(db, "visitors", ip));
+      const visitorDoc = await getDoc(doc(db, 'visitors', ip));
 
       if (visitorDoc.exists()) return;
 
-      await setDoc(doc(db, "visitors", ip), {
+      await setDoc(doc(db, 'visitors', ip), {
         timestamp: serverTimestamp(),
       });
     };
@@ -68,10 +68,10 @@ const Root: FC = ({ children }) => {
   useEffect(
     () =>
       onSnapshot(
-        query(collection(db, "visitors"), orderBy("timestamp")),
-        (snapshot) => setVisitorsAtom(snapshot.docs.map((doc) => doc.id))
+        query(collection(db, 'visitors'), orderBy('timestamp')),
+        (snapshot) => setVisitorsAtom(snapshot.docs.map((doc) => doc.id)),
       ),
-    [setVisitorIpAtom, setVisitorsAtom]
+    [setVisitorIpAtom, setVisitorsAtom],
   );
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const Root: FC = ({ children }) => {
           { component: About, props: aboutProps },
           { get: () => windowsAtom, set: setWindowsAtom },
           setFocusAtom,
-          setTopMostWindowSelector
+          setTopMostWindowSelector,
         );
         setLaunching(false);
       }, generateRandomNumber(1000, 2000));
@@ -98,7 +98,7 @@ const Root: FC = ({ children }) => {
     if (!startAtom) {
       setHighlightAtom((currHighlight) => ({
         ...currHighlight,
-        "start-menu": 0,
+        'start-menu': 0,
       }));
     }
   }, [startAtom, setHighlightAtom]);

@@ -1,13 +1,13 @@
-import { FC, RefObject } from "react";
-import { SetterOrUpdater } from "recoil";
-import { WindowTitle, Focusable, Highlight } from "@/utils/constants";
-import { WindowProps } from "@/components/window";
-import { File } from "./constants";
-import { indexOf } from "lodash";
+import { FC, RefObject } from 'react';
+import { SetterOrUpdater } from 'recoil';
+import { WindowTitle, Focusable, Highlight } from '@/utils/constants';
+import { WindowProps } from '@/components/window';
+import { File } from './constants';
+import { indexOf } from 'lodash';
 
 export const generateRandomNumber = (
   min: number = 0,
-  max: number = 1
+  max: number = 1,
 ): number => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const convertPxToVh = (px: number, screenHeight: number) =>
@@ -31,7 +31,7 @@ export const launchFile = (
     >;
   },
   setFocusAtom: SetterOrUpdater<Focusable>,
-  setTopMostWindowSelector: SetterOrUpdater<WindowTitle>
+  setTopMostWindowSelector: SetterOrUpdater<WindowTitle>,
 ) => {
   const windows = windowsAtom.get();
 
@@ -48,16 +48,16 @@ export const launchFile = (
 
 export const openLink = (
   anchorRef: RefObject<HTMLAnchorElement>,
-  url: string
+  url: string,
 ) => {
   anchorRef.current!.href = url;
-  anchorRef.current!.target = "_blank";
-  anchorRef.current!.rel = "noopener noreferrer";
+  anchorRef.current!.target = '_blank';
+  anchorRef.current!.rel = 'noopener noreferrer';
   anchorRef.current!.click();
 
-  anchorRef.current!.removeAttribute("href");
-  anchorRef.current!.removeAttribute("target");
-  anchorRef.current!.removeAttribute("rel");
+  anchorRef.current!.removeAttribute('href');
+  anchorRef.current!.removeAttribute('target');
+  anchorRef.current!.removeAttribute('rel');
 };
 
 export const handleDefaultKeydown = (
@@ -65,7 +65,7 @@ export const handleDefaultKeydown = (
   files: File[],
   focusAtom: Focusable,
   setHighlightAtom: SetterOrUpdater<Highlight>,
-  property: keyof Highlight
+  property: keyof Highlight,
 ) => {
   if (focusAtom !== property) return;
 

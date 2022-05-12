@@ -1,7 +1,7 @@
-import { FC, useState, useLayoutEffect } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { focusState, highlightState, startState } from "@/recoil/atoms";
-import { useWindowDimensions } from "@/hooks";
+import { FC, useState, useLayoutEffect } from 'react';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { focusState, highlightState, startState } from '@/recoil/atoms';
+import { useWindowDimensions } from '@/hooks';
 
 export const Background: FC = ({ children }) => {
   const { width, height } = useWindowDimensions();
@@ -23,7 +23,7 @@ export const Background: FC = ({ children }) => {
 
   return (
     <div
-      style={{ aspectRatio: aspectRatio ? "8/5" : "auto" }}
+      style={{ aspectRatio: aspectRatio ? '8/5' : 'auto' }}
       className="relative h-full bg-[#008080] pt-[1.1994vh] pb-[4.4978vh] mx-auto overflow-hidden"
     >
       <div
@@ -31,7 +31,7 @@ export const Background: FC = ({ children }) => {
         onClick={() => {
           resetStartAtom();
 
-          if (focusAtom === "desktop" && highlightAtom.desktop > 90)
+          if (focusAtom === 'desktop' && highlightAtom.desktop > 90)
             return setHighlightAtom((currHighlight) => ({
               ...currHighlight,
               desktop: currHighlight.desktop - 90,

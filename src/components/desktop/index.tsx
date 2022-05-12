@@ -1,3 +1,3 @@
-export * from "./background";
-export * from "./icons";
-export * from './windows'
+export * from './background';
+export * from './icons';
+export * from './windows';

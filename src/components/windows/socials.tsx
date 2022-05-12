@@ -1,14 +1,14 @@
-import { FC, useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { socialsFiles } from "@/utils/constants";
-import { highlightState, focusState } from "@/recoil/atoms";
-import Window, { WindowProps } from "@/components/window";
-import { handleDefaultKeydown, openLink } from "@/utils/helpers";
+import { FC, useEffect, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { socialsFiles } from '@/utils/constants';
+import { highlightState, focusState } from '@/recoil/atoms';
+import Window, { WindowProps } from '@/components/window';
+import { handleDefaultKeydown, openLink } from '@/utils/helpers';
 
 export const socialProps: WindowProps = {
-  title: "socials",
-  type: "explorer",
-  className: "aspect-[5/4]",
+  title: 'socials',
+  type: 'explorer',
+  className: 'aspect-[5/4]',
   minimize: { visible: true, disabled: false },
   maximize: { visible: true, disabled: false },
 };
@@ -20,15 +20,15 @@ export const Socials: FC = () => {
   const focusAtom = useRecoilValue(focusState);
 
   const iconsEvent: (() => void)[] = [
-    () => openLink(anchorRef, "https://github.com/k14lb3"),
-    () => openLink(anchorRef, "https://www.linkedin.com/in/karlivanalberto/"),
-    () => openLink(anchorRef, "https://twitter.com/k14lb3"),
+    () => openLink(anchorRef, 'https://github.com/k14lb3'),
+    () => openLink(anchorRef, 'https://www.linkedin.com/in/karlivanalberto/'),
+    () => openLink(anchorRef, 'https://twitter.com/k14lb3'),
   ];
 
   useEffect(() => {
     if (iconsRef.current) {
       const handleArrowRightKeydown = () => {
-        if (focusAtom !== "socials") return;
+        if (focusAtom !== 'socials') return;
 
         if (
           highlightAtom.socials === socialsFiles.length ||
@@ -44,7 +44,7 @@ export const Socials: FC = () => {
       };
 
       const handleArrowLeftKeydown = () => {
-        if (focusAtom !== "socials") return;
+        if (focusAtom !== 'socials') return;
 
         if (highlightAtom.socials === 1 || highlightAtom.socials === 90 + 1)
           return;
@@ -57,9 +57,9 @@ export const Socials: FC = () => {
       };
 
       const handleEnterKeyup = () => {
-        if (focusAtom !== "socials") return;
+        if (focusAtom !== 'socials') return;
 
-        const dblclick = new MouseEvent("dblclick", {
+        const dblclick = new MouseEvent('dblclick', {
           view: window,
           bubbles: true,
         });
@@ -73,10 +73,10 @@ export const Socials: FC = () => {
 
       const keydownEvents = (e: KeyboardEvent) => {
         switch (e.key) {
-          case "ArrowRight":
+          case 'ArrowRight':
             handleArrowRightKeydown();
             break;
-          case "ArrowLeft":
+          case 'ArrowLeft':
             handleArrowLeftKeydown();
             break;
           default:
@@ -85,25 +85,25 @@ export const Socials: FC = () => {
               socialsFiles,
               focusAtom,
               setHighlightAtom,
-              "socials"
+              'socials',
             );
         }
       };
 
       const keyupEvents = (e: KeyboardEvent) => {
         switch (e.key) {
-          case "Enter":
+          case 'Enter':
             handleEnterKeyup();
             break;
         }
       };
 
-      window.addEventListener("keydown", keydownEvents);
-      window.addEventListener("keyup", keyupEvents);
+      window.addEventListener('keydown', keydownEvents);
+      window.addEventListener('keyup', keyupEvents);
 
       return () => {
-        window.removeEventListener("keydown", keydownEvents);
-        window.removeEventListener("keyup", keyupEvents);
+        window.removeEventListener('keydown', keydownEvents);
+        window.removeEventListener('keyup', keyupEvents);
       };
     }
   }, [iconsRef, focusAtom, highlightAtom.socials, setHighlightAtom]);
@@ -114,7 +114,7 @@ export const Socials: FC = () => {
       <div
         className="absolute inset-0"
         onMouseDown={() => {
-          if (focusAtom === "socials" && highlightAtom.socials > 90)
+          if (focusAtom === 'socials' && highlightAtom.socials > 90)
             return setHighlightAtom((currHighlight) => ({
               ...currHighlight,
               socials: currHighlight.socials - 90,
@@ -124,11 +124,10 @@ export const Socials: FC = () => {
       <div className="flex space-x-[2.3988vh]">
         {socialsFiles.map(({ index, src, label }) => {
           const highlighted =
-            focusAtom === "socials" &&
+            focusAtom === 'socials' &&
             (highlightAtom.socials === index ||
               highlightAtom.socials === 90 + index);
-          const focused =
-            focusAtom === "socials" && highlightAtom.socials > 90;
+          const focused = focusAtom === 'socials' && highlightAtom.socials > 90;
 
           return (
             <div
@@ -154,13 +153,13 @@ export const Socials: FC = () => {
                     style={{
                       maskImage: `url(${src})`,
                       WebkitMaskImage: `url(${src})`,
-                      maskRepeat: "no-repeat",
-                      WebkitMaskRepeat: "no-repeat",
-                      maskSize: "4.799vh",
-                      WebkitMaskSize: "4.799vh",
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskSize: '4.799vh',
+                      WebkitMaskSize: '4.799vh',
                     }}
                     className={`absolute inset-0 aspect-square opacity-70${
-                      focused ? " bg-[#000080]" : ""
+                      focused ? ' bg-[#000080]' : ''
                     }`}
                   />
                 )}
@@ -169,9 +168,9 @@ export const Socials: FC = () => {
                 className={`px-[0.2999vh] text-[2.1vh] border-[0.1vh] border-dotted${
                   highlighted
                     ? ` border-black ${
-                        focused ? "bg-[#000080] text-white" : ""
+                        focused ? 'bg-[#000080] text-white' : ''
                       }`
-                    : " bg-white border-[transparent] "
+                    : ' bg-white border-[transparent] '
                 }`}
               >
                 {label}

@@ -1,7 +1,7 @@
-import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
-import { useRecoilValue } from "recoil";
-import { focusState } from "@/recoil/atoms";
-import { WindowProps } from ".";
+import { FC, DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
+import { useRecoilValue } from 'recoil';
+import { focusState } from '@/recoil/atoms';
+import { WindowProps } from '.';
 
 const minimizeIcon = (
   <div className="h-[0.3vh] aspect-[3/1] mt-auto mb-[0.15vh]">
@@ -117,8 +117,8 @@ export const TitleBar: FC<TitleBarProps> = ({
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full ${
-        focusAtom === title ? "bg-[#000080]" : "bg-[#808080]"
-      } px-[0.2999vh] ${className ? ` ${className}` : ""}`}
+        focusAtom === title ? 'bg-[#000080]' : 'bg-[#808080]'
+      } px-[0.2999vh] ${className ? ` ${className}` : ''}`}
       {...rest}
     >
       <div
@@ -127,20 +127,20 @@ export const TitleBar: FC<TitleBarProps> = ({
         onMouseUp={onMouseUp}
       />
       <div className="flex h-full items-center">
-        {(type === "explorer" || (type === "properties" && icon)) && (
+        {(type === 'explorer' || (type === 'properties' && icon)) && (
           <div className="h-[2.4vh] aspect-square">
             <img
               className="h-full w-full"
-              src={icon ? icon : "/static/images/icons/folder-opened.png"}
+              src={icon ? icon : '/static/images/icons/folder-opened.png'}
               alt="Window Icon"
             />
           </div>
         )}
         <div className="mr-[2.3988vh] ml-[0.4498vh] pb-[0.4498vh] text-white font-bold text-[1.75vh]">
           {title
-            .split("-")
+            .split('-')
             .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-            .join(" ")}
+            .join(' ')}
         </div>
       </div>
       <div className="relative flex">
@@ -149,8 +149,8 @@ export const TitleBar: FC<TitleBarProps> = ({
         <div
           className={
             (minimize && minimize.visible) || (maximize && maximize.visible)
-              ? "ml-[0.2999vh]"
-              : ""
+              ? 'ml-[0.2999vh]'
+              : ''
           }
         >
           <Button logo={closeIcon} onClick={closeWindow} />
