@@ -32,7 +32,7 @@ const Boot: FC = () => {
         setCursor('');
 
         setTimeout(() => {
-          setBgcolor('bg-[#008081]');
+          setBgcolor('bg-teal');
 
           setCursor(' cursor-progress');
 

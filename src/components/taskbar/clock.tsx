@@ -22,7 +22,7 @@ export const Clock: FC = () => {
 
   return (
     <div
-      className="relative flex justify-center items-center h-[3.3vh] aspect-[126/44] border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080]"
+      className="relative flex justify-center items-center h-[3.3vh] aspect-[126/44] border-solid border-[0.1vh] border-white border-t-gray border-l-gray"
       onMouseDown={() => resetFocusAtom()}
     >
       <time className="text-[1.5vh]">{time}</time>

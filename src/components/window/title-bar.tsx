@@ -79,14 +79,14 @@ const Button: FC<
     >
       <div
         className="h-full border-solid border-[0.1vh]
-            border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]
-						group-active:border-[#DFDFDF] group-active:border-t-[#808080]
-						group-active:border-l-[#808080]
+            border-gray border-t-alto border-l-alto
+						group-active:border-alto group-active:border-t-gray
+						group-active:border-l-gray
         }"
       >
         <div
-          className="flex items-center justify-center h-full bg-[#C0C0C0] border-solid 
-              border-[0.1vh] border-[#C0C0C0] group-active:border-[#C0C0C0] group-active:pt-[0.15vh] group-active:pl-[0.15vh]"
+          className="flex items-center justify-center h-full bg-silver border-solid 
+              border-[0.1vh] border-silver group-active:border-silver group-active:pt-[0.15vh] group-active:pl-[0.15vh]"
         >
           {logo}
         </div>
@@ -117,7 +117,7 @@ export const TitleBar: FC<TitleBarProps> = ({
   return (
     <div
       className={`relative flex justify-between items-center h-[2.7vh] w-full ${
-        focusAtom === title ? 'bg-[#000080]' : 'bg-[#808080]'
+        focusAtom === title ? 'bg-blue' : 'bg-gray'
       } px-[0.2999vh] ${className ? ` ${className}` : ''}`}
       {...rest}
     >

@@ -159,7 +159,7 @@ export const Icons: FC = () => {
                     WebkitMaskSize: '4.799vh',
                   }}
                   className={`absolute inset-0 aspect-square opacity-70${
-                    focused ? ' bg-[#000080]' : ''
+                    focused ? ' bg-blue' : ''
                   }`}
                 />
               )}
@@ -167,8 +167,8 @@ export const Icons: FC = () => {
             <div
               className={`px-[0.2999vh] text-[2.1vh] text-white border-[0.1vh] border-dotted${
                 highlighted
-                  ? ` border-[#ffff7f] ${focused ? 'bg-[#000080]' : ''}`
-                  : ' bg-[#008080] border-[transparent] '
+                  ? ` border-yellow ${focused ? 'bg-blue' : ''}`
+                  : ' bg-teal border-[transparent] '
               }`}
             >
               {label}

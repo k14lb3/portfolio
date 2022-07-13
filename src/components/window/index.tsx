@@ -167,7 +167,7 @@ const Window: FC<WindowProps> = ({
           left: `${windowPos.x}vh`,
           zIndex: indexOf(windowsPrecedenceAtom, title) + 1,
         }}
-        className={`absolute flex border-solid border-[0.1vh] border-t-[#DFDFDF] border-l-[#DFDFDF] border-black${
+        className={`absolute flex border-solid border-[0.1vh] border-t-alto border-l-alto border-black${
           positioned ? '' : 'invisible'
         }${className ? ` ${className}` : ''}`}
         onMouseDown={() => {
@@ -177,9 +177,9 @@ const Window: FC<WindowProps> = ({
         }}
         {...rest}
       >
-        <div className="h-full w-full border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
+        <div className="h-full w-full border-solid border-[0.1vh] border-gray border-t-white border-l-white">
           <div
-            className={`flex flex-col h-full w-full bg-[#C0C0C0] ${
+            className={`flex flex-col h-full w-full bg-silver ${
               type! === 'explorer' ? 'p-[0.3vh]' : 'p-[0.15vh] '
             }`}
           >
@@ -193,15 +193,15 @@ const Window: FC<WindowProps> = ({
               onMouseDown={handleMouseDown}
             />
             {type === 'explorer' ? (
-              <div className="h-full border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080] mt-[0.2999vh]">
-                <div className="relative h-full py-[1.1994vh] px-[1.1994vh] bg-white border-solid border-[0.1vh] border-[#DFDFDF] border-t-black border-l-black">
+              <div className="h-full border-solid border-[0.1vh] border-white border-t-gray border-l-gray mt-[0.2999vh]">
+                <div className="relative h-full py-[1.1994vh] px-[1.1994vh] bg-white border-solid border-[0.1vh] border-alto border-t-black border-l-black">
                   {children}
                 </div>
               </div>
             ) : !plain ? (
               <div className="flex flex-col flex-grow p-[0.8996vh] pt-[1.1994vh]">
                 <div className="flex-grow mb-[0.8996vh] border-solid border-[0.1vh] border-black border-t-white border-l-white">
-                  <div className="relative h-full px-[1.1994vh] bg-[#C0C0C0] border-solid border-[0.1vh] border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]">
+                  <div className="relative h-full px-[1.1994vh] bg-silver border-solid border-[0.1vh] border-gray border-t-alto border-l-alto">
                     {children}
                   </div>
                 </div>
@@ -231,13 +231,13 @@ const Window: FC<WindowProps> = ({
               screenHeight!,
             )}vh`,
           }}
-          className="absolute border-dotted border-[0.1vh] border-[#FF7F7F] z-[999]"
+          className="absolute border-dotted border-[0.1vh] border-pink z-[999]"
           onMouseUp={handleMouseUp}
         >
           {type === 'explorer' && (
-            <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]">
-              <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]">
-                <div className="h-full border-dotted border-[0.1vh] border-[#FF7F7F]"></div>
+            <div className="h-full border-dotted border-[0.1vh] border-pink">
+              <div className="h-full border-dotted border-[0.1vh] border-pink">
+                <div className="h-full border-dotted border-[0.1vh] border-pink"></div>
               </div>
             </div>
           )}

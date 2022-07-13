@@ -29,15 +29,15 @@ export const Button: FC<ButtonProps> = ({
     >
       <div
         className="h-full border-solid border-[0.1vh]
-            border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]
+            border-gray border-t-alto border-l-alto
             group-focus:border-black group-focus:border-t-white group-focus:border-l-white
-            group-active:border-[#808080]
+            group-active:border-gray
         }"
       >
         <div
-          className="flex justify-center items-center h-full bg-[#C0C0C0] border-solid 
-              border-[0.1vh] border-[#C0C0C0] group-focus:border-[#808080] group-focus:border-t-[#DFDFDF]
-             group-focus:border-l-[#DFDFDF] group-active:border-[#C0C0C0]"
+          className="flex justify-center items-center h-full bg-silver border-solid 
+              border-[0.1vh] border-silver group-focus:border-gray group-focus:border-t-alto
+             group-focus:border-l-alto group-active:border-silver"
         >
           <div className="w-full mx-[0.5997vh] group-active:pt-[0.15vh] group-active:pl-[0.15vh] text-[1.75vh] whitespace-nowrap overflow-hidden overflow-ellipsis">
             {children}

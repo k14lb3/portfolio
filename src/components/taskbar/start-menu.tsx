@@ -27,14 +27,14 @@ export const Container: FC<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 > = ({ className, children, ...rest }) => (
   <div
-    className={`absolute bg-[#C0C0C0] border-solid border-[0.1vh] border-black border-t-[#DFDFDF] border-l-[#DFDFDF] ${
+    className={`absolute bg-silver border-solid border-[0.1vh] border-black border-t-alto border-l-alto ${
       className ? ` ${className}` : ''
     }`}
     onClick={(e) => e.stopPropagation()}
     {...rest}
   >
-    <div className="flex border-solid border-[0.1vh] border-[#808080] border-t-white border-l-white">
-      <div className="flex bg-[#C0C0C0] p-[0.1499vh]">{children}</div>
+    <div className="flex border-solid border-[0.1vh] border-gray border-t-white border-l-white">
+      <div className="flex bg-silver p-[0.1499vh]">{children}</div>
     </div>
   </div>
 );
@@ -251,7 +251,7 @@ export const StartMenu: FC = () => {
   return (
     <Container className="left-[-2%] bottom-[107%]">
       <a ref={anchorRef} />
-      <div className="relative h-full w-[3.198vh] bg-[#808080]">
+      <div className="relative h-full w-[3.198vh] bg-gray">
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 -rotate-90 text-white font-bold text-[2.25vh] whitespace-nowrap">
           hello world :3
         </div>
@@ -266,14 +266,14 @@ export const StartMenu: FC = () => {
           return (
             <Fragment key={src}>
               {label === 'Shut Down' && (
-                <div className="relative mt-[0.3044vh] mb-[0.761vh] border-solid border-[0.1vh] border-t-[#808080] border-b-white  " />
+                <div className="relative mt-[0.3044vh] mb-[0.761vh] border-solid border-[0.1vh] border-t-gray border-b-white  " />
               )}
               <div
                 ref={(el) => {
                   optionsRef.current[index - 1] = el as HTMLDivElement;
                 }}
                 className={`flex h-[4.873vh] aspect-[274/64] items-center${
-                  highlighted ? ' bg-[#000080]' : ''
+                  highlighted ? ' bg-blue' : ''
                 }`}
                 onMouseOver={() => {
                   if (nested && typeof highlightAtom['start-menu'] !== 'number')

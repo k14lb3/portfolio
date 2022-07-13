@@ -34,7 +34,7 @@ const Taskbar: FC = () => {
   }, [setFocusAtom, setStartAtom]);
 
   return (
-    <div className="absolute bottom-0 h-[4.5vh] w-full bg-[#C0C0C0] border-solid border-t-[0.1vh] border-[#DFDFDF] z-[999]">
+    <div className="absolute bottom-0 h-[4.5vh] w-full bg-silver border-solid border-t-[0.1vh] border-alto z-[999]">
       <div className="h-full border-solid border-t-[0.1vh] border-white">
         <div className="flex items-center justify-between relative h-full w-full px-[0.2999vh]">
           <div
@@ -73,13 +73,13 @@ const Taskbar: FC = () => {
                     <div
                       className={`h-full border-solid border-[0.1vh] ${
                         focused
-                          ? 'pt-[0.1522vh] border-[#DFDFDF] border-t-[#808080] border-l-[#808080] bg-white'
-                          : 'border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]'
+                          ? 'pt-[0.1522vh] border-alto border-t-gray border-l-gray bg-white'
+                          : 'border-gray border-t-alto border-l-alto'
                       }`}
                     >
                       <div
                         className={`flex items-center h-full w-full px-[0.4498vh] ${
-                          focused ? 'bg-checkered' : 'bg-[#C0C0C0]'
+                          focused ? 'bg-checkered' : 'bg-silver'
                         }`}
                       >
                         <div className="flex items-center h-[2.4vh] aspect-square">

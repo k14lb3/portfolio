@@ -24,7 +24,7 @@ export const Background: FC = ({ children }) => {
   return (
     <div
       style={{ aspectRatio: aspectRatio ? '8/5' : 'auto' }}
-      className="relative h-full bg-[#008080] pt-[1.1994vh] pb-[4.4978vh] mx-auto overflow-hidden"
+      className="relative h-full bg-teal pt-[1.1994vh] pb-[4.4978vh] mx-auto overflow-hidden"
     >
       <div
         className="absolute inset-0"

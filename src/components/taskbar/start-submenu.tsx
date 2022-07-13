@@ -124,7 +124,7 @@ export const StartSubmenu: FC<StartSubmenuProps> = ({
                 (optionsRef.current[index - 1] = el as HTMLDivElement)
               }
               className={`flex items-center h-[2.999vh] aspect-[302/40] ${
-                highlighted ? 'bg-[#000080]' : ''
+                highlighted ? 'bg-blue' : ''
               }`}
               onMouseOver={() =>
                 setHighlightAtom((currHighlight) => ({

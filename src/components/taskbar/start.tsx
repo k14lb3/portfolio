@@ -20,12 +20,12 @@ export const Start: FC = () => {
       <div
         className={`h-full border-solid border-[0.1vh] ${
           startAtom
-            ? 'border-[#DFDFDF] border-t-[#808080] border-l-[#808080]'
-            : 'border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]'
+            ? 'border-alto border-t-gray border-l-gray'
+            : 'border-gray border-t-alto border-l-alto'
         }`}
       >
         <div
-          className={`flex items-center h-full w-full p-[0.2999vh] bg-[#C0C0C0] ${
+          className={`flex items-center h-full w-full p-[0.2999vh] bg-silver ${
             startAtom ? 'pt-[0.4498vh] pl-[0.4498vh]' : ''
           }`}
         >

@@ -16,7 +16,7 @@ export const About: FC = () => {
     <Window {...aboutProps}>
       <div className="flex flex-col h-full p-[2.9985vh]">
         <div className="grid grid-cols-2">
-          <div className="relative h-[17.993vh] aspect-square bg-[#DFDFDF] rounded-full overflow-hidden">
+          <div className="relative h-[17.993vh] aspect-square bg-alto rounded-full overflow-hidden">
             <Image
               priority
               src="/static/images/me.jpg"
@@ -43,7 +43,7 @@ export const About: FC = () => {
                 <ul>
                   <li>
                     <a
-                      className="hover:text-[#000080] hover:underline"
+                      className="hover:text-blue hover:underline"
                       href="https://reactjs.org/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -53,7 +53,7 @@ export const About: FC = () => {
                   </li>
                   <li>
                     <a
-                      className="hover:text-[#000080] hover:underline"
+                      className="hover:text-blue hover:underline"
                       href="https://nextjs.org/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -63,7 +63,7 @@ export const About: FC = () => {
                   </li>
                   <li>
                     <a
-                      className="hover:text-[#000080] hover:underline"
+                      className="hover:text-blue hover:underline"
                       href="https://firebase.google.com/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -83,7 +83,7 @@ export const About: FC = () => {
               <br />
               {'- '}
               <a
-                className="hover:text-[#000080] hover:underline"
+                className="hover:text-blue hover:underline"
                 href="https://myanimelist.net/anime/46352/Blue_Period"
                 target="_blank"
                 rel="noopener noreferrer"

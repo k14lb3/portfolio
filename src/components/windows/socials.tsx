@@ -159,7 +159,7 @@ export const Socials: FC = () => {
                       WebkitMaskSize: '4.799vh',
                     }}
                     className={`absolute inset-0 aspect-square opacity-70${
-                      focused ? ' bg-[#000080]' : ''
+                      focused ? ' bg-blue' : ''
                     }`}
                   />
                 )}
@@ -168,7 +168,7 @@ export const Socials: FC = () => {
                 className={`px-[0.2999vh] text-[2.1vh] border-[0.1vh] border-dotted${
                   highlighted
                     ? ` border-black ${
-                        focused ? 'bg-[#000080] text-white' : ''
+                        focused ? 'bg-blue text-white' : ''
                       }`
                     : ' bg-white border-[transparent] '
                 }`}

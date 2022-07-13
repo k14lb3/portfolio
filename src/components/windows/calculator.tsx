@@ -29,14 +29,14 @@ const Button: FC<
     >
       <div
         className="h-full border-solid border-[0.1vh]
-            border-[#808080] border-t-[#DFDFDF] border-l-[#DFDFDF]
-						group-active:border-[#DFDFDF] group-active:border-t-[#808080]
-						group-active:border-l-[#808080]
+            border-gray border-t-alto border-l-alto
+						group-active:border-alto group-active:border-t-gray
+						group-active:border-l-gray
         }"
       >
         <div
-          className="flex items-center justify-center h-full pb-[0.2999vh] bg-[#C0C0C0] border-solid 
-              border-[0.1vh] border-[#C0C0C0] group-active:border-[#C0C0C0] group-active:pt-[0.4498vh] group-active:pl-[0.15vh]"
+          className="flex items-center justify-center h-full pb-[0.2999vh] bg-silver border-solid 
+              border-[0.1vh] border-silver group-active:border-silver group-active:pt-[0.4498vh] group-active:pl-[0.15vh]"
         >
           {label}
         </div>
@@ -253,17 +253,17 @@ export const Calculator: FC = () => {
         <div className="flex my-[0.8995vh] justify-between">
           <div
             className="group block h-[3.898vh] aspect-[18/13]
-					border-solid border-[0.1vh] bg-[#C0C0C0] outline-none
-					border-white border-t-[#808080] border-l-[#808080]"
+					border-solid border-[0.1vh] bg-silver outline-none
+					border-white border-t-gray border-l-gray"
           >
             <div
               className="h-full pt-[0.5997vh] border-solid border-[0.1vh]
-            border-[#DFDFDF] border-t-black border-l-black text-center"
+            border-alto border-t-black border-l-black text-center"
             >
               {memory !== 0 && 'M'}
             </div>
           </div>
-          <div className="flex space-x-[0.5997vh] text-[#800000]">
+          <div className="flex space-x-[0.5997vh] text-maroon">
             <Button
               className="aspect-[7/4]"
               label="Back"
@@ -282,14 +282,14 @@ export const Calculator: FC = () => {
           </div>
         </div>
         <div className="flex space-x-[2.3988vh]">
-          <div className="grid grid-rows-4 gap-y-[0.8995vh] text-[#ff0000]">
+          <div className="grid grid-rows-4 gap-y-[0.8995vh] text-red">
             <Button label="MC" onClick={() => click('mc')} />
             <Button label="MR" onClick={() => click('mr')} />
             <Button label="MS" onClick={() => click('ms')} />
             <Button label="M+" onClick={() => click('m+')} />
           </div>
           <div className="flex space-x-[0.5997vh]">
-            <div className="grid grid-cols-3 gap-y-[0.8995vh] gap-x-[0.5997vh] text-[#0000ff]">
+            <div className="grid grid-cols-3 gap-y-[0.8995vh] gap-x-[0.5997vh] text-blue">
               <Button label="7" onClick={() => click('7')} />
               <Button label="8" onClick={() => click('8')} />
               <Button label="9" onClick={() => click('9')} />
@@ -304,18 +304,18 @@ export const Calculator: FC = () => {
               <Button label="." onClick={() => click('.')} />
             </div>
             <div className="flex space-x-[0.5997vh]">
-              <div className="space-y-[0.8995vh] text-[#ff0000]">
+              <div className="space-y-[0.8995vh] text-red">
                 <Button label="/" onClick={() => click('/')} />
                 <Button label="*" onClick={() => click('*')} />
                 <Button label="-" onClick={() => click('-')} />
                 <Button label="+" onClick={() => click('+')} />
               </div>
-              <div className="space-y-[0.8995vh] text-[#0000ff]">
+              <div className="space-y-[0.8995vh] text-blue">
                 <Button label="sqrt" onClick={() => click('sqrt')} />
                 <Button label="%" onClick={() => click('%')} />
                 <Button label="1/x" onClick={() => click('1/x')} />
                 <Button
-                  className="text-[#ff0000]"
+                  className="text-red"
                   label="="
                   onClick={() => click('=')}
                 />

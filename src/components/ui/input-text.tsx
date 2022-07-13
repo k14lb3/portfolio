@@ -12,11 +12,11 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   ({ containerClassName, className, children, ...rest }, ref) => {
     return (
       <div
-        className={`h-[3.9vh] aspect-[498:52] border-solid border-[0.1vh] border-white border-t-[#808080] border-l-[#808080] ${
+        className={`h-[3.9vh] aspect-[498:52] border-solid border-[0.1vh] border-white border-t-gray border-l-gray ${
           containerClassName ? ` ${containerClassName}` : ''
         }`}
       >
-        <div className="h-full w-full border-solid border-[0.1vh] border-[#DFDFDF] border-t-black border-l-black">
+        <div className="h-full w-full border-solid border-[0.1vh] border-alto border-t-black border-l-black">
           <input
             ref={ref}
             className={`block h-full w-full outline-none text-[1.7vh] ${
